@@ -1,16 +1,16 @@
 module volatilization
     implicit none
     
-         ! The wind measurements in the meteorological Daily Values File (*.dvf)
+         ! The wind measurements in the meteoroLOGICAL Daily Values File (*.dvf)
          ! were normalized to 10 meters, Open Flat Terrain.
          
-         real,parameter :: uWind_z0 = 0.03
-         real,parameter :: uWind_D  = 0.0
+         REAL,PARAMETER :: uWind_z0 = 0.03
+         REAL,PARAMETER :: uWind_D  = 0.0
             
-         !Real, Parameter :: vonKarman = 0.4
+         !REAL, PARAMETER :: vonKarman = 0.4
 
-         Real, Parameter :: Minimum_Canopy_Height_cm = 5.0
-         Real, Parameter :: Minimum_Canopy_Height_m = Minimum_Canopy_Height_cm * 1.0E-02
+         REAL, PARAMETER :: Minimum_Canopy_Height_cm = 5.0
+         REAL, PARAMETER :: Minimum_Canopy_Height_m = Minimum_Canopy_Height_cm * 1.0E-02
     
     contains
     
@@ -23,9 +23,9 @@ module volatilization
            thair_new,  dair,DGAIR, theta_sat
      
         implicit none
-        real     :: CNDBDY(3)     ! CNDBDY: Boundary Layer's Conductance (cm day^-1) = 1/Rdb, (3 chemicals)
-        integer, intent(in) :: k ! chemical number
-        real :: ATEMP(2),ZCH, z0, urh, uch,PWIND(2),TOTCR,d
+        REAL     :: CNDBDY(3)     ! CNDBDY: Boundary Layer's Conductance (cm day^-1) = 1/Rdb, (3 chemicals)
+        INTEGER, intent(in) :: k ! chemical number
+        REAL :: ATEMP(2),ZCH, z0, urh, uch,PWIND(2),TOTCR,d
 
     
         
@@ -69,7 +69,7 @@ module volatilization
            ATEMP(2)= air_TEMP
 
            ! Let u_2 and u_1 be wind speeds measured at
-           ! heights z_2 and z_1 respectively. Then
+           ! heights z_2 and z_1 respectively. THEN
            !
            !        u_2                    u_1
            ! ------------------  =  ------------------
@@ -79,7 +79,7 @@ module volatilization
            !     u_i : wind speed at height z_i
            !     z_i : height at which the measurement was taken (m)
            !     d_i : zero plane displacement (m)
-           !     z0_i: surface roughness length or roughness height (m)
+           !     z0_i: surface roughness LENgth or roughness height (m)
            !
            ! This equation assumes the atmosphere is neutrally stable,
            ! i.e., phi_m = 1, which implies psi_m = 0.
@@ -89,24 +89,24 @@ module volatilization
            ! atmosphere is neutrally stable.
            !
            ! The wind speed at reference conditions (urh) is retrieved from the
-           ! metereological file. The aerodynamic parameters for wind speed
-           ! computations are set by the subroutine Get_Aerodynamic_Parameters.
+           ! metereoLOGICAL file. The aerodynamic PARAMETERs for wind speed
+           ! computations are set by the subroutine Get_Aerodynamic_PARAMETERs.
            ! In the absence of przm input file values, the routine assumes
-           ! the conditions of the meteorological Daily Values File (*.dvf),
-           ! i.e., Open Flat Terrain (used for Metereological Stations), and
+           ! the conditions of the meteoroLOGICAL Daily Values File (*.dvf),
+           ! i.e., Open Flat Terrain (used for MetereoLOGICAL Stations), and
            ! wind measurements normalized to 10 meters.
-           ! See subroutines IniVar and Get_Aerodynamic_Parameters.
+           ! See subroutines IniVar and Get_Aerodynamic_PARAMETERs.
            !   Wind_Reference_Height = 10.0
            !   Wind_z0 = 0.03
            !   Wind_D  = 0.0
 
            ! Computes zero displacement height, D (meter)
-           ! and the roughness length, Z0 (meter)
+           ! and the roughness LENgth, Z0 (meter)
            Call Get_Crop_Params (zch, z0, d)
 
            ! urh: wind speed (meter/day) at reference height.
            !      units of WIND are cm/sec.
-           !      1 cm/sec is equivalent to 864.0 meter/day
+           !      1 cm/sec is equivaLENt to 864.0 meter/day
            !      subroutine canopy expects wind speed in meter/day
            ! uch: wind speed at the top of the canopy (zch)
 
@@ -138,21 +138,21 @@ module volatilization
     Subroutine Get_Crop_Params (Crop_Height, Z0, D)
 
       ! Given a height, compute the zero displacement
-      ! height and the roughness length
+      ! height and the roughness LENgth
       !
       ! Crop_Height -- The canopy height (meter)
       ! D  -- The zero plane displacement height (meter)
-      ! Z0 -- The roughness length (meter).
+      ! Z0 -- The roughness LENgth (meter).
 
       Implicit None
 
-      Real,  Intent(In) :: Crop_Height
-      Real, Intent(Out) :: D
-      Real, Intent(Out) :: Z0
+      REAL,  Intent(In) :: Crop_Height
+      REAL, Intent(Out) :: D
+      REAL, Intent(Out) :: Z0
 
-      Real :: logd, logz0
+      REAL :: logd, logz0
 
-      If (Crop_Height > Minimum_Canopy_Height_m) Then
+      If (Crop_Height > Minimum_Canopy_Height_m) THEN
          ! (Thibodeaux 1996) Regression for Zero plane displacement.
          ! height generated for 0.02 m < Crop_Height < 25 m
          ! Zero displacement height, m
@@ -171,7 +171,7 @@ module volatilization
          logz0 = 0.997*Log10(Minimum_Canopy_Height_m) - 0.883  ! copy 2/2; propagate changes
          Z0    = 10.0 ** logz0
          D  = 0.0
-      End If
+      END IF
 
    End Subroutine Get_Crop_Params
     
@@ -215,38 +215,38 @@ module volatilization
       ! * Modification date: 2/18/92 JAM
       !   To calculates the overall vertical transport resistance
 
-      Real,  Intent(in) :: zch
-      Real, Intent(out) :: totr
-      Real,  Intent(in) :: utemp(2)
-      Real,  Intent(in) :: uwind(2)
-      Real              :: crc(2)
+      REAL,  Intent(in) :: zch
+      REAL, Intent(out) :: totr
+      REAL,  Intent(in) :: utemp(2)
+      REAL,  Intent(in) :: uwind(2)
+      REAL              :: crc(2)
 
-      Real :: gradw, gradt, RiNum, phi_h, phi_m, psi_m, ustar
-      Real :: d, z0, diffch, e2, c1, c2, ct, meanT, uch, zeta
-      Real :: temp0, RiMax
+      REAL :: gradw, gradt, RiNum, phi_h, phi_m, psi_m, ustar
+      REAL :: d, z0, diffch, e2, c1, c2, ct, meanT, uch, zeta
+      REAL :: temp0, RiMax
 
-      Real, Parameter :: Zero = 0.0
+      REAL, PARAMETER :: Zero = 0.0
 
-      ! If the Richardson number is "close" to Fuzzy, then
+      ! If the Richardson number is "close" to Fuzzy, THEN
       ! the Richardson number is effectively equal to zero.
-      Real, Parameter :: Fuzzy = 0.003
+      REAL, PARAMETER :: Fuzzy = 0.003
 
       ! To convert from 1/m to 1/cm :
-      ! value in 1/m is equivalent to (value * Im_to_Icm) 1/cm
-      Real, Parameter :: Im_to_Icm = 1.0e-02
+      ! value in 1/m is equivaLENt to (value * Im_to_Icm) 1/cm
+      REAL, PARAMETER :: Im_to_Icm = 1.0e-02
 
       ! Temperature conversion: kelvin = Celsius + c2k
-      Real, Parameter :: c2k = 273.15
+      REAL, PARAMETER :: c2k = 273.15
 
       ! Maximum value of the Richardson number
-      Real, Parameter :: Max_Richardson = 0.19
+      REAL, PARAMETER :: Max_Richardson = 0.19
 
       ! g_grav: acceleration due to gravity. Express in m/day^2
-      ! so that the Richardson number is dimensionless.
+      ! so that the Richardson number is DIMENSIONless.
       ! g_grav = 9.8 m/s^2
       !        = 9.8 m/s^2 * (86400 s/day)**2 = 7.31567E+10 m/day^2
-      Real, Parameter :: g_grav = 9.8 * 86400.0**2
-      Real, Parameter :: Pi = 3.14159265358979
+      REAL, PARAMETER :: g_grav = 9.8 * 86400.0**2
+      REAL, PARAMETER :: Pi = 3.14159265358979
       
       
       
@@ -255,7 +255,7 @@ module volatilization
       gradw = (uwind(2)-uwind(1)) / zch      ! 1/day
       meanT = Sum(utemp(1:2))/2 + c2k        ! mean Temperature, kelvin
 
-      ! Computes Richardson number (RiNum) (dimensionless).
+      ! Computes Richardson number (RiNum) (DIMENSIONless).
       ! Louis J. Thibodeaux. 1996. Environmental Chemodynamics:
       ! Movement of Chemicals in Air, Water, and Soil. Wiley.
       ! 2nd Edition, p 373-375.
@@ -263,15 +263,15 @@ module volatilization
       ! the PRZM scenarios RiNum was outside the nominal range.
       RiNum = g_grav / meanT * gradt / gradw**2
 
-      ! Computes the dimensionless height (zeta). See
+      ! Computes the DIMENSIONless height (zeta). See
       ! Louis J. Thibodeaux. 1996. Environmental Chemodynamics:
       ! Movement of Chemicals in Air, Water, and Soil. Wiley.
       ! 2nd Edition, p 379-381.
-      If (RiNum < (-Fuzzy)) Then
+      If (RiNum < (-Fuzzy)) THEN
          ! Richardson number less than "fuzzy zero".
          zeta = RiNum
 
-      Else If (RiNum > Fuzzy) Then
+      ELSE IF (RiNum > Fuzzy) THEN
          ! Richardson number greater than "fuzzy zero".
          ! Make sure function for zeta is always evaluated with
          ! Richardson numbers < 0.2
@@ -281,12 +281,12 @@ module volatilization
       Else
          ! Abs(RiNum) <= Fuzzy, i.e., RiNum is equal to "Fuzzy Zero"
          zeta = Zero
-      End If
+      END IF
 
-      ! phi_h: stability function for sensible heat (dimensionless)
-      ! phi_m: stability function for momentum (dimensionless)
-      ! psi_m: integrated momentum stability parameter (dimensionless)
-      If (zeta < Zero) Then
+      ! phi_h: stability function for sensible heat (DIMENSIONless)
+      ! phi_m: stability function for momentum (DIMENSIONless)
+      ! psi_m: integrated momentum stability PARAMETER (DIMENSIONless)
+      If (zeta < Zero) THEN
          phi_h = 1.0 / Sqrt(1.0 - 15.0*zeta)
          phi_m = Sqrt(phi_h)
          temp0 = (1.0+phi_m**2)/2.0 * ((1.0+phi_m)/2.0)**2
@@ -296,10 +296,10 @@ module volatilization
          phi_h = 1.0 + 5.0*zeta
          phi_m = phi_h
          psi_m = -5.0 * zeta
-      End If
+      END IF
 
       ! Computes zero displacement height, D (meter)
-      ! and the roughness length, Z0 (meter)
+      ! and the roughness LENgth, Z0 (meter)
       Call Get_Crop_Params (zch, z0, d)
 
       uch = Uwind(2)
@@ -362,64 +362,64 @@ module volatilization
     !Module m_Wind
 !   
 !   Implicit None
-!          ! The wind measurements in the meteorological Daily Values File (*.dvf)
+!          ! The wind measurements in the meteoroLOGICAL Daily Values File (*.dvf)
 !          ! were normalized to 10 meters, Open Flat Terrain.
 !         
-!         real,save      :: uWind_Reference_Height = 10.0  !(can be changed by input file)
-!         real,parameter :: uWind_z0 = 0.03
-!         real,parameter :: uWind_D  = 0.0
+!         REAL,save      :: uWind_Reference_Height = 10.0  !(can be changed by input file)
+!         REAL,PARAMETER :: uWind_z0 = 0.03
+!         REAL,PARAMETER :: uWind_D  = 0.0
 !               
 !         
-!         Real, Parameter :: vonKarman = 0.4
-!         Real, Save      :: Height_stagnant_air_layer_cm = 0.5
-!         Real, Parameter :: Minimum_Canopy_Height_cm = 5.0
-!         Real, Parameter :: Minimum_Canopy_Height_m = Minimum_Canopy_Height_cm * 1.0E-02
+!         REAL, PARAMETER :: vonKarman = 0.4
+!         REAL, Save      :: Height_stagnant_air_layer_cm = 0.5
+!         REAL, PARAMETER :: Minimum_Canopy_Height_cm = 5.0
+!         REAL, PARAMETER :: Minimum_Canopy_Height_m = Minimum_Canopy_Height_cm * 1.0E-02
 !         
 !         
 !         
 !!   Private
 !!   Public :: Get_Crop_Params, inivar
-!!   Public :: Get_Aerodynamic_Parameters
+!!   Public :: Get_Aerodynamic_PARAMETERs
 !!
-!!   ! Aerodynamic Environments, used by Get_Aerodynamic_Parameters
-!!   Integer, Parameter, Public :: t_Open_Flat_Terrain = 1
-!!   Integer, Parameter, Public :: t_Class_A_Pan_Anemometer = 2
-!!   Integer, Parameter, Public :: t_FAO_Reference_Short_Grass_Crop = 3
-!!   Integer, Parameter, Public :: t_User = 4  ! Values read from the input file.
+!!   ! Aerodynamic Environments, used by Get_Aerodynamic_PARAMETERs
+!!   INTEGER, PARAMETER, Public :: t_Open_Flat_Terrain = 1
+!!   INTEGER, PARAMETER, Public :: t_Class_A_Pan_Anemometer = 2
+!!   INTEGER, PARAMETER, Public :: t_FAO_Reference_Short_Grass_Crop = 3
+!!   INTEGER, PARAMETER, Public :: t_User = 4  ! Values READ from the input file.
 !!
-!!   ! The wind measurements in the meteorological Daily Values File (*.dvf)
+!!   ! The wind measurements in the meteoroLOGICAL Daily Values File (*.dvf)
 !!   ! were normalized to 10 meters, Open Flat Terrain.
-!!   !> Plan for the future: read from the PRZM file the aerodynamic
-!!   !>      environment of the metereological file (e.g., *.dvf).
+!!   !> Plan for the future: READ from the PRZM file the aerodynamic
+!!   !>      environment of the metereoLOGICAL file (e.g., *.dvf).
 !!
-!!   Integer, Save, Public :: uWind_Environs = t_Open_Flat_Terrain
-!!   Real,    Save, Public :: uWind_Reference_Height, uWind_z0, uWind_D
+!!   INTEGER, Save, Public :: uWind_Environs = t_Open_Flat_Terrain
+!!   REAL,    Save, Public :: uWind_Reference_Height, uWind_z0, uWind_D
 !!
 !!   ! Height of the stagnant air layer above the soil = 5 mm = 0.5 cm
 !!   ! In the literature, generally denoted as "d".
 !!   ! Value expressed in cm.
-!!   Real, Save, Public :: Height_stagnant_air_layer_cm = 0.5
+!!   REAL, Save, Public :: Height_stagnant_air_layer_cm = 0.5
 !!
 !!   ! Minimum Canopy Height = 0.05 m = 5 cm
 !!   ! In the literature, Canopy Height is generally denoted as "Zch".
 !!   ! Minimum_Canopy_Height_cm -- value in cm
 !!   ! Minimum_Canopy_Height_c  -- value in meter
-!!   ! 1 cm is equivalent to 1.0E-02 m
-!!   Real, Parameter, Public :: Minimum_Canopy_Height_cm = 5.0
-!!   Real, Parameter, Public :: Minimum_Canopy_Height_m = Minimum_Canopy_Height_cm * 1.0E-02
+!!   ! 1 cm is equivaLENt to 1.0E-02 m
+!!   REAL, PARAMETER, Public :: Minimum_Canopy_Height_cm = 5.0
+!!   REAL, PARAMETER, Public :: Minimum_Canopy_Height_m = Minimum_Canopy_Height_cm * 1.0E-02
 !!
-!!   ! von Karman's constant, dimensionless
-!!   Real, Parameter, Public :: vonKarman = 0.4
+!!   ! von Karman's constant, DIMENSIONless
+!!   REAL, PARAMETER, Public :: vonKarman = 0.4
 !!
 !!   
 !!Contains
 !!
 !! Subroutine IniVar ()
-!!      !calculate wind parameters
+!!      !calculate wind PARAMETERs
 !!      Implicit None
 !!
 !!      uWind_Environs = t_Open_Flat_Terrain
-!!      Call Get_Aerodynamic_Parameters(uWind_Environs, uWind_Reference_Height, uWind_z0, uWind_D)
+!!      Call Get_Aerodynamic_PARAMETERs(uWind_Environs, uWind_Reference_Height, uWind_z0, uWind_D)
 !!   
 !!
 !!      ! Description taken from the przm manual.
@@ -429,13 +429,13 @@ module volatilization
 !!      ! above the ground surface.  This height may differ at some weather
 !!      ! stations such as at a class A station where the anemometer may be
 !!      ! attached to the evaporation pan.  The correct value can be obtained
-!!      ! from the meteorological data reports for the station whose data are
+!!      ! from the meteoroLOGICAL data reports for the station whose data are
 !!      ! in the simulation.
 !!      !
 !!      ! Thu Apr 08 16:54:02 EDT 2004 --
 !!      ! o The variable ZWIND was replaced with uWind_Reference_Height
 !!
-!!      ! The wind measurements in the meteorological Daily Values File (*.dvf)
+!!      ! The wind measurements in the meteoroLOGICAL Daily Values File (*.dvf)
 !!      ! were normalized to 10 meters, Open Flat Terrain.    
 !!
 !!   End Subroutine IniVar
@@ -443,20 +443,20 @@ module volatilization
 !!
 !!
 !!
-!!   Subroutine Get_Aerodynamic_Parameters (Wind_Env, Wind_Reference_Height, Wind_z0, Wind_D)
+!!   Subroutine Get_Aerodynamic_PARAMETERs (Wind_Env, Wind_Reference_Height, Wind_z0, Wind_D)
 !!
-!!      ! Returns Aerodynamic Parameters for wind speed computations
+!!      ! Returns Aerodynamic PARAMETERs for wind speed computations
 !!      !         for the named environment.
 !!      !
-!!      ! Wind_Env -- (integer) environment type: t_Open_Flat_Terrain or
+!!      ! Wind_Env -- (INTEGER) environment type: t_Open_Flat_Terrain or
 !!      !             t_Class_A_Pan_Anemometer, t_FAO_Reference_Short_Grass_Crop
 !!      !
 !!      ! Wind_Reference_Height -- reference height (meter)
-!!      ! Wind_z0 -- surface roughness length or roughness height (meter)
+!!      ! Wind_z0 -- surface roughness LENgth or roughness height (meter)
 !!      ! Wind_D  -- zero plane displacement (meter)
 !!      !
 !!      ! Let u_2 and u_1 be wind speeds measured at
-!!      ! heights z_2 and z_1 respectively. Then
+!!      ! heights z_2 and z_1 respectively. THEN
 !!      !
 !!      !        u_2                    u_1
 !!      ! ------------------  =  ------------------
@@ -466,7 +466,7 @@ module volatilization
 !!      !     u_i : wind speed at height z_i
 !!      !     z_i : height at which the measurement was taken (m)
 !!      !     d_i : zero plane displacement (m)
-!!      !     z0_i: surface roughness length or roughness height (m)
+!!      !     z0_i: surface roughness LENgth or roughness height (m)
 !!      !
 !!      ! This equation assumes the atmosphere is neutrally stable,
 !!      ! i.e., phi_m = 1, which implies psi_m = 0. See the PRZM
@@ -474,16 +474,16 @@ module volatilization
 !!
 !!      Implicit None
 !!
-!!      Integer, Intent(In) :: Wind_Env
-!!      Real,   Intent(Out) :: Wind_Reference_Height
-!!      Real,   Intent(Out) :: Wind_z0
-!!      Real,   Intent(Out) :: Wind_D
+!!      INTEGER, Intent(In) :: Wind_Env
+!!      REAL,   Intent(Out) :: Wind_Reference_Height
+!!      REAL,   Intent(Out) :: Wind_z0
+!!      REAL,   Intent(Out) :: Wind_D
 !!
 !!      Select Case (Wind_Env)
 !!      Case(t_Open_Flat_Terrain)
-!!         ! The wind measurements in the meteorological Daily Values File
+!!         ! The wind measurements in the meteoroLOGICAL Daily Values File
 !!         ! (*.dvf) were normalized to 10 meters, Open Flat Terrain (used
-!!         ! for Metereological Stations):
+!!         ! for MetereoLOGICAL Stations):
 !!         Wind_Reference_Height = 10.0
 !!         Wind_z0 = 0.03
 !!         Wind_D  = 0.0
@@ -500,7 +500,7 @@ module volatilization
 !!
 !!      Case(t_User)
 !!         !> This is a plan for the future.
-!!         !> User provides all parameters in the PRZM input file.
+!!         !> User provides all PARAMETERs in the PRZM input file.
 !!         !> Requires modification of the PRZM input file.
 !!         Wind_Reference_Height = uWind_Reference_Height
 !!         Wind_z0 = uWind_z0
@@ -510,28 +510,28 @@ module volatilization
 !!         ! Error
 !!
 !!      End Select
-!!   End Subroutine Get_Aerodynamic_Parameters
+!!   End Subroutine Get_Aerodynamic_PARAMETERs
 !
 !Contains
 !
 !   Subroutine Get_Crop_Params (Crop_Height, Z0, D)
 !
 !       Given a height, compute the zero displacement
-!       height and the roughness length
+!       height and the roughness LENgth
 !      
 !       Crop_Height -- The canopy height (meter)
 !       D  -- The zero plane displacement height (meter)
-!       Z0 -- The roughness length (meter).
+!       Z0 -- The roughness LENgth (meter).
 !
 !      Implicit None
 !
-!      Real,  Intent(In) :: Crop_Height
-!      Real, Intent(Out) :: D
-!      Real, Intent(Out) :: Z0
+!      REAL,  Intent(In) :: Crop_Height
+!      REAL, Intent(Out) :: D
+!      REAL, Intent(Out) :: Z0
 !
-!      Real :: logd, logz0
+!      REAL :: logd, logz0
 !
-!      If (Crop_Height > Minimum_Canopy_Height_m) Then
+!      If (Crop_Height > Minimum_Canopy_Height_m) THEN
 !          (Thibodeaux 1996) Regression for Zero plane displacement.
 !          height generated for 0.02 m < Crop_Height < 25 m
 !          Zero displacement height, m
@@ -550,7 +550,7 @@ module volatilization
 !         logz0 = 0.997*Log10(Minimum_Canopy_Height_m) - 0.883  ! copy 2/2; propagate changes
 !         Z0    = 10.0 ** logz0
 !         D  = 0.0
-!      End If
+!      END IF
 !
 !   End Subroutine Get_Crop_Params
 !

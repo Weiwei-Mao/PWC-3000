@@ -5,37 +5,37 @@
 	contains 
 	
     function get_order(x) result(order)
-    !returns an integer array with indices idicating the sort order of original array x
+    !returns an INTEGER array with indices idicating the sort order of original array x
        implicit none
-       integer, intent(in) :: x(:)
-       integer :: order(size(x))      ! Function result
+       INTEGER, intent(in) :: x(:)
+       INTEGER :: order(size(x))      ! Function result
     
-       logical :: mask(size(x))
-       integer :: i
+       LOGICAL :: mask(size(x))
+       INTEGER :: i
 
        mask = .true.
        do i = 1, size(x)
              order(i) = findloc( x, value=minval(x,dim=1,mask=mask), dim=1 )
              mask(order(i)) = .false.
-       end do  
+       END DO  
     end function
     
     
     subroutine make_run_id (i,j, ii,mm)
-    !makes a string that can be used for identifying output: Scheme#_Scenario#_ScenarioFileName (eg., 2_3_NDpumpkins)
+    !makes a string that can be used for identifying output: Scheme#_Scenario#_ScenarioFiLEName (eg., 2_3_NDpumpkins)
     
     USE constants_and_variables, ONLY: run_id ,  scenario_id ,  full_run_identification, working_directory, family_name   
-    USE waterbody_parameters, ONLY: waterbody_names
+    USE waterbody_PARAMETERs, ONLY: waterbody_names
     implicit none
-    integer, intent(in) :: i,j, ii,mm
-    character(LEN=25) :: schemnumber, scenarionumber, appnumber
-    integer :: last_slash, last_dot,last_slash2, last_dot2
+    INTEGER, intent(in) :: i,j, ii,mm
+    CHARACTER(LEN=25) :: schemnumber, scenarionumber, appnumber
+    INTEGER :: last_slash, last_dot,last_slash2, last_dot2
     
-    character(len=512) :: local_name
+    CHARACTER(LEN=512) :: local_name
     
     !*****turn numbers into text*****
-    write(schemnumber,*) i
-    write(scenarionumber,*) j
+    WRITE(schemnumber,*) i
+    WRITE(scenarionumber,*) j
     
     !last_slash = index(scenario_names(i,j), '\', .TRUE.)
     !last_dot   = index(scenario_names(i,j), '.', .TRUE.)
@@ -43,13 +43,13 @@
     last_slash2 = index(waterbody_names(ii), '\', .TRUE.)
     last_dot2   = index(waterbody_names(ii), '.', .TRUE.)
     
-    IF (index(waterbody_names(ii), '.')==0) then
+    IF (index(waterbody_names(ii), '.')==0) THEN
          local_name = waterbody_names(ii)
     else
          local_name= (waterbody_names(ii)((last_slash2+1):(last_dot2-1)))         
-    end if
+    END IF
     
-    write(appnumber, '(I4.4)') mm  !app window
+    WRITE(appnumber, '(I4.4)') mm  !app window
     
     ! scheme_number_ScenarioName_WaterbodyName
     
@@ -57,7 +57,7 @@
     trim(scenario_id)  &
         // '_' // trim(adjustl(local_name)) // '_' // trim(adjustl(appnumber))
     
-    !write(*,'(A8, A256)') 'Run ID:', adjustl(run_ID )
+    !WRITE(*,'(A8, A256)') 'Run ID:', adjustl(run_ID )
 
 
     
@@ -75,12 +75,12 @@
     
     SUBROUTINE tridiagonal_solution(A,B,C,X,F,n)
         implicit none
-        integer,intent(in) :: n
-        real,intent(in)    :: A(n), B(n),C(n) , F(n)
-        real,intent(out)   :: X(n)
+        INTEGER,intent(in) :: n
+        REAL,intent(in)    :: A(n), B(n),C(n) , F(n)
+        REAL,intent(out)   :: X(n)
         
-        real :: Y(n), ALPHA(n), BETA(n)
-        integer :: nu, i, j
+        REAL :: Y(n), ALPHA(n), BETA(n)
+        INTEGER :: nu, i, j
         
         ALPHA(1) = B(1)
         BETA(1) = C(1)/ALPHA(1)
@@ -89,7 +89,7 @@
             ALPHA(I) = B(I) - A(I)*BETA(I-1)
             BETA(I) = C(I)/ALPHA(I)
             Y(I) = (F(I)-A(I)*Y(I-1))/ALPHA(I)
-        end do
+        END DO
         
 
         
@@ -100,7 +100,7 @@
         do I=1, NU
             J=N-I
             X(J) = Y(J) - BETA(J)*X(J+1)          
-        end do
+        END DO
         
 
         
@@ -109,12 +109,12 @@
 
                
   !*****************************************************************************
-   pure elemental integer function jd (YEAR,MONTH,DAY)
+   pure elemental INTEGER function jd (YEAR,MONTH,DAY)
      !calculate the days since 1/1/1900 given year,month, day, from Fliegel and van Flandern (1968)
     !Fliegel, H. F. and van Flandern, T. C. (1968). Communications of the ACM, Vol. 11, No. 10 (October, 1968). 
 
      implicit none
-     integer, intent(in) :: year,month,day
+     INTEGER, intent(in) :: year,month,day
 
       JD= day-32075+1461*(year+4800+(month-14)/12)/4+367*(month-2-(month-14)/12*12) /12-3*((year+4900+(month-14)/12)/100)/4 -2415021
 
@@ -125,10 +125,10 @@
  !computes THE GREGORIAN CALENDAR DATE (YEAR,MONTH,DAY) given days since 1900
    implicit none
 
-   integer,intent(out) :: YEAR,MONTH,DAY
+   INTEGER,intent(out) :: YEAR,MONTH,DAY
 
-   integer,intent(in) :: date1900  !days since 1900
-   integer :: L,n,i,j
+   INTEGER,intent(in) :: date1900  !days since 1900
+   INTEGER :: L,n,i,j
 
    L= 2483590 + date1900
 
@@ -151,35 +151,35 @@
    end subroutine get_date
       
 
-     pure integer function find_depth_node(n,depth,desired) 
+     pure INTEGER function find_depth_node(n,depth,desired) 
      !Given an array "depth" of size "n" that is ordered from low to high values, this 
      !function will give the index of "depth" that is closest to the value "desired"
     
       implicit none
-      integer,intent(in)            :: n       !size of depth vector 
-      real,dimension(n), intent(in) :: depth   !vector holding incremental depths)
-      real,intent(in)               :: desired !desired depth
+      INTEGER,intent(in)            :: n       !size of depth vector 
+      REAL,DIMENSION(n), intent(in) :: depth   !vector holding incremental depths)
+      REAL,intent(in)               :: desired !desired depth
       
-      integer :: i, index
+      INTEGER :: i, index
 
-      !write(*,*) "CHECK for N herree:   n, depth, desired"
-      !write(*,*) n,depth,desired
+      !WRITE(*,*) "CHECK for N herree:   n, depth, desired"
+      !WRITE(*,*) n,depth,desired
       
       
       do i=1, n 
           index = i  !store value for the case where we go to the max n and i would be incremented another 1 value
           if (depth(i) > desired) exit
-      end do
+      END DO
 
       
-      i = index     !if i falls out the loop above it will have a value of n+1, so we use index to capture real value
-      if  (i==1) then 
+      i = index     !if i falls out the loop above it will have a value of n+1, so we use index to capture REAL value
+      if  (i==1) THEN 
           find_depth_node = 1
-      else if (abs(depth(i) - desired) < abs (depth(i-1) - desired)) then
+      ELSE IF (abs(depth(i) - desired) < abs (depth(i-1) - desired)) THEN
           find_depth_node = i
       else
           find_depth_node = i-1
-      end if
+      END IF
 
      end function find_depth_node  
            
@@ -188,29 +188,29 @@
      !value of a target_depth
      use clock_variables
      implicit none
-        integer,intent(in) :: n                      !size of input vectors for depth and prperty
-        real   ,intent(in) :: depth(n)          !vector of cumulative depths 
-        real   ,intent(in) :: property(n)            !property of interest corresponding to thicknrss vector
-        real   ,intent(in) :: target_depth           ! target depth is lower depth for averaging
-        real   ,intent(out):: average                 !average property value from zero depth to target depth
+        INTEGER,intent(in) :: n                      !size of input vectors for depth and prperty
+        REAL   ,intent(in) :: depth(n)          !vector of cumulative depths 
+        REAL   ,intent(in) :: property(n)            !property of interest corresponding to thicknrss vector
+        REAL   ,intent(in) :: target_depth           ! target depth is lower depth for averaging
+        REAL   ,intent(out):: average                 !average property value from zero depth to target depth
         
-        integer :: i
-        real ::  previous_depth, weighted_tally
+        INTEGER :: i
+        REAL ::  previous_depth, weighted_tally
 
         weighted_tally = 0.0
         previous_depth = 0.0
         
         do i = 1, n    
-              if (depth(i) < target_depth) then
+              if (depth(i) < target_depth) THEN
                   weighted_tally = weighted_tally+ property(i)*(depth(i) - previous_depth ) 
-              elseif(depth(i) >= target_depth) then
+              elseif(depth(i) >= target_depth) THEN
       
                  weighted_tally = weighted_tally + property(i)*(target_depth -  previous_depth)
 
                  exit !exit do loop   
-              end if 
+              END IF 
               previous_depth = depth(i)
-        end do
+        END DO
        average =  weighted_tally/target_depth     
        
        
@@ -220,15 +220,15 @@
      
      subroutine find_medians(rows, columns, x , medians)
         !Find medians of each column in array x 
-         integer, intent(in) ::  rows, columns      
-         real, intent(in),dimension(:,:)    ::  x       !assumed shape array 
-         real, intent(out),dimension(:)     ::  medians
+         INTEGER, intent(in) ::  rows, columns      
+         REAL, intent(in),DIMENSION(:,:)    ::  x       !assumed shape array 
+         REAL, intent(out),DIMENSION(:)     ::  medians
          
-         real :: hold(rows) 
+         REAL :: hold(rows) 
          
-         integer:: i,j
-         integer :: col
-         real :: max
+         INTEGER:: i,j
+         INTEGER :: col
+         REAL :: max
          
         do col = 1, columns !loop for each conc
            
@@ -245,15 +245,15 @@
                      hold(i)=hold(j)
                      hold(j)=max
                   endif
-               end do
-            end do
+               END DO
+            END DO
 
-            if(MOD(rows,2)==0)then
+            if(MOD(rows,2)==0)THEN
                medians(col) = (hold(rows/2)+hold(rows/2+1))/2.0
             else
                medians(col) = hold(rows/2 +1)
             endif
-     end do
+     END DO
      
 
      end subroutine find_medians
@@ -266,13 +266,13 @@
 !    !maximum values of "c" are chosen from within the c indices defined by "bounds"
 !    !output is delivered in the vector "output"
     implicit none
-    integer, intent(in) :: num_records
-    integer, intent(in) :: num_years
-    integer, intent(in) :: bounds(num_years)
-    real, intent(in), dimension(num_records) :: c
-    real, intent(out),dimension(num_years) :: output
+    INTEGER, intent(in) :: num_records
+    INTEGER, intent(in) :: num_years
+    INTEGER, intent(in) :: bounds(num_years)
+    REAL, intent(in), DIMENSION(num_records) :: c
+    REAL, intent(out),DIMENSION(num_years) :: output
 
-    integer :: i
+    INTEGER :: i
 
     !forall (i = 1: num_years-1) output(i) = maxval( c(bounds(i):bounds(i+1)-1) ) changed 2/5/2020
     
@@ -280,7 +280,7 @@
     
     do concurrent(i = 1: num_years-1)
         output(i) = maxval( c(bounds(i):bounds(i+1)-1) )
-    end do
+    END DO
     
     output(num_years)= maxval( c(bounds(num_years):num_records) )
 
@@ -295,15 +295,15 @@ subroutine Return_Frequency_Value(returnfrequency, c_in, n, c_out, lowYearFlag)
     !CALCULATES THE Concentration at the given yearly return frequency
     implicit none
     
-    real,intent(in) :: returnfrequency             !Example 1 in 10 years would be 10.0
-    integer,intent(in) :: n                        !number of items in list
-    real, intent(in), dimension(n):: c_in          !list of items
+    REAL,intent(in) :: returnfrequency             !Example 1 in 10 years would be 10.0
+    INTEGER,intent(in) :: n                        !number of items in list
+    REAL, intent(in), DIMENSION(n):: c_in          !list of items
     
-    real,intent(out):: c_out                       !output of 90th centile of peaks
-    real:: f,DEC      
-    integer:: m    
-    real,dimension(n):: c_sorted
-    logical, intent(out) :: LowYearFlag  !if n is less than 10, returns max value and LowYearFlag =1
+    REAL,intent(out):: c_out                       !output of 90th centile of peaks
+    REAL:: f,DEC      
+    INTEGER:: m    
+    REAL,DIMENSION(n):: c_sorted
+    LOGICAL, intent(out) :: LowYearFlag  !if n is less than 10, returns max value and LowYearFlag =1
     LowYearFlag = .false.
 
     call hpsort(n,c_sorted, c_in)  !returns a sorted array
@@ -312,12 +312,12 @@ subroutine Return_Frequency_Value(returnfrequency, c_in, n, c_out, lowYearFlag)
     m=int(f)
     DEC = f-m      
     
-   if (n < returnfrequency)then
+   if (n < returnfrequency)THEN
       c_out = c_sorted(n)
       LowYearFlag = .true.
    else 
     c_out = c_sorted(m)+DEC*(c_sorted(m+1)-c_sorted(m))
-   end if
+   END IF
 
 end subroutine Return_Frequency_Value    
      
@@ -325,12 +325,12 @@ end subroutine Return_Frequency_Value
 subroutine hpsort(n,ra,b)
 !  from numerical recipes  (should be upgraded to new f90 routine)
     implicit none
-    integer,intent(in):: n
-    real,intent(out),dimension(n)::ra !ordered output array
-    real,intent(in),dimension(n):: b  !original unordered input array
+    INTEGER,intent(in):: n
+    REAL,intent(out),DIMENSION(n)::ra !ordered output array
+    REAL,intent(in),DIMENSION(n):: b  !original unordered input array
 
-    integer i,ir,j,l
-    real rra
+    INTEGER i,ir,j,l
+    REAL rra
     
     ra=b    ! this added to conserve original order
 
@@ -339,25 +339,25 @@ subroutine hpsort(n,ra,b)
     l=n/2+1
     ir=n
 10    continue
-    if(l.gt.1)then 
+    if(l.gt.1)THEN 
     l=l-1
     rra=ra(l)
     else 
     rra=ra(ir)    
     ra(ir)=ra(1)
     ir=ir-1
-    if(ir.eq.1)then 
+    if(ir.eq.1)THEN 
     ra(1)=rra 
     return
     endif
     endif
     i=l 
     j=l+l
-20    if(j.le.ir)then 
-        if(j.lt.ir)then
+20    if(j.le.ir)THEN 
+        if(j.lt.ir)THEN
             if(ra(j).lt.ra(j+1))j=j+1 
         endif
-        if(rra.lt.ra(j))then 
+        if(rra.lt.ra(j))THEN 
             ra(i)=ra(j)
             i=j
             j=j+j
@@ -377,13 +377,13 @@ subroutine find_first_annual_dates(num_years, first_annual_dates )
    use utilities
    implicit none
    
-   integer,intent(in) :: num_years
-   integer,intent(out),dimension(num_years) :: first_annual_dates
-   integer i
+   INTEGER,intent(in) :: num_years
+   INTEGER,intent(out),DIMENSION(num_years) :: first_annual_dates
+   INTEGER i
 
    do i = 1,num_years
       first_annual_dates(i) =  jd(first_year+(i-1), first_mon,first_day )    
-   end do
+   END DO
 
    first_annual_dates = first_annual_dates - startday+1
 
@@ -393,38 +393,38 @@ end subroutine find_first_annual_dates
 
 	subroutine find_in_table(row, column, table, tablerows,tablecolumns, output)
 
-     !Given a real "table"  
+     !Given a REAL "table"  
      !with "tablerows" = number of rows of table
      !and "tablecolumns" = number of columns of table
-     ! find the "output" in the table with input row index of integer "row" and where
-     ! the output is interpolated from the columns by the input real "column" value
+     ! find the "output" in the table with input row index of INTEGER "row" and where
+     ! the output is interpolated from the columns by the input REAL "column" value
      !In other words, rows are exact and columns are interpolated
     
-	   integer, intent(in) :: row      ! the method
-	   real, intent(in)    :: column   !interpolate between column 
+	   INTEGER, intent(in) :: row      ! the method
+	   REAL, intent(in)    :: column   !interpolate between column 
        
-       integer, intent(in) :: tablerows
-       integer, intent(in) :: tablecolumns      
-       real, intent(in)    :: table(tablerows,tablecolumns)
-	   real, intent(out)   :: output
+       INTEGER, intent(in) :: tablerows
+       INTEGER, intent(in) :: tablecolumns      
+       REAL, intent(in)    :: table(tablerows,tablecolumns)
+	   REAL, intent(out)   :: output
 	
-	   integer :: i
-	   real    :: previous
+	   INTEGER :: i
+	   REAL    :: previous
 	
 	   !interpolate column value for values in row
 	   previous = 0.0
 	   do i = 1, tablecolumns
-	   	 if (column == table(1, i)) then !exact match, get value and end
+	   	 if (column == table(1, i)) THEN !exact match, get value and end
 	   		 output =  table(row, i)
 	   		 exit
-	   	 elseif (table(1, i) < column ) then
+	   	 elseif (table(1, i) < column ) THEN
 	   		 previous = table(1, i)
 	   	 else      !table(1, i))< column  !do interpolation and quit
 	   		 output =  table(row, i-1) +   (table(row, i)-table(row, i-1)) *  (column - previous)/(table(1, i)- previous)
-	   	!	 write(*,'("            row = ",i2, " interpolate between columns ", i2, " and ", i2, ", fraction = ", g10.4 )') row, i-1, i,  (column - previous)/(table(1, i)- previous)
+	   	!	 WRITE(*,'("            row = ",i2, " interpolate between columns ", i2, " and ", i2, ", fraction = ", g10.4 )') row, i-1, i,  (column - previous)/(table(1, i)- previous)
 	   		 exit
-		 end if	 
-       end do
+		 END IF	 
+       END DO
 
 
        

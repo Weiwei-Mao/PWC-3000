@@ -6,7 +6,7 @@ Subroutine adjust_application_dates_for_weather
 !Start with given application date. Check to see if a rain event of size "rain_limit" occurs within
 ! the "intolerable_rain_window", check alternately forward and backward one day at a time to find a date that
 ! has only less than the limit during that intolerable window. 
-! If no date is found, then the original date is retained.
+! If no date is found, THEN the original date is retained.
 
 !note: previously New PWC didnt have APPLICATIONS IN CHRONO ORDER,
 !but this routine needs them in order, now this is fixed, they are ordered in initialization with get_order
@@ -19,11 +19,11 @@ use  constants_and_Variables, ONLY: application_date, precip, total_applications
 
   implicit none
   
-  integer :: i, j, YEAR,MONTH,DAY
-  integer :: day_initial
-  integer :: m, n , k
-  integer :: previous_application_date 
-  character(len = 20) :: overide
+  INTEGER :: i, j, YEAR,MONTH,DAY
+  INTEGER :: day_initial
+  INTEGER :: m, n , k
+  INTEGER :: previous_application_date 
+  CHARACTER(LEN = 20) :: overide
   
   previous_application_date = -1000 !arbitrary low number
   
@@ -40,36 +40,36 @@ use  constants_and_Variables, ONLY: application_date, precip, total_applications
           
           call get_date (m +startday-1, YEAR,MONTH,DAY) 
                   
-          if (any(precip(m:n) > rain_limit) .eqv. .FALSE. )  then    
+          if (any(precip(m:n) > rain_limit) .eqv. .FALSE. )  THEN    
               application_date(i) = application_date(i) +k         
               if (application_date(i) - previous_application_date < min_days_between_apps) cycle
               exit
-          end if      
+          END IF      
 		
-      end do  
+      END DO  
       
      overide = ""
-     if (application_date(i) - previous_application_date < min_days_between_apps) then
+     if (application_date(i) - previous_application_date < min_days_between_apps) THEN
          application_date(i) = previous_application_date + min_days_between_apps
          overide = "cant find rain-free date, default to minimum interval regardless of rain"       
-     end if
+     END IF
 
      call get_date(application_date(i) , YEAR,MONTH,DAY)  
      
      if (YEAR > 9999) Year = 9999
-      write(*,'("actual application day (YMD) = ", I4,1x, I2,1x ,I2, ", added days =", I3,  ", " , A20)') YEAR,MONTH,DAY, k, overide
+      WRITE(*,'("actual application day (YMD) = ", I4,1x, I2,1x ,I2, ", added days =", I3,  ", " , A20)') YEAR,MONTH,DAY, k, overide
       
       previous_application_date =  application_date(i)  !reset app date to be used for check with minimum interval
-  end do
+  END DO
   
-write(*,*) "Finished adjusting application days for rain"
+WRITE(*,*) "Finished adjusting application days for rain"
 end subroutine adjust_application_dates_for_weather	
 	
 	
 
 	
 SUBROUTINE PESTAP(application_index)
-      !Loads conc_porewater and conc_total_per_water into parameter module after pesticide application
+      !Loads conc_porewater and conc_total_per_water into PARAMETER module after pesticide application
 
       use  constants_and_Variables, ONLY: COVER,pest_app_method,  &
                                     delx,theta_zero,DEPI,TAPP,appeff, &
@@ -86,18 +86,18 @@ SUBROUTINE PESTAP(application_index)
       
       
       REAL               ::  DMAX,SLOPE,BASE
-      real               ::  appamt          !g/cm2 actual amount pesticide applied to soil (adjusted for efficiency and canopy)
-      integer            ::  CAM_local 
-      integer,intent(in) ::  application_index
-      real               :: distribution_of_applied(ncom2)
-      integer :: i
+      REAL               ::  appamt          !g/cm2 actual amount pesticide applied to soil (adjusted for efficiency and canopy)
+      INTEGER            ::  CAM_local 
+      INTEGER,intent(in) ::  application_index
+      REAL               :: distribution_of_applied(ncom2)
+      INTEGER :: i
   
       plant_app = 0.0
    !   SOILAP = 0.0
       CAM_local = pest_app_method(application_index)
       distribution_of_applied = 0.0
 	  
-      !track the cummulative mass applied for use in output characterizations
+      !track the cummulative mass applied for use in output CHARACTERizations
       applied_mass_sum_gram_per_cm2 = applied_mass_sum_gram_per_cm2 + TAPP(application_index)
 
 
@@ -105,7 +105,7 @@ SUBROUTINE PESTAP(application_index)
       case (1)  !Soil surface pesticide application (Below Crop)
         plant_app= 0.
         APPAMT = TAPP(application_index)*APPEFF(application_index)    !g/cm2
-        !Solve for base of isosceles triangle given: length of 1 leg and area = 1.0
+        !Solve for base of isosceles triangle given: LENgth of 1 leg and area = 1.0
         DMAX = 4.0
         BASE=2./DMAX
         SLOPE=(-BASE/DMAX) 
@@ -114,7 +114,7 @@ SUBROUTINE PESTAP(application_index)
       case (2) ! Linear foliar pesticide application (Above Crop)
          plant_app    = COVER * TAPP(application_index) * APPEFF(application_index)
          APPAMT       = (1.0- COVER) * TAPP(application_index)*APPEFF(application_index)
-         !Solve for base of isosceles triangle given: length of 1 leg and area = 1.0   
+         !Solve for base of isosceles triangle given: LENgth of 1 leg and area = 1.0   
          DMAX = 4.0
          BASE=2./DMAX
          SLOPE=(-BASE/DMAX)          
@@ -143,7 +143,7 @@ SUBROUTINE PESTAP(application_index)
       case(4)  !(At Specific Depth)
         plant_app= 0.
         APPAMT = TAPP(application_index)*APPEFF(application_index)
-        !Solve for base of isosceles triangle given:length of 1 leg and area = 1.0
+        !Solve for base of isosceles triangle given:LENgth of 1 leg and area = 1.0
         DMAX = DEPI(application_index)
         BASE=0.
         SLOPE=0.
@@ -166,7 +166,7 @@ SUBROUTINE PESTAP(application_index)
        case (6) !**** linearly decreasing with depth *****
         plant_app= 0.
         APPAMT = TAPP(application_index)*APPEFF(application_index)
-        !  Solve for base of isosceles triangle given: length of 1 leg and area = 1.0
+        !  Solve for base of isosceles triangle given: LENgth of 1 leg and area = 1.0
         DMAX = DEPI(application_index)
         BASE=2./DMAX
         SLOPE=(-BASE/DMAX)
@@ -179,7 +179,7 @@ SUBROUTINE PESTAP(application_index)
       case (7) ! Incorporated increasing with depth pesticide application 
         plant_app= 0.
         APPAMT = TAPP(application_index)*APPEFF(application_index)
-!       Solve for base of isosceles triangle given:length of 1 leg and area = 1.0
+!       Solve for base of isosceles triangle given:LENgth of 1 leg and area = 1.0
         DMAX = DEPI(application_index)
         BASE=2./DMAX
         SLOPE=(-BASE/DMAX)
@@ -198,7 +198,7 @@ SUBROUTINE PESTAP(application_index)
         !ELSE
           plant_app    = COVER * TAPP(application_index) * APPEFF(application_index)
           APPAMT       = (1.0- COVER) * TAPP(application_index)*APPEFF(application_index)
-          !Solve for base of isosceles triangle given:length of 1 leg and area = 1.0     
+          !Solve for base of isosceles triangle given:LENgth of 1 leg and area = 1.0     
           IF(DEPI(application_index).GT.0.0)THEN
              DMAX = DEPI(application_index)
           ELSE
@@ -242,8 +242,8 @@ SUBROUTINE plant_pesticide_harvest_application
       INTEGER:: K
 
       REAL         DMAX,SLOPE,BASE
-      real   ::    harvested_to_soil(3, ncom2)
-      real   ::    unit_distribution (ncom2)
+      REAL   ::    harvested_to_soil(3, ncom2)
+      REAL   ::    unit_distribution (ncom2)
 
       harvested_to_soil=0.0
        
@@ -260,7 +260,7 @@ SUBROUTINE plant_pesticide_harvest_application
                     harvested_to_soil(k,:) =   unit_distribution* FOLPST(k)
                     conc_total_per_water(k,:) = conc_total_per_water(k,:)   +    harvested_to_soil(k,:)/(delx*theta_zero)
                     mass_in_compartment(k,:)  = mass_in_compartment(k,:)    +    harvested_to_soil(k,:)
-              end do
+              END DO
               
               FOLPST = 0.0 
               
@@ -290,7 +290,7 @@ end subroutine plant_pesticide_harvest_application
     !  
     !
     !  REAL,intent(in)  :: APPAMT,DMAX,BASE,SLOPE
-    !  real,intent(out) :: applied_to_soil(ncom2)
+    !  REAL,intent(out) :: applied_to_soil(ncom2)
     !   
     !  INTEGER  CMPT
     !  REAL     DEP,APPTOT,APPREM,FRACT,SLP2,FRCTOT
@@ -316,7 +316,7 @@ end subroutine plant_pesticide_harvest_application
     !    APPREM=APPAMT-APPTOT
     !    DEP=DEP+delx(CMPT)
     !    if (DEP >= (DMAX-1.E-4)) exit
-    !  end do
+    !  END DO
     !  
     ! 
     !  
@@ -340,7 +340,7 @@ SUBROUTINE pesticide_decreasing_distribution(APPAMT,DMAX,BASE,SLOPE,applied_to_s
       
 
     REAL,intent(in)  :: APPAMT,DMAX,BASE,SLOPE
-    real,intent(out) :: applied_to_soil(ncom2)
+    REAL,intent(out) :: applied_to_soil(ncom2)
 
     INTEGER  CMPT, ncmpwithchem, i
     REAL     DEP,APPTOT,APPREM,FRACT,SLP2,FRCTOT, prev, curr, bottom
@@ -353,14 +353,14 @@ SUBROUTINE pesticide_decreasing_distribution(APPAMT,DMAX,BASE,SLOPE,applied_to_s
     do ncmpwithchem = 1, ncom2 ! Count the number of compartments that will have chemical added
         DEP = DEP + delx(ncmpwithchem)
         if (DEP >= (DMAX-1E-7)) exit
-    end do
+    END DO
 
     do i=1, ncmpwithchem
         bottom = min(bottom + delx(i), DMAX)
         curr = bottom*bottom*SLOPE/2 + BASE*bottom
         applied_to_soil(i) = (curr - prev) * APPAMT
         prev = curr
-    end do
+    END DO
 END SUBROUTINE pesticide_decreasing_distribution
 
 
@@ -380,7 +380,7 @@ END SUBROUTINE pesticide_decreasing_distribution
       ! DMAX   - depth to which chemical should be applied;
       
     REAL,intent(in)  :: APPAMT,DMAX
-    real,intent(out) :: applied_to_soil(ncom2)
+    REAL,intent(out) :: applied_to_soil(ncom2)
        
     INTEGER  CMPT, ncmpwithchem, i
     REAL     DEP,APPTOT,APPREM,FRACT,SLP2,FRCTOT, prev, curr, bottom
@@ -398,7 +398,7 @@ END SUBROUTINE pesticide_decreasing_distribution
         if (DEP >= (DMAX-1E-7)) exit
         
 
-    end do
+    END DO
 
     do i=1, ncmpwithchem
         bottom = min(bottom + delx(i), DMAX)
@@ -406,7 +406,7 @@ END SUBROUTINE pesticide_decreasing_distribution
         applied_to_soil(i) = (curr - prev) * APPAMT
         prev = curr
         
-    end do  
+    END DO  
   
    END SUBROUTINE pesticide_uniform_distribution 
 !***********************************************************************************   
@@ -417,7 +417,7 @@ END SUBROUTINE pesticide_decreasing_distribution
       implicit none
 
       REAL,intent(in)  :: APPAMT,DMAX,BASE,SLOPE
-      real,intent(out) :: applied_to_soil(ncom2)
+      REAL,intent(out) :: applied_to_soil(ncom2)
        
       INTEGER  CMPT, ncmpwithchem, i
       REAL     DEP,APPTOT,APPREM,FRACT,SLP2,FRCTOT, prev, curr, bottom
@@ -430,14 +430,14 @@ END SUBROUTINE pesticide_decreasing_distribution
       do ncmpwithchem=1, ncom2 ! Count the number of compartments that will have chemical added
           DEP = DEP + delx(ncmpwithchem)
           if (DEP >= (DMAX-1E-7)) exit
-      end do
+      END DO
 
       do i=1, ncmpwithchem
           bottom = min(bottom + delx(i), DMAX)
           curr = 1 - ((DMAX-bottom)*(DMAX-bottom)*SLOPE/2 + BASE*(DMAX-bottom))
           applied_to_soil(i) = (curr - prev) * APPAMT
           prev = curr
-      end do      
+      END DO      
 
  END SUBROUTINE pesticide_increasing_distribution    
     
@@ -452,7 +452,7 @@ END SUBROUTINE pesticide_decreasing_distribution
     !  !BASE   - initial starting amount of application
     !  !SLOPE  - slope of linearly decreasing application
     !
-    !  real,intent(out) :: applied_to_soil(ncom2)
+    !  REAL,intent(out) :: applied_to_soil(ncom2)
     !  REAL     APPAMT,DMAX,BASE,SLOPE
     !  INTEGER  CMPT
     !  REAL     DEP,APPTOT,APPREM,FRACT,SLP2,FRCTOT
@@ -475,7 +475,7 @@ END SUBROUTINE pesticide_decreasing_distribution
     !    APPTOT=APPTOT+applied_to_soil(CMPT)
     !    APPREM=APPAMT-APPTOT
     !    IF(DEP>=(DMAX-1.E-4)) exit
-    !  end do
+    !  END DO
     !
     !END SUBROUTINE pesticide_increasing_distribution
     !
@@ -489,11 +489,11 @@ END SUBROUTINE pesticide_decreasing_distribution
     !!  !CHEM   - chemical id number (1-3)
     !!  !DMAX   - depth to which chemical should be applied;
     !!
-    !!  real,intent(out) :: applied_to_soil(ncom2)
+    !!  REAL,intent(out) :: applied_to_soil(ncom2)
     !!  REAL     APPAMT,DMAX
     !!  INTEGER  CMPT
     !!  REAL     depth,APPTOT,APPREM,SLP2,FRCTOT
-    !!  real,intent(in) :: top2cm
+    !!  REAL,intent(in) :: top2cm
     !!  
     !!  
     !!  FRCTOT=0.0
@@ -515,7 +515,7 @@ END SUBROUTINE pesticide_decreasing_distribution
     !!     if (depth >= 1.95) exit
     !!     
     !!
-    !!   end do 
+    !!   END DO 
     !!
     !!   do  
     !!      IF((depth.GT.1.95).AND.(depth.LT.2.05))APPREM=APPAMT-APPTOT
@@ -530,7 +530,7 @@ END SUBROUTINE pesticide_decreasing_distribution
     !!      if (depth >= (DMAX-1.E-4)) exit
     !!
     !!
-    !!   end do
+    !!   END DO
     !         
     !
     !
@@ -550,11 +550,11 @@ END SUBROUTINE pesticide_decreasing_distribution
       !CHEM   - chemical id number (1-3)
       !DMAX   - depth to which chemical should be applied;
       
-    real,intent(out) :: applied_to_soil(ncom2)
+    REAL,intent(out) :: applied_to_soil(ncom2)
     REAL     APPAMT,DMAX
     INTEGER  CMPT,ncmpwithchem,i
     REAL     depth,APPTOT,APPREM,SLP2,FRCTOT,DEP,prev,curr,bottom
-    real,intent(in) :: top2cm        
+    REAL,intent(in) :: top2cm        
       
     DEP = 0.0
     APPTOT=0.0
@@ -567,19 +567,19 @@ END SUBROUTINE pesticide_decreasing_distribution
     do ncmpwithchem=1, ncom2 ! Count the number of compartments that will have chemical added
         DEP = DEP + delx(ncmpwithchem)
         if (DEP >= (DMAX-1E-7)) exit
-    end do
+    END DO
 
     do i=1, ncmpwithchem
         bottom = min(bottom + delx(i), DMAX)
-        if (bottom <= 2.0) then
+        if (bottom <= 2.0) THEN
             curr = (bottom/2.0)*APPAMT * top2cm
             applied_to_soil(i) = (curr - prev)
         else
             curr = APPAMT * top2cm +((bottom-2.0)/(DMAX-2.0)) * APPAMT *(1-top2cm)
             applied_to_soil(i) = (curr - prev)
-        end if
+        END IF
         prev = curr 
-    end do
+    END DO
       
 END SUBROUTINE pesticide_Tband_distribution
  
@@ -589,7 +589,7 @@ SUBROUTINE pesticide_atdepth_distribution(APPAMT,DMAX,applied_to_soil)
 !Houbau mod
     use constants_and_variables, ONLY: DELX,ncom2
     implicit none
-    real,intent(out) :: applied_to_soil(ncom2)
+    REAL,intent(out) :: applied_to_soil(ncom2)
     REAL     APPAMT,DMAX
     INTEGER  CMPT,ncmpwithchem,i
     REAL     DEP,bottom     
@@ -603,13 +603,13 @@ SUBROUTINE pesticide_atdepth_distribution(APPAMT,DMAX,applied_to_soil)
     do ncmpwithchem=1, ncom2 ! Count the number of compartments that will have chemical added
         DEP = DEP + delx(ncmpwithchem)
         if (DEP >= (DMAX-1E-7)) exit
-    end do
+    END DO
     
     do i=1, ncmpwithchem
         bottom = min(bottom + delx(i), DMAX)
         if (bottom >= DMAX) exit
         CMPT = i
-    end do 
+    END DO 
     applied_to_soil(CMPT) = APPAMT
 
 END SUBROUTINE pesticide_atdepth_distribution 
@@ -628,7 +628,7 @@ END SUBROUTINE pesticide_atdepth_distribution
     !      !APPAMT - total amount of chemical to distribute in the soil
     !      !CHEM   - chemical id number (1-3)
     !      
-    !      real,intent(out)   :: applied_to_soil(ncom2)
+    !      REAL,intent(out)   :: applied_to_soil(ncom2)
     !      REAL,intent(in)    ::  APPAMT,DMAX
     !      INTEGER  CMPT
     !      REAL     DEP
@@ -641,7 +641,7 @@ END SUBROUTINE pesticide_atdepth_distribution
     !        CMPT= CMPT + 1
     !        DEP=DEP+DELX(CMPT)
     !        IF(DEP >= (DMAX-1.E-4)) exit
-    !      end do     
+    !      END DO     
     !      
     !      applied_to_soil(CMPT)=APPAMT
     !      

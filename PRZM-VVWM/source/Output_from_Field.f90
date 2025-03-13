@@ -4,7 +4,7 @@ Module Output_From_Field
 		
     subroutine scenario_hydrolgy_summary
     use constants_and_variables, ONLY: scenario_id, hold_precip, hold_irrig, hold_runoff
-       !  write(98,'(A40, 4G12.4)') trim(scenario_id), hold_precip, hold_irrig, hold_runoff, hold_runoff/(hold_precip + hold_irrig) 
+       !  WRITE(98,'(A40, 4G12.4)') trim(scenario_id), hold_precip, hold_irrig, hold_runoff, hold_runoff/(hold_precip + hold_irrig) 
 
     
     end subroutine scenario_hydrolgy_summary
@@ -17,14 +17,14 @@ Module Output_From_Field
 	    implicit none
         !maxcap_volume = effective pore volume
 	    !Throughputs = infiltration/maxcap_volume/retardation_factor
-	    integer :: i,k
-	    integer :: count
-	    real    :: adj 
-	    reaL    :: inflitration_cum
+	    INTEGER :: i,k
+	    INTEGER :: count
+	    REAL    :: adj 
+	    REAL    :: inflitration_cum
 	    
-	    !write(98,*) 'Retardation Factor: ', retardation_factor
-	    !write(98,*) 'Water Capacity:	 ', maxcap_volume
-	    !write(98,*) 'Day    Flow(cm)  Pore Volumes  Throughputs  Conc(ppb)'
+	    !WRITE(98,*) 'Retardation Factor: ', retardation_factor
+	    !WRITE(98,*) 'Water Capacity:	 ', maxcap_volume
+	    !WRITE(98,*) 'Day    Flow(cm)  Pore Volumes  Throughputs  Conc(ppb)'
 	
         do k=1,nchem         
               adj = maxcap_volume*retardation_factor(k)
@@ -37,18 +37,18 @@ Module Output_From_Field
               do i = 1, num_records
                   simulation_avg(k) =simulation_avg(k) + conc_last_horizon_save(k, i)
                   inflitration_cum = inflitration_cum + infiltration_save(ncom2, i)
-                 !   write(98,'(I6, 4G12.3)') i, inflitration_cum,inflitration_cum/maxcap_volume, inflitration_cum/adj, conc_last_horizon_save(i)
-                  if (inflitration_cum/adj >= 1.0) then
+                 !   WRITE(98,'(I6, 4G12.3)') i, inflitration_cum,inflitration_cum/maxcap_volume, inflitration_cum/adj, conc_last_horizon_save(i)
+                  if (inflitration_cum/adj >= 1.0) THEN
                       count = count + 1
                       post_bt_avg(k) = post_bt_avg(k) +conc_last_horizon_save(k,i)
-                  end if	
-              end do
+                  END IF	
+              END DO
               
               gw_peak(k) = maxval(conc_last_horizon_save(k,:))
               post_bt_avg(k) = post_bt_avg(k)/count
               throughputs(k) = inflitration_cum/adj
               simulation_avg(k) = simulation_avg(k) / num_records 
-        end do
+        END DO
 
     end subroutine groundwater
     
@@ -61,7 +61,7 @@ Module Output_From_Field
         
         
         
-	    use waterbody_parameters, ONLY: afield 
+	    use waterbody_PARAMETERs, ONLY: afield 
 	    implicit none
    
         !Time Series sent to VVWM:
@@ -69,15 +69,15 @@ Module Output_From_Field
         mass_off_field(day_number_chemtrans,2,1) =   ERFLUX(1)* afield*10. * erosion_mitigation !converts to kg
           
 
-        if (nchem >1) then
+        if (nchem >1) THEN
           mass_off_field(day_number_chemtrans,1,2) = ROFLUX(2)* afield*10. * runoff_mitigation !converts to kg
           mass_off_field(day_number_chemtrans,2,2) = ERFLUX(2)* afield*10. * erosion_mitigation !converts to kg
-        end if
+        END IF
         
-        if (nchem >2) then
+        if (nchem >2) THEN
           mass_off_field(day_number_chemtrans,1,3) = ROFLUX(3)* afield*10.  * runoff_mitigation !converts to kg
           mass_off_field(day_number_chemtrans,2,3) = ERFLUX(3) * afield*10. * erosion_mitigation !converts to kg
-        end if
+        END IF
 
         
 	end subroutine get_inputs_from_field_for_vvwm
@@ -85,19 +85,19 @@ Module Output_From_Field
 
 
   !**********************************************************************************************
-  subroutine write_outputfile_header_2
+  subroutine WRITE_outputfile_header_2
   !called by program below id time series is selected
       use  constants_and_Variables, ONLY:TimeSeriesUnit2,Version_Number,PLNAME,chem_id,NPLOTS
-      integer :: i
+      INTEGER :: i
       
       WRITE(TimeSeriesUnit2,'(A48,1X,F7.3)')'United States of America, EPA PRZM5-VVWM Version', Version_Number  
       WRITE(TimeSeriesUnit2,*)      
   
       WRITE(TimeSeriesUnit2,'(A4,1x,A2,1x,A2,9x, 100(A4,I1,9X))') "Year","Mo","Dy", (PLNAME(I),chem_id(I),I=1,NPLOTS)     !Header List
       
-  end subroutine write_outputfile_header_2
+  end subroutine WRITE_outputfile_header_2
  
-  SUBROUTINE write_outputfile_2
+  SUBROUTINE WRITE_outputfile_2
     use	constants_and_Variables, ONLY: is_timeseriesfile, TimeSeriesUnit2, precipitation, snowfl,soil_temp,THRUFL,IRRR,SoilWater,cint,EvapoTran,delx, &
     theta_end, CEVAP ,runoff_on_day,curve_number_daily,theta_sat,ainf,ncom2,snow,sedl,TDET,PVFLUX,sdkflx,SUPFLX,UPFLUX,kd_new, &
     conc_total_per_water, mass_in_compartment, mass_in_compartment2,HEIGHT,  &
@@ -105,28 +105,28 @@ Module Output_From_Field
     NCHEM,TCNC,DKFLUX,ERFLUX, WOFLUX,ROFLUX,const,OUTPUJ,    &
     OUTPJJ,chem_id,NPLOTS, ARG,ARG2,PLNAME,MODE,DCOFLX,max_number_plots,Version_Number,julday1900,  &
      day_number_chemtrans,mass_off_field, &
-    First_time_through_PRZM , working_directory, family_name, run_id,maxFileLength, &
+    First_time_through_PRZM , working_directory, family_name, run_id,maxFileLENgth, &
 	top_node_last_horizon, bottom_node_last_horizon,conc_last_horizon_save, day_number_chemtrans, full_run_identification, &
     hold_precip,hold_irrig,hold_runoff
     
-    use waterbody_parameters, ONLY: afield 
+    use waterbody_PARAMETERs, ONLY: afield 
     use utilities_1
     
 !   Outputs user specified time series to time series plotting files
     implicit none
 
-    integer :: start_compartment, end_compartment
+    INTEGER :: start_compartment, end_compartment
     INTEGER  I,K
-    real ::  OUTPUT(max_number_plots)
+    REAL ::  OUTPUT(max_number_plots)
     REAL ::  PNBRN(max_number_plots)
-    real ::  PRTBUF(max_number_plots)
+    REAL ::  PRTBUF(max_number_plots)
 
     REAL   RMULT,onSOIL(3)
     REAL   TTTOT,DPTOT
 
-    CHARACTER(len=4) :: TSUM,TAVE,TSER,TCUM
-    character(len = maxFileLength) :: filename
-    integer :: current_year,current_month,current_day
+    CHARACTER(LEN=4) :: TSUM,TAVE,TSER,TCUM
+    CHARACTER(LEN = maxFileLENgth) :: fiLEName
+    INTEGER :: current_year,current_month,current_day
     
 
 	!**************************************************************
@@ -134,10 +134,10 @@ Module Output_From_Field
          tttot = 0.0
          do i =   top_node_last_horizon,bottom_node_last_horizon              
                 TTTOT= TTTOT  + conc_porewater(k,i)   *DELX(i) 
-         end do 
+         END DO 
          !top_node_last_horizon = next to last node and bottom_node_last_horizon = last node, now set this way
          conc_last_horizon_save(k, day_number_chemtrans) =   TTTOT  * 1.0E9/sum(delx( top_node_last_horizon:bottom_node_last_horizon ))
-     end do	
+     END DO	
 
     !********************************************************************** 
        !Cummulatives for researech
@@ -148,14 +148,14 @@ Module Output_From_Field
      
      
      
-	if (is_timeseriesfile .eqv. .FALSE. ) return  !if time series file is not specified, then leave
+	if (is_timeseriesfile .eqv. .FALSE. ) return  !if time series file is not specified, THEN leave
 	
-    if (First_time_through_PRZM) then 
-		filename = trim(full_run_identification) // ".out"  !field output name    
-	    OPEN(Unit=TimeSeriesUnit2,FILE=filename, STATUS='UNKNOWN') 
-        call  write_outputfile_header_2
+    if (First_time_through_PRZM) THEN 
+		fiLEName = trim(full_run_identification) // ".out"  !field output name    
+	    OPEN(Unit=TimeSeriesUnit2,FILE=fiLEName, STATUS='UNKNOWN') 
+        call  WRITE_outputfile_header_2
         First_time_through_PRZM = .FALSE.
-    end if
+    END IF
     
     TSUM = 'TSUM'
     TAVE = 'TAVE'
@@ -196,7 +196,7 @@ Module Output_From_Field
                     ELSE
                       TTTOT= TTTOT+SoilWater(K)
                     ENDIF
-              end do
+              END DO
               PNBRN(I)=TTTOT
           !case('INFL')           !this doesnt make sense
           !    do K =start_compartment,end_compartment
@@ -205,7 +205,7 @@ Module Output_From_Field
           !       ELSE
           !          TTTOT= TTTOT+AINF(K)
           !       ENDIF           
-          !    end do                   
+          !    END DO                   
           !    PNBRN(I)=TTTOT       
           case('SLET') 
               do K =start_compartment,end_compartment
@@ -214,7 +214,7 @@ Module Output_From_Field
                  ELSE
                    TTTOT= TTTOT+EvapoTran(K)
                  ENDIF
-              end do
+              END DO
               PNBRN(I)=TTTOT
                    
           case('STMP')
@@ -224,7 +224,7 @@ Module Output_From_Field
                      ELSE
                        TTTOT=TTTOT+soil_temp(K)
                      ENDIF
-              end do
+              END DO
               PNBRN(I)=TTTOT    
           case ('TPST')  !Pesticide storages (units of GRAMS/(CM**2)             
               DO K =start_compartment,end_compartment
@@ -242,7 +242,7 @@ Module Output_From_Field
                   ELSE
                     TTTOT=TTTOT + mass_in_compartment(chem_id(i),K)                    
                   ENDIF
-              END Do
+              END DO
               PNBRN(I)=TTTOT               
           case('MAS2' )             
               DO K =start_compartment,end_compartment
@@ -260,7 +260,7 @@ Module Output_From_Field
                 ELSE
                   TTTOT=TTTOT+( conc_porewater(chem_id(i),K)*DELX(K)*theta_end(K))
                 ENDIF
-              end do
+              END DO
               PNBRN(I)=TTTOT                     
                                       
           case('DKFX')              
@@ -270,7 +270,7 @@ Module Output_From_Field
                 ELSE
                   TTTOT= TTTOT+DKFLUX(chem_id(i),K)
                 ENDIF
-              end do
+              END DO
               PNBRN(I)=TTTOT                   
           case('UFLX')              
               DO K =start_compartment,end_compartment
@@ -279,7 +279,7 @@ Module Output_From_Field
                 ELSE
                   TTTOT= TTTOT+UPFLUX(chem_id(i),K)
                 ENDIF
-              end do
+              END DO
               PNBRN(I)=TTTOT                     
           case('DCON')             
               DO K =start_compartment,end_compartment
@@ -289,7 +289,7 @@ Module Output_From_Field
                 ELSE
                   TTTOT= TTTOT+( conc_porewater(chem_id(i),K)*1.E6)
                 ENDIF
-              end do         
+              END DO         
               PNBRN(I)=TTTOT  
               
          case('AQFR')  !Aquifer
@@ -300,7 +300,7 @@ Module Output_From_Field
                 ELSE
                   TTTOT= TTTOT+( conc_porewater(chem_id(i),K)*1.E6)
                 ENDIF
-              end do         
+              END DO         
               PNBRN(I)=TTTOT    
               
        
@@ -312,7 +312,7 @@ Module Output_From_Field
                ELSE
                  TTTOT= TTTOT+(( conc_porewater(chem_id(i),K)*1.E6)*kd_new(chem_id(i),K))
                ENDIF
-             end do            
+             END DO            
              PNBRN(I)=TTTOT                                   
           case('GCON') 
              DO K =start_compartment,end_compartment
@@ -321,7 +321,7 @@ Module Output_From_Field
                ELSE
                  TTTOT= TTTOT+((( conc_porewater(chem_id(i),K)*1.E6)*new_henry(chem_id(i),K)))
                ENDIF
-             end do  
+             END DO  
              PNBRN(I)=TTTOT                                       
           case('TCON')      
              do K =start_compartment,end_compartment
@@ -334,7 +334,7 @@ Module Output_From_Field
                                 conc_porewater(chem_id(i),K)*1.E6*kd_new(chem_id(i),K)+   &
                                 conc_porewater(chem_id(i),K)*1.E6*new_henry(chem_id(i),K)*(theta_sat(K)-theta_end(K)))
                ENDIF
-             end do
+             END DO
              PNBRN(I)=TTTOT        
           case default       
           end select
@@ -345,7 +345,7 @@ Module Output_From_Field
         !swtr with tser only gives time series for single point
         IF (PLNAME(I) == 'SWTR') PNBRN(I)= SoilWater(start_compartment)
 
-        IF (PLNAME(I) == 'THET') PNBRN(I)= theta_end(start_compartment) ! Soil water storage (dimensionless)
+        IF (PLNAME(I) == 'THET') PNBRN(I)= theta_end(start_compartment) ! Soil water storage (DIMENSIONless)
         
 !       Water fluxes (units of CM/DAY)
 
@@ -371,9 +371,9 @@ Module Output_From_Field
         IF (PLNAME(I)=='DKFX') PNBRN(I)=DKFLUX(chem_id(i),start_compartment)
         IF (PLNAME(I)=='UFLX') PNBRN(I)=UPFLUX(chem_id(i),start_compartment)
 
-        IF (PLNAME(I)=='DCON') then
+        IF (PLNAME(I)=='DCON') THEN
             PNBRN(I)=conc_porewater(chem_id(i),start_compartment)*1.E6     
-        end if
+        END IF
         
         
         IF (PLNAME(I)=='ACON') PNBRN(I)=conc_porewater(chem_id(i),start_compartment)*1.E6 *kd_new(chem_id(i),start_compartment)
@@ -434,14 +434,14 @@ Module Output_From_Field
       ELSEIF(MODE(I).EQ.TAVE)THEN 
           DO   K=start_compartment,end_compartment           !Accumulate Total Depth for use in depth weighted average
              DPTOT=DPTOT+DELX(K)
-          end do
+          END DO
             OUTPUT(I)=PNBRN(I)/DPTOT
       ENDIF
            
         IF ((MODE(I).EQ.TSER).OR.(MODE(I).EQ.TSUM).OR.(MODE(I).EQ.TAVE))PRTBUF(i)= OUTPUT(I)
         IF (MODE(I).EQ.TCUM) PRTBUF(i)= OUTPJJ(I)
 
-   end do
+   END DO
     
    call get_date(julday1900, current_year,current_month,current_day)
   
@@ -451,7 +451,7 @@ Module Output_From_Field
 !         !E3 format cuz program was leaving out the "E" on number <  E-99
 !18       FORMAT (I4,I3,I3, 4X,100(2X,ES12.4E3))  
 
-  END SUBROUTINE write_outputfile_2
+  END SUBROUTINE WRITE_outputfile_2
 	
 end Module Output_From_Field
       
@@ -502,13 +502,13 @@ end Module Output_From_Field
                      !  ELSEIF(((K.GT.MIDCOM1).OR.(K.GT.MIDCOM2)).AND.((DELX(K)/2.5).LT.2.0))THEN
                      !    SPSTRT=1.0
                      !  ENDIF
-                     !end do                 
+                     !END DO                 
                      !PNBRN(I)=TTTOT     
                  !ELSEIF (PLNAME(I) .EQ. CMSS)THEN    !cmss is not documented      
                  !    CMDPTH=0.0
                  !    DO K=IARG1,IARG3
                  !      TTTOT=TTTOT+(conc_total_per_water(ID1,K)*DELX(K)*theta_end(K))*DELX(K)
-                 !    end do
+                 !    END DO
                  !    CMTOT=0.0
                  !    CMSS1=TTTOT/2.
                  !    TTTOT=0.0
@@ -520,7 +520,7 @@ end Module Output_From_Field
                  !      ELSEIF(TTTOT.LE.CMSS1)THEN
                  !        CMDPTH=CMTOT
                  !      ENDIF
-                 !    end do
+                 !    END DO
                  !    PNBRN(I)=CMDPTH
                  !ELSEIF (PLNAME(I) .EQ. INCS)THEN   !INCS is not documented       
                  !    TTTOT=0.0
@@ -530,6 +530,6 @@ end Module Output_From_Field
                  !      CMTOT=CMTOT+DELX(K)
                  !      TTTOT=(conc_total_per_water(ID1,K)*DELX(K)*theta_end(K))*DELX(K)
                  !      IF(TTTOT.GT.CONST(I))CMDPTH=CMTOT              !the use of CONST doesnt make sence to me here
-                 !    end do                  
+                 !    END DO                  
                  !    PNBRN(I)=CMDPTH
                  !ENDIF  

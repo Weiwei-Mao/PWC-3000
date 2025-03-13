@@ -11,16 +11,16 @@ use constants_and_variables, ONLY: num_records , DELT_vvwm, fraction_to_benthic,
                                    m1_input,m1_store,m2_store,mavg1_store,aq1_store, aq2_store, m2_input, m_total, v2 
 
 
-use waterbody_parameters, ONLY: benthic_depth ,porosity,area_waterbody 
+use waterbody_PARAMETERs, ONLY: benthic_depth ,porosity,area_waterbody 
                          
                                   
     implicit none
-    integer :: day_count, i
+    INTEGER :: day_count, i
 
-    real:: m1,m2    !daily peak/average mass
-    real:: mn1, mn2        !mass at end of time step
-    real:: aqconc1, aqconc2  !aqueous concentrations for regions 1 and 2
-    real:: new_aqconc1, new_aqconc2  !aqueous concentrations for regions 1 and 2
+    REAL:: m1,m2    !daily peak/average mass
+    REAL:: mn1, mn2        !mass at end of time step
+    REAL:: aqconc1, aqconc2  !aqueous concentrations for regions 1 and 2
+    REAL:: new_aqconc1, new_aqconc2  !aqueous concentrations for regions 1 and 2
   
     m1=0.
     m2=0.
@@ -33,7 +33,7 @@ use waterbody_parameters, ONLY: benthic_depth ,porosity,area_waterbody
     do day_count = 1,num_records    
 
 
-        m1 = (1-   fraction_to_benthic(day_count))*(mn1 + m1_input(day_count))  !re-equilibration with incoming sediment and then redistribution
+        m1 = (1-   fraction_to_benthic(day_count))*(mn1 + m1_input(day_count))  !re-equilibration with incoming sediment and THEN redistribution
         m2 = mn2 + fraction_to_benthic(day_count) *(mn1 + m1_input(day_count))   + m2_input(day_count)
         
         m1_store(day_count)=m1
@@ -67,7 +67,7 @@ use waterbody_parameters, ONLY: benthic_depth ,porosity,area_waterbody
         
 
         
-    end do 
+    END DO 
 
 
     
@@ -84,7 +84,7 @@ subroutine reducer2
                                          A,B,E,F  !output  
 
      implicit none 
-     integer i 
+     INTEGER i 
    
     !    CALCULATE CONSTANTS FOR USE IN SIMULDIFF2
     
@@ -110,16 +110,16 @@ end subroutine reducer2
     !____________________________________________________________________
 subroutine simuldiff2 (A,B,E,F,m1,m2,T_end,mn1,mn2,mavg1,mavg2)
         implicit none
-        real,intent(in):: A,B,E,F    !diff eqn coefficients
-        real,intent(in):: m1,m2        !initial values for m1 and m2
-        real,intent(in):: T_end        !time duration
+        REAL,intent(in):: A,B,E,F    !diff eqn coefficients
+        REAL,intent(in):: m1,m2        !initial values for m1 and m2
+        REAL,intent(in):: T_end        !time duration
         
-        real,intent(out)::mn1,mn2    !values for m1 and m2 after time T_end
-        real,intent(out)::mavg1        !average concentration over T_end
-        real,intent(out)::mavg2        !average concentration over T_end
+        REAL,intent(out)::mn1,mn2    !values for m1 and m2 after time T_end
+        REAL,intent(out)::mavg1        !average concentration over T_end
+        REAL,intent(out)::mavg2        !average concentration over T_end
         
-        real:: root1,root2,DD,EE,FF,X1,Y1,af,fxa,bxe,dif,bbb,rt1,rt2,exrt1,exrt2,ccc,ddd,gx,hx
-        real:: term1,term2,term3,term4
+        REAL:: root1,root2,DD,EE,FF,X1,Y1,af,fxa,bxe,dif,bbb,rt1,rt2,exrt1,exrt2,ccc,ddd,gx,hx
+        REAL:: term1,term2,term3,term4
 
         af=A+F
         fxa=F*A

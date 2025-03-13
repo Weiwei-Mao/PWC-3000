@@ -8,14 +8,14 @@ contains
                                  eroded_solids_mass, burial,flowthru_the_body, mass_off_field,&   !OUTPUT array to hold runoff & erosion & spraydrift events
                                  runoff_total,erosion_total,  Daily_Avg_Runoff, runoff_save, edge_of_field
     
-    use waterbody_parameters, ONLY: afield, baseflow    
+    use waterbody_PARAMETERs, ONLY: afield, baseflow    
 
-    !       This routine no longer reads zts of course. It serves only to tie up a few things
+    !       This routine no longer READs zts of course. It serves only to tie up a few things
     
     
     !****************************************************************
-    !This subroutine reads the PRZM output file with ZTS subscript
-    !It then reads in the file and puts pesticide spray drift and runoff mass into first
+    !This subroutine READs the PRZM output file with ZTS subscript
+    !It THEN READs in the file and puts pesticide spray drift and runoff mass into first
     !column of the array mass.
     !It returns all masses for the simulation in the array mass
     !It puts erosion pesticide mass into second column of 'mass'
@@ -23,21 +23,21 @@ contains
     !****************************************************************
     implicit none
 
-!    real :: applied
-!    real(8) :: percent
+!    REAL :: applied
+!    REAL(8) :: percent
 
-!    real(8) :: spraymass                !individual spraydrift mass (kg)
-!    real(8) :: runoff_cm
-!    real(8):: erosion_tonnes        !
-!    real(8):: absolute_day            !total number of days from start of simulation
+!    REAL(8) :: spraymass                !individual spraydrift mass (kg)
+!    REAL(8) :: runoff_cm
+!    REAL(8):: erosion_tonnes        !
+!    REAL(8):: absolute_day            !total number of days from start of simulation
 
 
 
-!    integer:: day_number            !number of the day (e.g., jan 1 = 1, feb 1 = 32)
-!    integer:: app_day                !day of application
-!    integer:: app_mon                !month of application
-!    integer:: day                !month and day of erosion/ runoff event
-integer :: i
+!    INTEGER:: day_number            !number of the day (e.g., jan 1 = 1, feb 1 = 32)
+!    INTEGER:: app_day                !day of application
+!    INTEGER:: app_mon                !month of application
+!    INTEGER:: day                !month and day of erosion/ runoff event
+INTEGER :: i
 
     burial = 0.
     runoff_total = 0.0
@@ -62,8 +62,8 @@ integer :: i
 		
         Burial = eroded_solids_mass/86400.  ! kg/day*(day/86400 sec)    = kg/sec
         
-        !write(*,*) 'parent runoff mass delivered ',     sum(mass_off_field(:,1,1))
-        !write(*,*)  'parent erosion mass ',             sum(mass_off_field(:,2,1))
+        !WRITE(*,*) 'parent runoff mass delivered ',     sum(mass_off_field(:,1,1))
+        !WRITE(*,*)  'parent erosion mass ',             sum(mass_off_field(:,2,1))
         !
         !proocess mass inputs
     !    mass_off_field= mass_off_field* afield*10.  !converts to kg
@@ -71,15 +71,15 @@ integer :: i
         !mass_off_field(:,1,1) =  parent_runoff_series(:)* afield*10.  !converts to kg
         !mass_off_field(:,2,1) = parent_erosion_series(:)* afield*10.  !converts to kg
         !        
-        !if (nchem >1) then
+        !if (nchem >1) THEN
         !  mass_off_field(:,1,2) = daughter_runoff_series(:)* afield*10.  !converts to kg
         !  mass_off_field(:,2,2) = daughter_erosion_series(:)* afield*10.  !converts to kg
-        !end if
+        !END IF
         !
-        !if (nchem >2) then
+        !if (nchem >2) THEN
         !  mass_off_field(:,1,3) = granddaughter_runoff_series(:)* afield*10.  !converts to kg
         !  mass_off_field(:,2,3) = granddaughter_erosion_series(:)* afield*10.  !converts to kg
-        !end if
+        !END IF
         
         runoff_total(1:nchem) = sum(mass_off_field(:,1,1:nchem),1)
         erosion_total(1:nchem)= sum(mass_off_field(:,2,1:nchem),1)
@@ -91,13 +91,13 @@ integer :: i
 !%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     subroutine spraydrift
        use nonInputVariables, only: 
-       use waterbody_parameters, ONLY:area_waterbody
+       use waterbody_PARAMETERs, ONLY:area_waterbody
        
        use constants_and_variables, ONLY: num_records, total_applications, drift_kg_per_m2 , application_date, startday, &
                                       mass_off_field, spray_total, spray_additions ,  drift_mitigation           
        implicit none
-       integer  ::  i, index_day
-      ! real     ::  sprayrate
+       INTEGER  ::  i, index_day
+      ! REAL     ::  sprayrate
     !Note mass is an array refernced to day 1 of the simulation, appdate is an array of dates from 1900       
        
        spray_total= 0.0
@@ -108,7 +108,7 @@ integer :: i
        
        do i=1, total_applications
            index_day = application_date(i)-startday+1  !corrected by adding 1, since first day is 1 not zero
-           if (index_day > 0 .and. index_day <= num_records) then
+           if (index_day > 0 .and. index_day <= num_records) THEN
             !   sprayrate = drift_kg_per_m2(i) * area_waterbody  
                
                spray_additions(index_day) = drift_kg_per_m2(i) * area_waterbody * drift_mitigation
@@ -118,11 +118,11 @@ integer :: i
                
                 spray_total(1) =  spray_total(1) + spray_additions(index_day)
                
-           end if          
-       end do
+           END IF          
+       END DO
        
-       !write(*,*) "total_applications = ", total_applications
-       !write(*,*) "Spray mass = ", spray_total(1)
+       !WRITE(*,*) "total_applications = ", total_applications
+       !WRITE(*,*) "Spray mass = ", spray_total(1)
        
     end subroutine spraydrift
 !%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
@@ -137,9 +137,9 @@ subroutine DegradateProduction(chem_index)
                                     aqconc_avg1,aqconc_avg2,k_anaer_aq,capacity_2 , degradateProduced1,degradateProduced2
       
       implicit none               
-      integer,intent(in) :: chem_index
+      INTEGER,intent(in) :: chem_index
 
-      real :: MWTRatio
+      REAL :: MWTRatio
       
       MWTRatio = MWT(chem_index+1)/MWT(chem_index)
       
@@ -169,18 +169,18 @@ subroutine initial_conditions(chem_index)
                                      capacity_1, kd_sed_1
                                                        
         implicit none      
-        integer,intent(in) :: chem_index
-integer :: i
+        INTEGER,intent(in) :: chem_index
+INTEGER :: i
         !********************************************************************
         fraction_to_benthic = kd_sed_1*eroded_solids_mass/ (capacity_1 + kd_sed_1*eroded_solids_mass)    !used later in core calc routine
         
         
        !all mass goes to water column initially
-       if (chem_index ==1) then 
+       if (chem_index ==1) THEN 
            m1_input = mass_off_field(:,1,chem_index) +  mass_off_field(:,2,chem_index) + spray_additions !only parent drifts
        else
            m1_input = mass_off_field(:,1,chem_index) +  mass_off_field(:,2,chem_index)                   !degradates dont drift
-       end if
+       END IF
        
 
        
@@ -189,10 +189,10 @@ integer :: i
         m2_input = 0.0  
 
         !******* Add in any degradate mass produced by parent from subsequent parent run******
-        if (chem_index>1) then                 !j=1 is the parent.
+        if (chem_index>1) THEN                 !j=1 is the parent.
           m1_input = m1_input + degradateProduced1   
           m2_input = m2_input + degradateProduced2
-        end if
+        END IF
         
 end subroutine initial_conditions
 

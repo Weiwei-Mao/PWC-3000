@@ -41,7 +41,7 @@ module plantgrowth
 
       !Do growth stage
 
-      do i=1, num_crop_periods_input
+      do i=1, num_crop_periods_input  
 
             if (evergreen) THEN   !there should be only one crop period for evergreen
                       canopy_cover  = max_canopy_cover(i)

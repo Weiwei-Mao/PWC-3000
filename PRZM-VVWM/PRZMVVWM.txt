@@ -1,0 +1,83 @@
+PWC 3 Input File, Version 1
+C:\Users\Wei\OneDrive - Florida State University\Desktop\PWC\
+Test
+C:\Users\Wei\OneDrive - Florida State University\Desktop\PWC\
+1.0
+.FALSE.    .FALSE.    .FALSE.    .FALSE.    .TRUE.
+1
+100     6.6     0.0
+1,      0.99    1
+0.0     0.0     0.0
+0.0     0.0     0.0
+0.0     0.0     0.0
+0.88    1          
+86      0       0       0       0
+25      0       0
+86      0       0       0       0
+25      0       0
+86      0       0       0       0 
+30      0       0
+86      0       0       0       0
+86      0       0       0       0       .TRUE.
+25      0       0
+25      0       0       0       0
+0.5     0.5     0.5
+215.685  0       0
+0.00013  0       0
+33       0       0
+2.5E-07  0       0
+4300     0       0
+83860    0       0
+2
+.FALSE.
+.TRUE.   10.0    200.0   0.0
+.FALSE.  0       0
+1
+1        "Test1, less pesticides application"
+1
+1
+10      20      1      4.0      0.0      1      5      3      0
+.FALSE.  0      0
+.FALSE.  0      0      0      0
+1
+C:\Users\Wei\OneDrive - Florida State University\Desktop\PWC\Immokalee.SCN2
+.FALSE.
+0
+3
+0      0      0
+3
+0
+0
+0
+0
+0
+.TRUE.
+.FALSE.      .FALSE.      .TRUE.      .FALSE.      .FALSE.
+1
+C:\Users\Wei\OneDrive - Florida State University\Desktop\PWC\LakeTrafford.WAT
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.      0
+.TRUE.      0      0
+.TRUE.
+.TRUE.      0      0
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.      0.2
+.TRUE.
+.TRUE.
+.TRUE.
+.TRUE.
+holder for future expansion
+holder for future expansion
+holder for future expansion
+holder for future expansion
+holder for future expansion
+0

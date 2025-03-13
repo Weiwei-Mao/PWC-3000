@@ -13,136 +13,136 @@ module process_medians
               median_daughter_unit_tpez,median_grandaughter_unit_tpez, Sediment_conversion_factor, family_name, working_directory
             
           use utilities_1, ONLY: find_medians
-          use waterbody_parameters, ONLY: this_waterbody_name
+          use waterbody_PARAMETERs, ONLY: this_waterbody_name
           
           
-          integer, intent(in) :: app_window_counter
-          logical, intent(in) :: run_tpez_wpez
+          INTEGER, intent(in) :: app_window_counter
+          LOGICAL, intent(in) :: run_tpez_wpez
     
-          integer :: i
-          real    :: medians_temp(number_medians)        
-          character(Len=1000) :: localfilename
+          INTEGER :: i
+          REAL    :: medians_temp(number_medians)        
+          CHARACTER(LEN=1000) :: localfiLEName
           
           
-          !***** Open median file and write headers*******
+          !***** Open median file and WRITE headers*******
  
-          if (First_time_through_medians) then 
-              !open a file and write header
-               localfilename = trim(working_directory) //trim(family_name) // "_medians_" // trim(this_waterbody_name) // ".txt"
-               open (UNIT= median_unit, FILE = localfilename, STATUS = 'UNKNOWN')
-               write(median_unit, '(''Benthic Conversion Factor             = '', G14.4E3,'' -Pore water (ug/L) to (total mass, ug)/(dry sed mass,kg)'')') Sediment_conversion_factor(1)*1000.        
-               write(median_unit, '(A225)') (("Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg, post_bt_avg,  throughput,  GWpeak"))
+          if (First_time_through_medians) THEN 
+              !open a file and WRITE header
+               localfiLEName = trim(working_directory) //trim(family_name) // "_medians_" // trim(this_waterbody_name) // ".txt"
+               open (UNIT= median_unit, FILE = localfiLEName, STATUS = 'UNKNOWN')
+               WRITE(median_unit, '(''Benthic Conversion Factor             = '', G14.4E3,'' -Pore water (ug/L) to (total mass, ug)/(dry sed mass,kg)'')') Sediment_conversion_factor(1)*1000.        
+               WRITE(median_unit, '(A225)') (("Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg, post_bt_avg,  throughput,  GWpeak"))
 
-               if (nchem>1) then !daughter
-                   localfilename = trim(working_directory) //trim(family_name) //  "_medians_deg1_" // trim(this_waterbody_name) // ".txt"
-                   open (UNIT= median_daughter_unit, FILE = localfilename, STATUS = 'UNKNOWN')
+               if (nchem>1) THEN !daughter
+                   localfiLEName = trim(working_directory) //trim(family_name) //  "_medians_deg1_" // trim(this_waterbody_name) // ".txt"
+                   open (UNIT= median_daughter_unit, FILE = localfiLEName, STATUS = 'UNKNOWN')
                    
-                   write(median_daughter_unit, '(''Benthic Conversion Factor             = '', G14.4E3,'' -Pore water (ug/L) to (total mass, ug)/(dry sed mass,kg)'')') Sediment_conversion_factor(2)*1000.
-                   write(median_daughter_unit, '(A225)') (("Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg, post_bt_avg,  throughput, GWpeak"))
+                   WRITE(median_daughter_unit, '(''Benthic Conversion Factor             = '', G14.4E3,'' -Pore water (ug/L) to (total mass, ug)/(dry sed mass,kg)'')') Sediment_conversion_factor(2)*1000.
+                   WRITE(median_daughter_unit, '(A225)') (("Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg, post_bt_avg,  throughput, GWpeak"))
                endif
                
-               if (nchem>2) then !grandaughter
-                   localfilename =  trim(working_directory) //trim(family_name) // "_medians_deg2_" // trim(this_waterbody_name) // ".txt"
-                   open (UNIT= median_grandaughter_unit, FILE = localfilename, STATUS = 'UNKNOWN')
-                   write(median_grandaughter_unit, '(''Benthic Conversion Factor             = '', G14.4E3,'' -Pore water (ug/L) to (total mass, ug)/(dry sed mass,kg)'')') Sediment_conversion_factor(3)*1000.
+               if (nchem>2) THEN !grandaughter
+                   localfiLEName =  trim(working_directory) //trim(family_name) // "_medians_deg2_" // trim(this_waterbody_name) // ".txt"
+                   open (UNIT= median_grandaughter_unit, FILE = localfiLEName, STATUS = 'UNKNOWN')
+                   WRITE(median_grandaughter_unit, '(''Benthic Conversion Factor             = '', G14.4E3,'' -Pore water (ug/L) to (total mass, ug)/(dry sed mass,kg)'')') Sediment_conversion_factor(3)*1000.
                    
-                   write(median_grandaughter_unit, '(A225)') (("Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg, post_bt_avg,  throughput, GWpeak"))
+                   WRITE(median_grandaughter_unit, '(A225)') (("Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg, post_bt_avg,  throughput, GWpeak"))
                endif
 
-               if (run_tpez_wpez) then
-                  localfilename = trim(working_directory) //trim(family_name) // '_medians_wpez.txt'
-                  open (UNIT= median_unit_wpez, FILE = localfilename, STATUS = 'UNKNOWN')
-                  write(median_unit_wpez,  '(A212)') "Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg,  Total System (lb/A)"
+               if (run_tpez_wpez) THEN
+                  localfiLEName = trim(working_directory) //trim(family_name) // '_medians_wpez.txt'
+                  open (UNIT= median_unit_wpez, FILE = localfiLEName, STATUS = 'UNKNOWN')
+                  WRITE(median_unit_wpez,  '(A212)') "Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg,  Total System (lb/A)"
 
-                  localfilename = trim(working_directory) //trim(family_name) // '_medians_tpez.txt'
-                  open (UNIT= median_unit_tpez, FILE = localfilename, STATUS = 'UNKNOWN')
-                  write(median_unit_tpez,  '(A93)') "Run Information                                                                       ,  lb/A"
+                  localfiLEName = trim(working_directory) //trim(family_name) // '_medians_tpez.txt'
+                  open (UNIT= median_unit_tpez, FILE = localfiLEName, STATUS = 'UNKNOWN')
+                  WRITE(median_unit_tpez,  '(A93)') "Run Information                                                                       ,  lb/A"
 
-                  if (nchem>1) then !daughter
-                      localfilename = trim(working_directory) //trim(family_name) // '_medians_deg1_wpez.txt'
-                      open (UNIT= median_daughter_unit_wpez, FILE = localfilename, STATUS = 'UNKNOWN')
-                      write(median_daughter_unit_wpez,  '(A212)') "Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg,  Total System (lb/A)"
+                  if (nchem>1) THEN !daughter
+                      localfiLEName = trim(working_directory) //trim(family_name) // '_medians_deg1_wpez.txt'
+                      open (UNIT= median_daughter_unit_wpez, FILE = localfiLEName, STATUS = 'UNKNOWN')
+                      WRITE(median_daughter_unit_wpez,  '(A212)') "Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg,  Total System (lb/A)"
 
-                      localfilename = trim(working_directory) //trim(family_name) // '_medians_deg1_tpez.txt'
-                      open (UNIT= median_daughter_unit_tpez, FILE = localfilename, STATUS = 'UNKNOWN')
-                      write(median_daughter_unit_tpez,  '(A93)') "Run Information                                                                       ,  lb/A"
-
-                  endif
-                  
-                  
-                  if (nchem>2) then !grandaughter
-                      localfilename =  trim(working_directory) //trim(family_name) // '_medians_deg2_wpez.txt'
-                      open (UNIT= median_grandaughter_unit_wpez, FILE = localfilename, STATUS = 'UNKNOWN')
-                      write(median_grandaughter_unit_wpez,  '(A212)') "Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg,  Total System (lb/A)"
-
-                      localfilename = trim(working_directory) // trim(family_name) // '_medians_deg2_tpez.txt'
-                      open (UNIT= median_grandaughter_unit_tpez, FILE = localfilename, STATUS = 'UNKNOWN')
-                      write(median_grandaughter_unit_tpez,  '(A93)') "Run Information                                                                       ,  lb/A"
+                      localfiLEName = trim(working_directory) //trim(family_name) // '_medians_deg1_tpez.txt'
+                      open (UNIT= median_daughter_unit_tpez, FILE = localfiLEName, STATUS = 'UNKNOWN')
+                      WRITE(median_daughter_unit_tpez,  '(A93)') "Run Information                                                                       ,  lb/A"
 
                   endif
                   
                   
+                  if (nchem>2) THEN !grandaughter
+                      localfiLEName =  trim(working_directory) //trim(family_name) // '_medians_deg2_wpez.txt'
+                      open (UNIT= median_grandaughter_unit_wpez, FILE = localfiLEName, STATUS = 'UNKNOWN')
+                      WRITE(median_grandaughter_unit_wpez,  '(A212)') "Run Information                                                                       ,  1-d avg   ,  365-d avg ,  Total avg ,  4-d avg   ,  21-d avg  ,  60-d avg  ,   B 1-day  ,  B 21-d avg,  Total System (lb/A)"
 
-               end if
+                      localfiLEName = trim(working_directory) // trim(family_name) // '_medians_deg2_tpez.txt'
+                      open (UNIT= median_grandaughter_unit_tpez, FILE = localfiLEName, STATUS = 'UNKNOWN')
+                      WRITE(median_grandaughter_unit_tpez,  '(A93)') "Run Information                                                                       ,  lb/A"
+
+                  endif
+                  
+                  
+
+               END IF
                
    
                
                First_time_through_medians = .FALSE.
-          end if
+          END IF
                
  
           !*********Populate Open Median Files with Data************
 
           call find_medians (app_window_counter, number_medians, hold_for_medians_wb, medians_temp)             
-          write(median_unit, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
+          WRITE(median_unit, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
 
-          if (nchem>1) then !daughter
+          if (nchem>1) THEN !daughter
               call find_medians (app_window_counter, number_medians, hold_for_medians_daughter, medians_temp)             
-              write(median_daughter_unit, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
-          end if
+              WRITE(median_daughter_unit, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
+          END IF
           
-          if (nchem>2) then !grandaughter
+          if (nchem>2) THEN !grandaughter
               call find_medians (app_window_counter, number_medians, hold_for_medians_grandaughter, medians_temp)             
-              write(median_grandaughter_unit, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
-          end if
+              WRITE(median_grandaughter_unit, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
+          END IF
           
 
           
           !*******************************************
           
 
-         if (run_tpez_wpez) then  !wpez needs its own call due to different capture also because its scenario run is same as pond                 
+         if (run_tpez_wpez) THEN  !wpez needs its own call due to different capture also because its scenario run is same as pond                 
 
            
              call find_medians (app_window_counter, number_medians, hold_for_medians_wpez, medians_temp)  
                 
   
-                write(median_unit_wpez, '(A86, 10(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, 9) 
+                WRITE(median_unit_wpez, '(A86, 10(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, 9) 
 
    
                 call find_medians (app_window_counter, 1, hold_for_medians_tpez, medians_temp)   
-                write(median_unit_tpez, '(A86, ",", G12.4 )') adjustl((adjustr(run_id)//"_median")), medians_temp(1)*0.892179
+                WRITE(median_unit_tpez, '(A86, ",", G12.4 )') adjustl((adjustr(run_id)//"_median")), medians_temp(1)*0.892179
     
 
-                if (nchem>1) then !daughter
+                if (nchem>1) THEN !daughter
      
                    call find_medians (app_window_counter, number_medians, hold_for_medians_WPEZ_daughter, medians_temp)             
-                   write(median_daughter_unit_wpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
+                   WRITE(median_daughter_unit_wpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
            
                    call find_medians (app_window_counter, 1, hold_for_medians_TPEZ_daughter, medians_temp)             
-                   write(median_daughter_unit_tpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), medians_temp(1)*0.892179
-                end if
+                   WRITE(median_daughter_unit_tpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), medians_temp(1)*0.892179
+                END IF
                  
           
-               if (nchem>2) then !grandaughter
+               if (nchem>2) THEN !grandaughter
                    call find_medians (app_window_counter, number_medians, hold_for_medians_WPEZ_grandaughter, medians_temp)             
-                   write(median_grandaughter_unit_wpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
+                   WRITE(median_grandaughter_unit_wpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), (medians_temp(i), i=1, number_medians)  
            
                    call find_medians (app_window_counter, 1, hold_for_medians_TPEZ_grandaughter, medians_temp)             
-                   write(median_grandaughter_unit_tpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), medians_temp(1)*0.892179
-               end if
+                   WRITE(median_grandaughter_unit_tpez, '(A86, 11(",",G12.4)  )' )  adjustl((adjustr(run_id)//"_median")), medians_temp(1)*0.892179
+               END IF
                
-         end if
+         END IF
          
                
                

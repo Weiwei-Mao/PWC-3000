@@ -10,7 +10,7 @@ module allocations
      use TPEZ_spray_initialization, ONLY:tpez_spray_additions
      implicit none
      
-     !write(*,*) num_records, ncom2
+     !WRITE(*,*) num_records, ncom2
      
             allocate (erosion_save(num_records))            
             allocate (mass_off_field(num_records,2,3))  
@@ -60,17 +60,17 @@ module allocations
         
         allocate (edge_of_field(num_records))
  
-        allocate (precip_m(num_records))  !VVWM parameters which have  different units
+        allocate (precip_m(num_records))  !VVWM PARAMETERs which have  different units
         allocate (evap_m(num_records)) 
         allocate (temp_avg(num_records)) 
         allocate (wind_m(num_records))
       
 
   
-        if (nchem > 1) then 
+        if (nchem > 1) THEN 
                 allocate (degradateProduced1(num_records))
                 allocate (degradateProduced2(num_records))    
-        end if
+        END IF
      
         allocate (volume1(num_records))
         allocate (daily_depth(num_records))
@@ -201,7 +201,7 @@ end subroutine allocation_for_VVWM
  
 	
 	
-    subroutine  deallocate_scenario_parameters
+    subroutine  deallocate_scenario_PARAMETERs
         use constants_and_variables, ONLY: emergence_date ,maturity_date,harvest_date ,&
         precip,pet_evap,air_temperature,wind_speed,solar_radiation,&
         erosion_save,soil_depth,wiltpoint_water,fieldcap_water,delx,bulkdensity,orgcarb,theta_zero, &
@@ -341,7 +341,7 @@ end subroutine allocation_for_VVWM
       deallocate (burial)
       deallocate (eroded_solids_mass)
       deallocate (fraction_to_benthic)
-      deallocate (precip_m)             !VVWM parameters which have  different units
+      deallocate (precip_m)             !VVWM PARAMETERs which have  different units
       deallocate (evap_m) 
       deallocate (temp_avg) 
       deallocate (wind_m)
@@ -350,10 +350,10 @@ end subroutine allocation_for_VVWM
       deallocate (spray_additions)
       deallocate(tpez_spray_additions)
       
-      if (nchem > 1) then 
+      if (nchem > 1) THEN 
               deallocate (degradateProduced1)
               deallocate (degradateProduced2)    
-      end if
+      END IF
       deallocate (volume1)
       deallocate (daily_depth)
       deallocate (k_flow)
@@ -400,7 +400,7 @@ end subroutine allocation_for_VVWM
      
      
         
-   end subroutine deallocate_scenario_parameters
+   end subroutine deallocate_scenario_PARAMETERs
     
     
     
@@ -412,7 +412,7 @@ end subroutine allocation_for_VVWM
     !subroutine allocate_vvwm
 !USE noninputvariables
 !use variables, ONLY: nchem
-!integer :: status            !array allocation status,  0=success
+!INTEGER :: status            !array allocation status,  0=success
 !    
 !        allocate (wind(num_records), STAT=status)
 !        allocate (temp_avg(num_records), STAT=status)
@@ -432,10 +432,10 @@ end subroutine allocation_for_VVWM
 !           
 !        allocate (mass(num_records,2,3), STAT=status)
 !        
-!        if (nchem > 1) then 
+!        if (nchem > 1) THEN 
 !                allocate (degradateProduced1(num_records), STAT=status)
 !                allocate (degradateProduced2(num_records), STAT=status)    
-!        end if
+!        END IF
 !     
 !        allocate (volume1(num_records), STAT=status)
 !        allocate (daily_depth(num_records), STAT=status)

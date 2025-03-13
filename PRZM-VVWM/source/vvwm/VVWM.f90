@@ -4,7 +4,7 @@ module VVWM_solution_setup
 ! THIS IS THE ANALYTICAL SOLUTION For the two compartment VVWM.
 ! Also has a single comprtment TPEZ solution
 !
-! Based on EXAMS, attempt made to put EXAMS parameters in CAPITAL LETTERS
+! Based on EXAMS, attempt made to put EXAMS PARAMETERs in CAPITAL LETTERS
 !___________________________________________________________________________
     contains
     subroutine VVWM
@@ -14,10 +14,10 @@ module VVWM_solution_setup
         water_column_rate,is_hed_files_made, DELT_vvwm,is_add_return_frequency, additional_return_frequency, &
         outputfile_parent_daily,outputfile_deg1_daily,outputfile_deg2_daily,&
         outputfile_parent_deem,outputfile_deg1_deem,outputfile_deg2_deem,&
-        outputfile_parent_calendex,outputfile_deg1_calendex,outputfile_deg2_calendex,&
+        outputfile_parent_caLENdex,outputfile_deg1_caLENdex,outputfile_deg2_caLENdex,&
         outputfile_parent_esa,outputfile_deg1_esa,outputfile_deg2_esa,summary_outputfile,  k_flow  !, First_time_through_wb
     
-    use waterbody_parameters, ONLY: FROC2, simtypeflag, this_waterbody_name
+    use waterbody_PARAMETERs, ONLY: FROC2, simtypeflag, this_waterbody_name
     
   !  use variables, ONLY: ,Batch_outputfile
 
@@ -38,8 +38,8 @@ module VVWM_solution_setup
 
 
 !**local chemical properties****
-integer :: chem_index
-real    :: koc
+INTEGER :: chem_index
+REAL    :: koc
 
 
  !   call allocation_for_VVWM  moved to front
@@ -62,11 +62,11 @@ real    :: koc
     end select
                 
     do chem_index= 1, nchem
-          if (is_koc) then
+          if (is_koc) THEN
                   koc   = k_f_input(chem_index) 
           else
                   Koc = k_f_input(chem_index)/froc2
-          end if
+          END IF
       
       !*******************************************
         call solute_holding_capacity(chem_index,koc)    
@@ -80,7 +80,7 @@ real    :: koc
         call burial_calc(koc)
         call volatilization(chem_index )
             
-        !process the individual degradation rates into overall parameters:
+        !process the individual degradation rates into overall PARAMETERs:
         call gamma_one
         call gamma_two
         
@@ -88,16 +88,16 @@ real    :: koc
 
         call MainLoop       
    
-        if (nchem > chem_index) then    
+        if (nchem > chem_index) THEN    
               call DegradateProduction(chem_index) 
-        end if
+        END IF
 
       !**********************************************************          
        call output_processor(chem_index, waterbody_timeseries_unit, &
            summary_output_unit, summary_output_unit_deg1, summary_output_unit_deg2,       &
            summary_outputfile, summary_outputfile_deg1, summary_outputfile_deg2, this_waterbody_name)
       !**********************************************************          
-  end do                                                                 
+  END DO                                                                 
 
 end subroutine VVWM
     

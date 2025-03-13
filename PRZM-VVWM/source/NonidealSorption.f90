@@ -6,8 +6,8 @@ subroutine freundlich(chem, conc)
 ! Calculates the Effective Kd at aqueous concentration of "conc" based on Freundlich Isotherm Properties (K_..., N_...)
 ! "lowest_conc" prevents numerical bumbling about      
 use constants_and_Variables, ONLY: lowest_conc, Kd_new, k_freundlich, N_freundlich, k_freundlich_2, N_freundlich_2, KD_2, ncom2
-    integer,intent(in) :: chem           !identifier of which chemical propert set to use: Parent Daughter, Granddaughter
-    real,intent(in)    :: conc(ncom2) !Aqueous Concentration
+    INTEGER,intent(in) :: chem           !identifier of which chemical propert set to use: Parent Daughter, Granddaughter
+    REAL,intent(in)    :: conc(ncom2) !Aqueous Concentration
     
     where (conc > lowest_conc)
             !conc is in g/cm3 , needs to be converted to mg/L, hence 1000000
@@ -26,15 +26,15 @@ end subroutine freundlich
     !%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                    
 subroutine nonequilibrium (time, k, conc_1_in,Sorbed2_in, theta, theta_air, conc1_new, Sorbed2_new )
 use  constants_and_Variables, ONLY: k2, bulkdensity,kd_new, kd_2, old_henry, ncom2
-    integer, intent(in) :: k                        !chemicam number
-    real, intent(in)    :: conc_1_in(ncom2)         !mobile aqueous concentration
-    real, intent(in)    :: Sorbed2_in(ncom2)     !nonequilibrium sorbed pahse conc (g/g), Sorbed2 in main variable module
-    real, intent(in)    :: theta(ncom2), theta_air(ncom2) 
-    real, intent(in)    :: time
-    real, intent(out)   :: Sorbed2_new(ncom2) , Conc1_new(ncom2) 
+    INTEGER, intent(in) :: k                        !chemicam number
+    REAL, intent(in)    :: conc_1_in(ncom2)         !mobile aqueous concentration
+    REAL, intent(in)    :: Sorbed2_in(ncom2)     !nonequilibrium sorbed pahse conc (g/g), Sorbed2 in main variable module
+    REAL, intent(in)    :: theta(ncom2), theta_air(ncom2) 
+    REAL, intent(in)    :: time
+    REAL, intent(out)   :: Sorbed2_new(ncom2) , Conc1_new(ncom2) 
        
-    integer :: i
-    real ::  A(ncom2),B(ncom2),E(ncom2),F(ncom2)
+    INTEGER :: i
+    REAL ::  A(ncom2),B(ncom2),E(ncom2),F(ncom2)
     
     A = -k2(k) * bulkdensity *kd_2(k,:)/(theta + theta_air*old_henry(k,:) + bulkdensity*kd_new(k,:))
     B =  k2(k)* bulkdensity/(theta + theta_air*old_henry(k,:) + bulkdensity*kd_new(k,:))
@@ -43,14 +43,14 @@ use  constants_and_Variables, ONLY: k2, bulkdensity,kd_new, kd_2, old_henry, nco
     
     !do i=1,ncom2    
     !  call simuldiff2(A(i),B(i),E(i),F(i),conc_1_in(i),Sorbed2_in(i),time, Conc1_new(i), Sorbed2_new(i))
-    !end do
+    !END DO
 
     !******************************************
     !I dont think this call needs to be in a loop. Looks like it is just doing redundant calcs.
     !a single call should do it. Its probably a hold over from a revision that needs removing , see above
     do concurrent (i=1:ncom2)
         call simuldiff2(A,B,E,F,conc_1_in,Sorbed2_in,time, Conc1_new, Sorbed2_new)
-    end do
+    END DO
  !*************************************** 
 end subroutine nonequilibrium
     
@@ -70,16 +70,16 @@ elemental subroutine simuldiff2 (A,B,E,F,m1,m2,T_end,mn1,mn2)   !,mavg1,mavg2)
     !____________________________________________________________________
 
         implicit none
-        real,intent(in):: A,B,E,F    !diff eqn coefficients
-        real,intent(in):: m1,m2        !initial values for m1 and m2
-        real,intent(in):: T_end        !time duration
+        REAL,intent(in):: A,B,E,F    !diff eqn coefficients
+        REAL,intent(in):: m1,m2        !initial values for m1 and m2
+        REAL,intent(in):: T_end        !time duration
         
-        real,intent(out)::mn1,mn2    !values for m1 and m2 after time T_end
-        !real,intent(out)::mavg1        !average concentration over T_end
-        !real,intent(out)::mavg2        !average concentration over T_end
+        REAL,intent(out)::mn1,mn2    !values for m1 and m2 after time T_end
+        !REAL,intent(out)::mavg1        !average concentration over T_end
+        !REAL,intent(out)::mavg2        !average concentration over T_end
         
-        real:: root1,root2,DD,EE,FF,X1,Y1,af,fxa,bxe,dif,bbb,rt1,rt2,exrt1,exrt2,ccc,ddd  
-!        real:: term1,term2,term3,term4,gx,hx
+        REAL:: root1,root2,DD,EE,FF,X1,Y1,af,fxa,bxe,dif,bbb,rt1,rt2,exrt1,exrt2,ccc,ddd  
+!        REAL:: term1,term2,term3,term4,gx,hx
         
         af=A+F
         fxa=F*A
@@ -127,8 +127,8 @@ elemental subroutine simuldiff2 (A,B,E,F,m1,m2,T_end,mn1,mn2)   !,mavg1,mavg2)
     !    mavg1=(term1+term2+term3+term4)/T_end               !mavg1=(term1+term2+term3+term4)/(T2-T1)
     !    
     !    
-    !    !        if (isnan(mavg1)) then
-    !    !    write(*,*)dif, fxa,bxe, f, a, b , e
+    !    !        if (isnan(mavg1)) THEN
+    !    !    WRITE(*,*)dif, fxa,bxe, f, a, b , e
     !    !    pause
     !    !endif
     !    

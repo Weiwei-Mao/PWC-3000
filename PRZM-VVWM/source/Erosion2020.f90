@@ -13,8 +13,8 @@ module erosion
 										
       use utilities_1
       implicit none
-	  integer, intent(in) :: day    !simulation tracker for output arrays
-      integer,intent(in) :: julday  !used to determine the rainfall characteristics
+	  INTEGER, intent(in) :: day    !simulation tracker for output arrays
+      INTEGER,intent(in) :: julday  !used to determine the rainfall CHARACTERistics
 
 
 	  
@@ -22,13 +22,13 @@ module erosion
       REAL ::  EC0,EC1,EC2,TC,QP,QU
 
 	  
-      !if runoff does not occur or frozen ground (maybe redundant) then no erosion
+      !if runoff does not occur or frozen ground (maybe redundant) THEN no erosion
 	  SEDL= 0.0                     
       enriched_eroded_solids= 0.0	
-	  IF (runoff_on_day <= 0.0 ) then !if runoff does not occur, no erosion
+	  IF (runoff_on_day <= 0.0 ) THEN !if runoff does not occur, no erosion
 		  SEDL= 0.0                     
           enriched_eroded_solids= 0.0	
-	  else if ((is_temperature_simulated).AND.(soil_temp(1).LE.0.0)) then !if runoff does not occur or frozen ground (maybe redundant) 
+	  ELSE IF ((is_temperature_simulated).AND.(soil_temp(1).LE.0.0)) THEN !if runoff does not occur or frozen ground (maybe redundant) 
           SEDL= 0.0                     
           enriched_eroded_solids= 0.0	 
 	  else  !regular erosion caluclations
@@ -62,7 +62,7 @@ module erosion
            ENRICH= EXP(ENRICH)
          ENDIF
 	     enriched_eroded_solids=  (SLKGHA/(100000.))*ENRICH   !grams/cm2  (ha/10000 m2)(1000 g/kg)(m2/10000 cm2) = 1/100000
-	  end if
+	  END IF
 	
 	  
       erosion_save(day) = sedl
@@ -80,14 +80,14 @@ module erosion
       !Slp is in perecent so no conversion needed
       
        use  constants_and_Variables, ONLY: SLP,curve_number_daily
-       use waterbody_parameters, ONLY: hydro_length
+       use waterbody_PARAMETERs, ONLY: hydro_LENgth
        implicit none
-       real, intent(out) :: TC
+       REAL, intent(out) :: TC
        REAL HL1, S              
 
        
        
-       HL1 = hydro_length*3.28                       !convert to feet
+       HL1 = hydro_LENgth*3.28                       !convert to feet
        S = 1000./curve_number_daily - 10.0
     
        TC = HL1**.8 * (S  +1.)**0.7 / 1140.0 /slp**0.5
@@ -106,8 +106,8 @@ module erosion
 
       implicit none 
 
-      integer,intent(in) :: julday
-       real, intent(out) :: EC0,EC1,EC2
+      INTEGER,intent(in) :: julday
+       REAL, intent(out) :: EC0,EC1,EC2
       
       INTEGER  IFND,J
       INTEGER  NBG(4),NEN(4)
@@ -166,7 +166,7 @@ module erosion
             EC2=CTEMP * (CC2(J)-CC2(J-1)) + CC2(J-1)
             IFND=1
           ENDIF
-        end do
+        END DO
         IF(IFND.EQ.0)THEN
           EC0=CC0(NEN(IREG))
           EC1=CC1(NEN(IREG))

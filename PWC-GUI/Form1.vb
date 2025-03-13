@@ -9,7 +9,7 @@ Imports System.Windows.Forms.VisualStyles
 Public Class Form1
     Const VersionNumber As Double = 1.0
 
-    Private ReadOnly SchemeInfoList As New ArrayList ' this is a list and characteristics of all the application schemes, icluding crops, rates everything from labels
+    Private READOnly SchemeInfoList As New ArrayList ' this is a list and CHARACTERistics of all the application schemes, icluding crops, rates everything from labels
 
     ' these are for hiding the tabs that are not normally used
     Private tempTabpage1 As TabPage
@@ -25,7 +25,7 @@ Public Class Form1
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("en-US")
+        System.ThREADing.ThREAD.CurrentThREAD.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("en-US")
         Me.Text = "Pesticide Water Calculator, Version " & Standard.VersionNumber
 
     End Sub
@@ -61,7 +61,7 @@ Public Class Form1
     End Sub
 
     Private Sub MakeSprayTable()
-        SprayGridView.Rows.Add(Standard.sprayterm0) 'Header with buffer length in ft
+        SprayGridView.Rows.Add(Standard.sprayterm0) 'Header with buffer LENgth in ft
         SprayGridView.Rows.Add(Standard.sprayterm1)
         SprayGridView.Rows.Add(Standard.sprayterm2)
         SprayGridView.Rows.Add(Standard.sprayterm3)
@@ -108,7 +108,7 @@ Public Class Form1
         combo.Items.Add(Standard.method6)
         combo.Items.Add(Standard.method7)
 
-        'combo.Items.Add(Convert.ToString(ChrW(9661))) ' "▽" 'convert to string, or else there are problems elsewhere in read and save
+        'combo.Items.Add(Convert.ToString(ChrW(9661))) ' "▽" 'convert to string, or else there are problems elsewhere in READ and save
         ''   combo.Items.Add(Convert.ToString(ChrW(9651))) ' "△"
 
 
@@ -200,25 +200,25 @@ Public Class Form1
         SaveFileDialogMain.Filter = "PWC 3 INPUT Files (*.PW3)|*.PW3|ALL Files (*.*)|*.*"
         SaveFileDialogMain.FilterIndex = 1
 
-        SaveFileDialogMain.InitialDirectory = FileNames.WorkingDirectory
-        SaveFileDialogMain.FileName = ""
+        SaveFileDialogMain.InitialDirectory = FiLENames.WorkingDirectory
+        SaveFileDialogMain.FiLEName = ""
         result = SaveFileDialogMain.ShowDialog(Me)
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.InputFileName = SaveFileDialogMain.FileName
+        FiLENames.InputFiLEName = SaveFileDialogMain.FiLEName
 
 
-        FileNames.WorkingDirectory = System.IO.Path.GetDirectoryName(SaveFileDialogMain.FileName) & "\"
-        WorkingDirectoryLabel.Text = FileNames.WorkingDirectory
+        FiLENames.WorkingDirectory = System.IO.Path.GetDirectoryName(SaveFileDialogMain.FiLEName) & "\"
+        WorkingDirectoryLabel.Text = FiLENames.WorkingDirectory
         SaveFileDialogMain.InitialDirectory = WorkingDirectoryLabel.Text
 
-        IOFamilyName.Text = System.IO.Path.GetFileNameWithoutExtension(SaveFileDialogMain.FileName)
+        IOFamilyName.Text = System.IO.Path.GetFiLENameWithoutExtension(SaveFileDialogMain.FiLEName)
 
-        SaveInputsAsTextFile(SaveFileDialogMain.FileName)
+        SaveInputsAsTextFile(SaveFileDialogMain.FiLEName)
 
     End Sub
 
@@ -240,19 +240,19 @@ Public Class Form1
     Private Sub WorkingDirectoryLabel_DoubleClick(sender As Object, e As EventArgs) Handles WorkingDirectoryLabel.DoubleClick
         'Go to directory if it exists
 
-        If System.IO.Directory.Exists(WorkingDirectoryLabel.Text) Then
+        If System.IO.Directory.Exists(WorkingDirectoryLabel.Text) THEN
             Process.Start("explorer.exe", WorkingDirectoryLabel.Text)
         Else
             Return
-        End If
+        END IF
     End Sub
 
     Private Sub WorkingDirectoryLabel_MouseEnter(sender As Object, e As EventArgs) Handles WorkingDirectoryLabel.MouseEnter
-        If System.IO.Directory.Exists(WorkingDirectoryLabel.Text) Then
+        If System.IO.Directory.Exists(WorkingDirectoryLabel.Text) THEN
             WorkingDirectoryLabel.ForeColor = Color.Blue
         Else
             Return
-        End If
+        END IF
     End Sub
 
     Private Sub WorkingDirectoryLabel_MouseLeave(sender As Object, e As EventArgs) Handles WorkingDirectoryLabel.MouseLeave
@@ -265,28 +265,28 @@ Public Class Form1
         RetrieveMainInput.Filter = "PWC 3 INPUT Files (*.PW3)|*.PW3|ALL Files (*.*)|*.*"
 
         'Opens the desktop if there is no previous open
-        If System.IO.Directory.Exists(FileNames.WorkingDirectory) Then
-            RetrieveMainInput.InitialDirectory = FileNames.WorkingDirectory
+        If System.IO.Directory.Exists(FiLENames.WorkingDirectory) THEN
+            RetrieveMainInput.InitialDirectory = FiLENames.WorkingDirectory
         Else
             '  RetrieveMainInput.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-        End If
+        END IF
 
-        RetrieveMainInput.FileName = ""
+        RetrieveMainInput.FiLEName = ""
 
         result = RetrieveMainInput.ShowDialog(Me)
 
         'Cancel button will cause return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.WorkingDirectory = System.IO.Path.GetDirectoryName(RetrieveMainInput.FileName) & "\"
+        FiLENames.WorkingDirectory = System.IO.Path.GetDirectoryName(RetrieveMainInput.FiLEName) & "\"
 
-        ReadInputsFromTextFile(RetrieveMainInput.FileName)
+        READInputsFromTextFile(RetrieveMainInput.FiLEName)
 
         'disable all edit buttons in scheme table on first retrieve
         Dim buttonCell As DataGridViewDisableButtonCell
-        For i As Integer = 0 To SchemeTableDisplay.RowCount - 1
+        For i As INTEGER = 0 To SchemeTableDisplay.RowCount - 1
             buttonCell = CType(SchemeTableDisplay.Rows(i).Cells("Commit"), DataGridViewDisableButtonCell)
             buttonCell.Enabled = False
         Next
@@ -301,20 +301,20 @@ Public Class Form1
     Private Sub CalculateButton_Click(sender As Object, e As EventArgs) Handles CalculateButton.Click
 
 
-        If Not System.IO.Directory.Exists(WorkingDirectoryLabel.Text) Then
+        If Not System.IO.Directory.Exists(WorkingDirectoryLabel.Text) THEN
             MsgBox("No Working Directory. Save this work, And a working directory will be automatcally established")
             Return
-        End If
+        END IF
 
         System.IO.Directory.SetCurrentDirectory(WorkingDirectoryLabel.Text)
 
         Dim isCorrect As Boolean
         Dim WarningMessage As String = ""
         CheckChemicalInputs(isCorrect, WarningMessage)
-        If Not isCorrect Then
+        If Not isCorrect THEN
             MsgBox(WarningMessage)
             Return
-        End If
+        END IF
 
 
         RunPRZMandVVWM()
@@ -325,24 +325,24 @@ Public Class Form1
 
     Private Sub YearlyCycleButton_CheckedChanged(sender As Object, e As EventArgs)
 
-        If HydroDataGrid.IsHandleCreated Then ' need this to prevent firing at load time before grid is available
-            If YearlyCycleButton.Checked Then
+        If HydroDataGrid.IsHandleCreated THEN ' need this to prevent firing at load time before grid is available
+            If YearlyCycleButton.Checked THEN
                 HydroDataGrid.Columns(0).HeaderText = "Date (m/d)"
             Else
                 HydroDataGrid.Columns(0).HeaderText = "Date (m/d/y)"
-            End If
-        End If
+            END IF
+        END IF
 
     End Sub
 
     Private Sub EvergreenCheckbox_CheckedChanged(sender As Object, e As EventArgs)
-        If Evergreen.Checked Then
+        If Evergreen.Checked THEN
             EvergreenPanel.Visible = True
             CropGridView.Visible = False
         Else
             EvergreenPanel.Visible = False
             CropGridView.Visible = True
-        End If
+        END IF
     End Sub
 
 
@@ -351,13 +351,13 @@ Public Class Form1
 
     Private Sub AbsoluteDaysButton_CheckedChanged(sender As Object, e As EventArgs) Handles AbsoluteDaysButton.CheckedChanged, emerge.CheckedChanged
 
-        If AppTableDisplay.IsHandleCreated Then
-            If AbsoluteDaysButton.Checked Then
+        If AppTableDisplay.IsHandleCreated THEN
+            If AbsoluteDaysButton.Checked THEN
                 AppTableDisplay.Columns(0).Name = "Date"
             Else
                 AppTableDisplay.Columns(0).Name = "Days"
-            End If
-        End If
+            END IF
+        END IF
 
     End Sub
 
@@ -367,9 +367,9 @@ Public Class Form1
         result = WeatherFolderBrowser.ShowDialog(Me)
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
         WeatherDirectoryBox.Text = WeatherFolderBrowser.SelectedPath & "\"
     End Sub
@@ -378,21 +378,21 @@ Public Class Form1
         Dim result As System.Windows.Forms.DialogResult
         GetWeatherFileDialog.Filter = "WEA files (*.WEA)|*.WEA|All files (*.*)|*.*"
 
-        If System.IO.Directory.Exists(FileNames.PreviousWeatherPath) Then
-            GetWeatherFileDialog.InitialDirectory = FileNames.PreviousWeatherPath
-        End If
+        If System.IO.Directory.Exists(FiLENames.PreviousWeatherPath) THEN
+            GetWeatherFileDialog.InitialDirectory = FiLENames.PreviousWeatherPath
+        END IF
 
         result = GetWeatherFileDialog.ShowDialog() 'display Open dialog box
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        WeatherFileName.Text = System.IO.Path.GetFileName(GetWeatherFileDialog.FileName)
-        WeatherDirectoryBox.Text = System.IO.Path.GetDirectoryName(GetWeatherFileDialog.FileName) & "\"
+        WeatherFiLEName.Text = System.IO.Path.GetFiLEName(GetWeatherFileDialog.FiLEName)
+        WeatherDirectoryBox.Text = System.IO.Path.GetDirectoryName(GetWeatherFileDialog.FiLEName) & "\"
 
-        FileNames.PreviousWeatherPath = System.IO.Path.GetDirectoryName(GetWeatherFileDialog.FileName)
+        FiLENames.PreviousWeatherPath = System.IO.Path.GetDirectoryName(GetWeatherFileDialog.FiLEName)
 
     End Sub
 
@@ -402,14 +402,14 @@ Public Class Form1
         ByVal sender As Object, ByVal e As EventArgs) _
         Handles SchemeTableDisplay.CurrentCellDirtyStateChanged
 
-        If SchemeTableDisplay.IsCurrentCellDirty Then
+        If SchemeTableDisplay.IsCurrentCellDirty THEN
             SchemeTableDisplay.CommitEdit(DataGridViewDataErrorContexts.Commit)
-        End If
+        END IF
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles SchemeTableDisplay.CellContentClick
 
-        Dim NumberofApplications As Integer
+        Dim NumberofApplications As INTEGER
         Dim ApplicationTable As New SchemeDetails With {
             .Days = New List(Of String),
             .Amount = New List(Of String),
@@ -424,22 +424,22 @@ Public Class Form1
 
         Dim Description As String
         Dim SchemeLabels As String
-        Dim DisplayedSchemeNumber As Integer
+        Dim DisplayedSchemeNumber As INTEGER
 
-        If e.RowIndex < 0 Then
+        If e.RowIndex < 0 THEN
             Exit Sub
-        End If
+        END IF
 
         Select Case SchemeTableDisplay.Columns(e.ColumnIndex).Name
                 Case "Edit"
 
                     'clear all got it
-                    For i As Integer = 0 To SchemeTableDisplay.RowCount - 1
+                    For i As INTEGER = 0 To SchemeTableDisplay.RowCount - 1
                         SchemeTableDisplay.Rows(i).Cells("Commit").Value = ""
                     Next
 
                 'this if statement ensures that all buttons are deactivated when unchecked
-                If SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit").Value = True Then
+                If SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit").Value = True THEN
 
                     For Each oRow As DataGridViewRow In SchemeTableDisplay.Rows
                         oRow.Cells("Edit").Value = False
@@ -447,11 +447,11 @@ Public Class Form1
                     SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit").Value = True
 
                     'toggle scenario and app tab on if checked
-                    If TabControl1.Controls.Contains(tempTabpage5) = False Then
+                    If TabControl1.Controls.Contains(tempTabpage5) = False THEN
                         'tab 5 and 6 are always together, so only need to see if oe or the other is active
                         TabControl1.Controls.Add(tempTabpage5)
                         TabControl1.Controls.Add(tempTabpage6)
-                    End If
+                    END IF
 
                 Else
                     For Each oRow As DataGridViewRow In SchemeTableDisplay.Rows
@@ -461,43 +461,43 @@ Public Class Form1
                     'toggle off scenario and app tab if nothing checked
                     TabControl1.Controls.Remove(SchemeApplicationsTab)
                     TabControl1.Controls.Remove(SchemeScenariosTab)
-                End If
+                END IF
 
 
-                If SchemeTableDisplay.Columns(e.ColumnIndex).Name = "Edit" Then
+                If SchemeTableDisplay.Columns(e.ColumnIndex).Name = "Edit" THEN
                         Dim buttonCell As DataGridViewDisableButtonCell
                         Dim checkCell As DataGridViewCheckBoxCell = CType(SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit"), DataGridViewCheckBoxCell)
 
-                        For i As Integer = 0 To SchemeTableDisplay.RowCount - 1
+                        For i As INTEGER = 0 To SchemeTableDisplay.RowCount - 1
                             buttonCell = CType(SchemeTableDisplay.Rows(i).Cells("Commit"), DataGridViewDisableButtonCell)
                             buttonCell.Enabled = False
 
                             'dont allow scheme description to be edited unless checked
-                            SchemeTableDisplay.Rows(i).Cells(3).ReadOnly = True
+                            SchemeTableDisplay.Rows(i).Cells(3).READOnly = True
                         Next
 
                         '________________________________________________________________________
                         'When a new row is created, Make the delete button imediatelty active and disable the new button
 
 
-                        If (SchemeTableDisplay.Rows.Count - 2 = e.RowIndex) Then
+                        If (SchemeTableDisplay.Rows.Count - 2 = e.RowIndex) THEN
                             buttonCell = CType(SchemeTableDisplay.Rows(e.RowIndex).Cells("Delete"), DataGridViewDisableButtonCell)
                             buttonCell.Enabled = True
                             buttonCell = CType(SchemeTableDisplay.Rows(e.RowIndex + 1).Cells("Delete"), DataGridViewDisableButtonCell)
                             buttonCell.Enabled = False
-                        End If
+                        END IF
 
                     '_______________________________________________
 
                     'allow only active scheme description to be edited
-                    SchemeTableDisplay.Rows(e.RowIndex).Cells(3).ReadOnly = False
+                    SchemeTableDisplay.Rows(e.RowIndex).Cells(3).READOnly = False
 
                         buttonCell = CType(SchemeTableDisplay.Rows(e.RowIndex).Cells("Commit"), DataGridViewDisableButtonCell)
 
                         buttonCell.Enabled = CType(checkCell.Value, [Boolean])
 
                         SchemeTableDisplay.Invalidate()
-                    End If
+                    END IF
 
                     Description = SchemeTableDisplay.Rows(e.RowIndex).Cells(3).Value
 
@@ -507,20 +507,20 @@ Public Class Form1
                     Label88.Text = SchemeLabels
                     Label87.Text = SchemeLabels
 
-                    If SchemeInfoList.Count - 1 < e.RowIndex Then
+                    If SchemeInfoList.Count - 1 < e.RowIndex THEN
                         'in case edit button is pushed before anything is populated previously an error will not throw
                         Exit Sub
-                    End If
+                    END IF
 
                     ApplicationTable = SchemeInfoList(e.RowIndex)
 
                     NumberofApplications = ApplicationTable.Days.Count
                     AppTableDisplay.Rows.Clear()
 
-                If NumberofApplications > 0 Then  'prevents error if user attempts to save without any applications
+                If NumberofApplications > 0 THEN  'prevents error if user attempts to save without any applications
                     AppTableDisplay.Rows.Add(NumberofApplications)
 
-                    For i As Integer = 0 To NumberofApplications - 1
+                    For i As INTEGER = 0 To NumberofApplications - 1
                         AppTableDisplay.Item(0, i).Value = ApplicationTable.Days(i)
                         AppTableDisplay.Item(1, i).Value = ApplicationTable.Amount(i)
 
@@ -590,7 +590,7 @@ Public Class Form1
                         AppTableDisplay.Item(8, i).Value = ApplicationTable.Lag(i)
 
                     Next
-                End If
+                END IF
 
 
                 AbsoluteDaysButton.Checked = ApplicationTable.AbsoluteRelative
@@ -609,7 +609,7 @@ Public Class Form1
                 OptimumApplicationWindow.Text = ApplicationTable.OptimumApplicationWindow
                 MinDaysBetweenApps.Text = ApplicationTable.MinDaysBetweenApps
                 GetScenariosBatchCheckBox.Checked = ApplicationTable.UseBatchScenarioFile
-                ScenarioBatchFileName.Text = ApplicationTable.ScenarioBatchFileName
+                ScenarioBatchFiLEName.Text = ApplicationTable.ScenarioBatchFiLEName
 
                 RunoffMitigation.Text = ApplicationTable.RunoffMitigation
                 ErosionMitigation.Text = ApplicationTable.ErosionMitigation
@@ -626,18 +626,18 @@ Public Class Form1
 
                     ' Some error messages have been arising in here ...
 
-                    '    'Disabling button apparently does not really disable its action, only its color
+                    '    'Disabling button apparently does not REALly disable its action, only its color
                     '    'So I added the following IF to kick out of the commit button if the edit box is not checked
 
 
 
-                    If SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit").Value = False Then
+                    If SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit").Value = False THEN
                         Exit Sub
-                    End If
+                    END IF
 
 
                     'same set of lines as in EDIT above, but needed because if you change scheme description
-                    'without unchecking and rechecking EDIT, then the labvels will not be loaded
+                    'without unchecking and rechecking EDIT, THEN the labvels will not be loaded
                     Description = SchemeTableDisplay.Rows(e.RowIndex).Cells(3).Value
 
                     DisplayedSchemeNumber = e.RowIndex + 1
@@ -647,7 +647,7 @@ Public Class Form1
                     Label87.Text = SchemeLabels
 
 
-                    For i As Integer = 0 To SchemeTableDisplay.RowCount - 1
+                    For i As INTEGER = 0 To SchemeTableDisplay.RowCount - 1
                         SchemeTableDisplay.Rows(i).Cells(e.ColumnIndex).Value = ""
                     Next
 
@@ -664,28 +664,28 @@ Public Class Form1
 
 
 
-                    If SchemeTableDisplay.CurrentRow.IsNewRow Then
+                    If SchemeTableDisplay.CurrentRow.IsNewRow THEN
                         Beep()
                     Else
                         'toggle off scenario and app tab if delete the checked scheme 
 
-                        If SchemeTableDisplay.Rows(e.RowIndex).Cells(1).Value Then
+                        If SchemeTableDisplay.Rows(e.RowIndex).Cells(1).Value THEN
                             TabControl1.Controls.Remove(SchemeApplicationsTab)
                             TabControl1.Controls.Remove(SchemeScenariosTab)
-                        End If
+                        END IF
 
 
 
                         SchemeTableDisplay.Rows.Remove(SchemeTableDisplay.Rows(e.RowIndex))
-                    End If
+                    END IF
 
-                    If SchemeInfoList.Count > e.RowIndex Then
-                        'this if condition is needed if there is an uncommitted row, then you can still delete it
-                        'likewise if there is an uncommited row, then this prevents attempting to delete a nonexistent scheme
+                    If SchemeInfoList.Count > e.RowIndex THEN
+                        'this if condition is needed if there is an uncommitted row, THEN you can still delete it
+                        'likewise if there is an uncommited row, THEN this prevents attempting to delete a nonexistent scheme
                         'only want to delete table row, and not schemeinfolist item
 
                         SchemeInfoList.RemoveAt(e.RowIndex)
-                    End If
+                    END IF
 
 
 
@@ -702,21 +702,21 @@ Public Class Form1
 
     Private Sub SchemeTableDisplay_CellMouseEnter(sender As Object, e As DataGridViewCellEventArgs) Handles SchemeTableDisplay.CellMouseEnter
 
-        If e.RowIndex < 0 Then
+        If e.RowIndex < 0 THEN
             Exit Sub
-        End If
+        END IF
 
         Dim buttonCell As DataGridViewDisableButtonCell
         buttonCell = CType(SchemeTableDisplay.Rows(e.RowIndex).Cells("Delete"), DataGridViewDisableButtonCell)
 
         'this logic signifies a new row,;iterally "isnewrow" does not work so resorted to this.
-        If (SchemeTableDisplay.Rows.Count - 1 = e.RowIndex) Then
+        If (SchemeTableDisplay.Rows.Count - 1 = e.RowIndex) THEN
             buttonCell.Enabled = False
             SchemeTableDisplay.Invalidate()  'redraw
             Exit Sub
         Else
             buttonCell.Enabled = True
-        End If
+        END IF
 
 
         SchemeTableDisplay.Invalidate()  'redraw
@@ -730,17 +730,17 @@ Public Class Form1
 
 
             Case "Commit"
-                If SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit").Value = True Then
+                If SchemeTableDisplay.Rows(e.RowIndex).Cells("Edit").Value = True THEN
                     SchemeTableDisplay.Rows(e.RowIndex).Cells("Commit").Value = "Commit"
-                End If
+                END IF
         End Select
 
     End Sub
 
     Private Sub SchemeTableDisplay_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles SchemeTableDisplay.CellMouseLeave
-        If e.RowIndex < 0 Then
+        If e.RowIndex < 0 THEN
             Exit Sub
-        End If
+        END IF
 
         Select Case SchemeTableDisplay.Columns(e.ColumnIndex).Name
             Case "Delete"
@@ -760,31 +760,31 @@ Public Class Form1
         '(SchemeInfoList.Count vs. SchemeTableDisplay.Rows.Count - 1)
 
 
-        If SchemeTableDisplay.CurrentRow.IsNewRow Then  'schemes can only be added on the "new row"
+        If SchemeTableDisplay.CurrentRow.IsNewRow THEN  'schemes can only be added on the "new row"
 
-            If SchemeInfoList.Count < SchemeTableDisplay.Rows.Count - 1 Then  'Previous row is not committed
+            If SchemeInfoList.Count < SchemeTableDisplay.Rows.Count - 1 THEN  'Previous row is not committed
 
-                SchemeTableDisplay.CurrentRow.Cells(3).ReadOnly = True  'Current row is new row, so no entry allowed util commit
+                SchemeTableDisplay.CurrentRow.Cells(3).READOnly = True  'Current row is new row, so no entry allowed util commit
                 '  SchemeTableDisplay.CurrentRow.Cells(1).Value = False    'clear any checks
-                SchemeTableDisplay.CurrentRow.Cells(1).ReadOnly = True  'dont allow any checks in edit box
+                SchemeTableDisplay.CurrentRow.Cells(1).READOnly = True  'dont allow any checks in edit box
                 MsgBox("Previous scheme has never been committed. Commit that scheme before adding another scheme")
             Else
-                SchemeTableDisplay.CurrentRow.Cells(1).ReadOnly = False   'allow the edit box to be checked
-            End If
+                SchemeTableDisplay.CurrentRow.Cells(1).READOnly = False   'allow the edit box to be checked
+            END IF
 
         Else
 
 
             'prevents previous row from being editable without checkbox after a new row has been populated
-            If SchemeTableDisplay.CurrentRow.Cells(1).Value = False Then
-                SchemeTableDisplay.CurrentRow.Cells(3).ReadOnly = True
+            If SchemeTableDisplay.CurrentRow.Cells(1).Value = False THEN
+                SchemeTableDisplay.CurrentRow.Cells(3).READOnly = True
             Else
-                SchemeTableDisplay.CurrentRow.Cells(3).ReadOnly = False
-            End If
+                SchemeTableDisplay.CurrentRow.Cells(3).READOnly = False
+            END IF
 
 
 
-        End If
+        END IF
 
 
 
@@ -800,28 +800,28 @@ Public Class Form1
 
         OpenAndSelectScenarios.Filter = "Scenario Files V2 (*.SCN2)|*.SCN2| All files (*.*)|*.*"
 
-        OpenAndSelectScenarios.InitialDirectory = FileNames.DefaultScenarioDirectory
+        OpenAndSelectScenarios.InitialDirectory = FiLENames.DefaultScenarioDirectory
 
-        If System.IO.Directory.Exists(FileNames.PreviousScenarioPath) Then
-            OpenAndSelectScenarios.InitialDirectory = FileNames.PreviousScenarioPath
-        End If
+        If System.IO.Directory.Exists(FiLENames.PreviousScenarioPath) THEN
+            OpenAndSelectScenarios.InitialDirectory = FiLENames.PreviousScenarioPath
+        END IF
 
         result = OpenAndSelectScenarios.ShowDialog() 'display Open dialog box
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FileName)
+        FiLENames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FiLEName)
         Dim selectedScenario As String
 
-        For Each selectedScenario In OpenAndSelectScenarios.FileNames
-            ' ScenariosList.Items.Add(System.IO.Path.GetFileName(selectedScenario))
+        For Each selectedScenario In OpenAndSelectScenarios.FiLENames
+            ' ScenariosList.Items.Add(System.IO.Path.GetFiLEName(selectedScenario))
             'need path
             ScenarioListBox.Items.Add(selectedScenario)
         Next
 
-        FileNames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FileName)
+        FiLENames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FiLEName)
 
     End Sub
 
@@ -846,22 +846,22 @@ Public Class Form1
     End Sub
 
     Private Sub DoDegradate1_CheckedChanged(sender As Object, e As EventArgs) Handles DoDegradate1.CheckedChanged
-        If DoDegradate1.Checked = False Then
+        If DoDegradate1.Checked = False THEN
             DoDegradate2.Checked = False
             DoDegradate2.Enabled = False
             DaughterVisibleStatus(False)
         Else
             DoDegradate2.Enabled = True
             DaughterVisibleStatus(True)
-        End If
+        END IF
     End Sub
 
     Private Sub DoDegradate2_CheckedChanged(sender As Object, e As EventArgs) Handles DoDegradate2.CheckedChanged
-        If DoDegradate2.Checked = False Then
+        If DoDegradate2.Checked = False THEN
             GrandaughterVisibleStatus(False)
         Else
             GrandaughterVisibleStatus(True)
-        End If
+        END IF
     End Sub
 
 
@@ -883,7 +883,7 @@ Public Class Form1
         Sol3.Visible = status
         Henry3.Visible = status
         AirDiff3.Visible = status
-        HeatHenry3.Visible = status
+        HeaTHENry3.Visible = status
 
         WaterMolarRatio2.Visible = status
         BenthicMolarRatio2.Visible = status
@@ -914,7 +914,7 @@ Public Class Form1
         Sol2.Visible = status
         Henry2.Visible = status
         AirDiff2.Visible = status
-        HeatHenry2.Visible = status
+        HeaTHENry2.Visible = status
 
         WaterMolarRatio1.Visible = status
         BenthicMolarRatio1.Visible = status
@@ -932,11 +932,11 @@ Public Class Form1
 
 
     Private Sub ItsOther_CheckedChanged(sender As Object, e As EventArgs) Handles ItsOther.CheckedChanged
-        'If ItsOther.Checked Then
+        'If ItsOther.Checked THEN
         '    waterbodypanel.Visible = True
         'Else
         '    waterbodypanel.Visible = False
-        'End If
+        'END IF
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -944,28 +944,28 @@ Public Class Form1
 
         OpenAndSelectScenarios.Filter = "Water Body Files (*.WAT)|*.WAT| All files (*.*)|*.*"
 
-        OpenAndSelectScenarios.InitialDirectory = FileNames.DefaultWaterBodyDirectory
+        OpenAndSelectScenarios.InitialDirectory = FiLENames.DefaultWaterBodyDirectory
 
-        If System.IO.Directory.Exists(FileNames.PreviousWaterBodyPath) Then
-            OpenAndSelectScenarios.InitialDirectory = FileNames.PreviousWaterBodyPath
-        End If
+        If System.IO.Directory.Exists(FiLENames.PreviousWaterBodyPath) THEN
+            OpenAndSelectScenarios.InitialDirectory = FiLENames.PreviousWaterBodyPath
+        END IF
 
         result = OpenAndSelectScenarios.ShowDialog() 'display Open dialog box
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.PreviousWaterBodyPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FileName)
+        FiLENames.PreviousWaterBodyPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FiLEName)
         Dim selectedScenario As String
 
-        For Each selectedScenario In OpenAndSelectScenarios.FileNames
-            ' ScenariosList.Items.Add(System.IO.Path.GetFileName(selectedScenario))
+        For Each selectedScenario In OpenAndSelectScenarios.FiLENames
+            ' ScenariosList.Items.Add(System.IO.Path.GetFiLEName(selectedScenario))
             'need path
             WaterbodyList.Items.Add(selectedScenario)
         Next
 
-        FileNames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FileName)
+        FiLENames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenAndSelectScenarios.FiLEName)
 
 
 
@@ -987,34 +987,34 @@ Public Class Form1
 
     Private Sub PushToLoadScenario_Click(sender As Object, e As EventArgs) Handles PushToLoadScenario.Click
 
-        If LoadFromCSV.Checked Then
+        If LoadFromCSV.Checked THEN
             OpenSingleScenarioFile.Filter = "Batch CSV Files (*.CSV)|*.CSV"
         Else
             OpenSingleScenarioFile.Filter = "Scenario Files (*.SCN2)|*.SCN2"
-        End If
+        END IF
 
 
-        If System.IO.Directory.Exists(FileNames.PreviousScenarioPath) Then
-            OpenSingleScenarioFile.InitialDirectory = FileNames.PreviousScenarioPath
+        If System.IO.Directory.Exists(FiLENames.PreviousScenarioPath) THEN
+            OpenSingleScenarioFile.InitialDirectory = FiLENames.PreviousScenarioPath
         Else
-            OpenSingleScenarioFile.InitialDirectory = FileNames.DefaultScenarioDirectory
-        End If
+            OpenSingleScenarioFile.InitialDirectory = FiLENames.DefaultScenarioDirectory
+        END IF
 
         Dim result As System.Windows.Forms.DialogResult
         result = OpenSingleScenarioFile.ShowDialog(Me)
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenSingleScenarioFile.FileName)
+        FiLENames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenSingleScenarioFile.FiLEName)
 
-        If LoadFromCSV.Checked Then
-            LoadSingleBatchFileScenario(OpenSingleScenarioFile.FileName)
+        If LoadFromCSV.Checked THEN
+            LoadSingleBatchFileScenario(OpenSingleScenarioFile.FiLEName)
         Else
-            ReadScenarioParameters(OpenSingleScenarioFile.FileName)
-        End If
+            READScenarioPARAMETERs(OpenSingleScenarioFile.FiLEName)
+        END IF
 
 
 
@@ -1028,26 +1028,26 @@ Public Class Form1
         Dim result As System.Windows.Forms.DialogResult
 
         SaveSingleScenarioFile.Filter = "Scenario Files V2 (*.scn2)|*.SCN2"
-        SaveSingleScenarioFile.InitialDirectory = FileNames.PreviousCustomScenarioPath
+        SaveSingleScenarioFile.InitialDirectory = FiLENames.PreviousCustomScenarioPath
 
         'make the file default to be the last file retrieved
-        SaveSingleScenarioFile.FileName = FileNames.PreviousScenarioFile
+        SaveSingleScenarioFile.FiLEName = FiLENames.PreviousScenarioFile
 
         result = SaveSingleScenarioFile.ShowDialog(Me)
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(SaveSingleScenarioFile.FileName)
+        FiLENames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(SaveSingleScenarioFile.FiLEName)
 
         Dim msg As String
 
         msg = CreateScenarioString()
 
         Try
-            My.Computer.FileSystem.WriteAllText(SaveSingleScenarioFile.FileName, msg, False, System.Text.Encoding.ASCII)
+            My.Computer.FileSystem.WRITEAllText(SaveSingleScenarioFile.FiLEName, msg, False, System.Text.Encoding.ASCII)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -1061,11 +1061,11 @@ Public Class Form1
 
         OpenWaterbodyFile.Filter = "Waterbody Files (*.WAT)|*.WAT"
 
-        If System.IO.Directory.Exists(FileNames.PreviousWaterBodyPath) Then
-            OpenWaterbodyFile.InitialDirectory = FileNames.PreviousWaterBodyPath
+        If System.IO.Directory.Exists(FiLENames.PreviousWaterBodyPath) THEN
+            OpenWaterbodyFile.InitialDirectory = FiLENames.PreviousWaterBodyPath
         Else
-            OpenWaterbodyFile.InitialDirectory = FileNames.DefaultScenarioDirectory
-        End If
+            OpenWaterbodyFile.InitialDirectory = FiLENames.DefaultScenarioDirectory
+        END IF
 
 
         Dim result As System.Windows.Forms.DialogResult
@@ -1073,14 +1073,14 @@ Public Class Form1
         result = OpenWaterbodyFile.ShowDialog(Me)
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
 
-        FileNames.PreviousWaterBodyPath = System.IO.Path.GetDirectoryName(OpenWaterbodyFile.FileName)
+        FiLENames.PreviousWaterBodyPath = System.IO.Path.GetDirectoryName(OpenWaterbodyFile.FiLEName)
 
-        ReadwaterBodyParameters(OpenWaterbodyFile.FileName)
+        READwaterBodyPARAMETERs(OpenWaterbodyFile.FiLEName)
 
 
     End Sub
@@ -1091,70 +1091,70 @@ Public Class Form1
         Dim result As System.Windows.Forms.DialogResult
 
         SaveWaterbodyFile.Filter = "Waterbody Files (*.WAT)|*.WAT|ALL Files (*.*)|*.*"
-        SaveWaterbodyFile.InitialDirectory = FileNames.PreviousWaterBodyPath
+        SaveWaterbodyFile.InitialDirectory = FiLENames.PreviousWaterBodyPath
 
         'make the file default to be the last file retrieved
-        SaveWaterbodyFile.FileName = FileNames.PreviousScenarioFile
+        SaveWaterbodyFile.FiLEName = FiLENames.PreviousScenarioFile
 
         result = SaveWaterbodyFile.ShowDialog(Me)
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.PreviousWaterBodyPath = System.IO.Path.GetDirectoryName(SaveWaterbodyFile.FileName)
+        FiLENames.PreviousWaterBodyPath = System.IO.Path.GetDirectoryName(SaveWaterbodyFile.FiLEName)
 
         Dim msg As String
 
         msg = CreateWaterbodyString()
 
         Try
-            My.Computer.FileSystem.WriteAllText(SaveWaterbodyFile.FileName, msg, False, System.Text.Encoding.ASCII)
+            My.Computer.FileSystem.WRITEAllText(SaveWaterbodyFile.FiLEName, msg, False, System.Text.Encoding.ASCII)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Dim a As Integer
-        Dim b As Integer
+        Dim a As INTEGER
+        Dim b As INTEGER
         a = SchemeTableDisplay.CurrentCell.RowIndex
         b = SchemeTableDisplay.CurrentCell.ColumnIndex
         SchemeTableDisplay.Rows(a).Cells(b).Value = ""
         Timer1.Stop()
     End Sub
     Private Sub ToggleAdvancedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleAdvancedToolStripMenuItem.Click
-        If TabControl1.Controls.Contains(tempTabpage1) Then
+        If TabControl1.Controls.Contains(tempTabpage1) THEN
             TabControl1.Controls.Remove(AdvancedTab)
             Return
-        End If
+        END IF
         TabControl1.Controls.Add(tempTabpage1)
     End Sub
     Private Sub ToggleScenarioExaminerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleScenarioExaminerToolStripMenuItem.Click
-        If TabControl1.Controls.Contains(tempTabpage2) Then
+        If TabControl1.Controls.Contains(tempTabpage2) THEN
             TabControl1.Controls.Remove(ScenarioExaminerTab)
             Return
-        End If
+        END IF
         TabControl1.Controls.Add(tempTabpage2)
     End Sub
 
 
     Private Sub ToggeWaterbodyExaminerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggeWaterbodyExaminerToolStripMenuItem.Click
-        If TabControl1.Controls.Contains(tempTabpage4) Then
+        If TabControl1.Controls.Contains(tempTabpage4) THEN
             TabControl1.Controls.Remove(WaterbodyExaminerTab)
             Return
-        End If
+        END IF
         TabControl1.Controls.Add(tempTabpage4)
     End Sub
 
 
 
     Private Sub ToggleMoreOutputToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleMoreOutputToolStripMenuItem.Click
-        If TabControl1.Controls.Contains(tempTabpage3) Then
+        If TabControl1.Controls.Contains(tempTabpage3) THEN
             TabControl1.Controls.Remove(OptionalOutputTab)
             Return
-        End If
+        END IF
         TabControl1.Controls.Add(tempTabpage3)
     End Sub
 
@@ -1174,13 +1174,13 @@ Public Class Form1
     Private Sub AdditionalOutputGridView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles AdditionalOutputGridView.CellContentClick
 
 
-        If AdditionalOutputGridView.Columns(e.ColumnIndex).HeaderText = "Delete" Then
-            If AdditionalOutputGridView.CurrentRow.IsNewRow Then
+        If AdditionalOutputGridView.Columns(e.ColumnIndex).HeaderText = "Delete" THEN
+            If AdditionalOutputGridView.CurrentRow.IsNewRow THEN
                 Beep()
             Else
                 AdditionalOutputGridView.Rows.Remove(AdditionalOutputGridView.Rows(e.RowIndex))
-            End If
-        End If
+            END IF
+        END IF
 
 
 
@@ -1194,7 +1194,7 @@ Public Class Form1
 
             Case "Delete"
 
-                If AppTableDisplay.CurrentRow.IsNewRow Then
+                If AppTableDisplay.CurrentRow.IsNewRow THEN
 
                     Beep()
                 Else
@@ -1206,19 +1206,19 @@ Public Class Form1
 
                     AppTableDisplay.ClearSelection()
 
-                End If
+                END IF
 
 
             Case Else
 
-                If e.RowIndex > -1 Then
+                If e.RowIndex > -1 THEN
                     Select Case AppTableDisplay.Rows(e.RowIndex).Cells(2).Value
                         Case Standard.method1, Standard.method2                    'above and below crop
                             AppTableDisplay.Rows(e.RowIndex).Cells(3).Value = "4.0"
                             AppTableDisplay.Rows(e.RowIndex).Cells(4).Value = "0.0"
 
-                            AppTableDisplay.Rows(e.RowIndex).Cells(3).ReadOnly = True
-                            AppTableDisplay.Rows(e.RowIndex).Cells(4).ReadOnly = True
+                            AppTableDisplay.Rows(e.RowIndex).Cells(3).READOnly = True
+                            AppTableDisplay.Rows(e.RowIndex).Cells(4).READOnly = True
                             AppTableDisplay.Item(3, e.RowIndex).Style.ForeColor = Color.Gray
                             AppTableDisplay.Item(4, e.RowIndex).Style.ForeColor = Color.Gray
 
@@ -1228,20 +1228,20 @@ Public Class Form1
 
                             AppTableDisplay.Item(3, e.RowIndex).Style.ForeColor = Color.Black
                             AppTableDisplay.Item(4, e.RowIndex).Style.ForeColor = Color.Gray
-                            AppTableDisplay.Rows(e.RowIndex).Cells(3).ReadOnly = False
-                            AppTableDisplay.Rows(e.RowIndex).Cells(4).ReadOnly = True
+                            AppTableDisplay.Rows(e.RowIndex).Cells(3).READOnly = False
+                            AppTableDisplay.Rows(e.RowIndex).Cells(4).READOnly = True
 
 
                         Case Else
                             AppTableDisplay.Item(3, e.RowIndex).Style.ForeColor = Color.Black
                             AppTableDisplay.Item(4, e.RowIndex).Style.ForeColor = Color.Black
-                            AppTableDisplay.Rows(e.RowIndex).Cells(3).ReadOnly = False
-                            AppTableDisplay.Rows(e.RowIndex).Cells(4).ReadOnly = False
+                            AppTableDisplay.Rows(e.RowIndex).Cells(3).READOnly = False
+                            AppTableDisplay.Rows(e.RowIndex).Cells(4).READOnly = False
 
                     End Select
 
 
-                End If
+                END IF
 
 
 
@@ -1257,80 +1257,80 @@ Public Class Form1
 
         msg = ""
 
-        If MsgBox("Do you want To overwrite the Henry's Law value with an estimate based on the solubility and vapor pressure?", 4, "Overwrite Warning") = 7 Then
+        If MsgBox("Do you want To overWRITE the Henry's Law value with an estimate based on the solubility and vapor pressure?", 4, "OverWRITE Warning") = 7 THEN
             Return
-        End If
+        END IF
 
 
-        TestRealNumbers(TrueOrFalse, msg, VaporPress1)
+        TestREALNumbers(TrueOrFalse, msg, VaporPress1)
 
-        If TrueOrFalse = False Then
+        If TrueOrFalse = False THEN
             MsgBox(msg)
 
 
             Return
-        End If
+        END IF
 
-        TestRealNumbers(TrueOrFalse, msg, Sol1)
-        If TrueOrFalse = False Then
+        TestREALNumbers(TrueOrFalse, msg, Sol1)
+        If TrueOrFalse = False THEN
             MsgBox(msg)
             Return
-        End If
+        END IF
 
-        TestRealNumbers(TrueOrFalse, msg, MWT1)
-        If TrueOrFalse = False Then
+        TestREALNumbers(TrueOrFalse, msg, MWT1)
+        If TrueOrFalse = False THEN
             MsgBox(msg)
             Return
-        End If
+        END IF
 
         henryConstant = Henry.UnitlessVolumetric(VaporPress1.Text, Sol1.Text, MWT1.Text)
         Henry1.Text = String.Format("{0:G3}", henryConstant)
 
-        If DoDegradate1.Checked Then
-            TestRealNumbers(TrueOrFalse, msg, VaporPress2)
-            If TrueOrFalse = False Then
+        If DoDegradate1.Checked THEN
+            TestREALNumbers(TrueOrFalse, msg, VaporPress2)
+            If TrueOrFalse = False THEN
                 MsgBox(msg)
                 Return
-            End If
+            END IF
 
-            TestRealNumbers(TrueOrFalse, msg, Sol2)
-            If TrueOrFalse = False Then
+            TestREALNumbers(TrueOrFalse, msg, Sol2)
+            If TrueOrFalse = False THEN
                 MsgBox(msg)
                 Return
-            End If
+            END IF
 
-            TestRealNumbers(TrueOrFalse, msg, MWT2)
-            If TrueOrFalse = False Then
+            TestREALNumbers(TrueOrFalse, msg, MWT2)
+            If TrueOrFalse = False THEN
                 MsgBox(msg)
                 Return
-            End If
+            END IF
 
             henryConstant = Henry.UnitlessVolumetric(VaporPress2.Text, Sol2.Text, MWT2.Text)
             Henry2.Text = String.Format("{0:G3}", henryConstant)
-        End If
+        END IF
 
-        If DoDegradate2.Checked Then
-            TestRealNumbers(TrueOrFalse, msg, VaporPress3)
-            If TrueOrFalse = False Then
+        If DoDegradate2.Checked THEN
+            TestREALNumbers(TrueOrFalse, msg, VaporPress3)
+            If TrueOrFalse = False THEN
                 MsgBox(msg)
                 Return
-            End If
+            END IF
 
-            TestRealNumbers(TrueOrFalse, msg, Sol3)
-            If TrueOrFalse = False Then
+            TestREALNumbers(TrueOrFalse, msg, Sol3)
+            If TrueOrFalse = False THEN
                 MsgBox(msg)
                 Return
-            End If
+            END IF
 
-            TestRealNumbers(TrueOrFalse, msg, MWT3)
-            If TrueOrFalse = False Then
+            TestREALNumbers(TrueOrFalse, msg, MWT3)
+            If TrueOrFalse = False THEN
                 MsgBox(msg)
                 Return
-            End If
+            END IF
 
             henryConstant = Henry.UnitlessVolumetric(VaporPress3.Text, Sol3.Text, MWT3.Text)
             Henry3.Text = String.Format("{0:G3}", henryConstant)
-        End If
+        END IF
 
 
 
@@ -1343,11 +1343,11 @@ Public Class Form1
         Select Case HorizonGridView.Columns(e.ColumnIndex).HeaderText
             Case "Delete"
 
-                If HorizonGridView.CurrentRow.IsNewRow Then
+                If HorizonGridView.CurrentRow.IsNewRow THEN
                     Beep()
                 Else
                     HorizonGridView.Rows.Remove(HorizonGridView.Rows(e.RowIndex))
-                End If
+                END IF
             Case Else
                 Exit Sub
 
@@ -1362,32 +1362,32 @@ Public Class Form1
         OpenSelectScenarioBatchFile.Filter = "Scenario Batch Files (*.CSV)|*.CSV| All files (*.*)|*.*"
 
 
-        OpenSelectScenarioBatchFile.InitialDirectory = FileNames.DefaultScenarioDirectory
+        OpenSelectScenarioBatchFile.InitialDirectory = FiLENames.DefaultScenarioDirectory
 
-        If System.IO.Directory.Exists(FileNames.PreviousScenarioPath) Then
-            OpenSelectScenarioBatchFile.InitialDirectory = FileNames.PreviousScenarioPath
-        End If
+        If System.IO.Directory.Exists(FiLENames.PreviousScenarioPath) THEN
+            OpenSelectScenarioBatchFile.InitialDirectory = FiLENames.PreviousScenarioPath
+        END IF
 
         result = OpenSelectScenarioBatchFile.ShowDialog() 'display Open dialog box
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenSelectScenarioBatchFile.FileName)
-        ScenarioBatchFileName.Text = OpenSelectScenarioBatchFile.FileName
+        FiLENames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenSelectScenarioBatchFile.FiLEName)
+        ScenarioBatchFiLEName.Text = OpenSelectScenarioBatchFile.FiLEName
 
-        FileNames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenSelectScenarioBatchFile.FileName)
+        FiLENames.PreviousScenarioPath = System.IO.Path.GetDirectoryName(OpenSelectScenarioBatchFile.FiLEName)
 
     End Sub
 
     Private Sub ScenarioListBox_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ScenarioListBox.MouseDoubleClick
-        Dim intIndex As Integer = ScenarioListBox.Items.IndexOf(ScenarioListBox.SelectedItem)
+        Dim intIndex As INTEGER = ScenarioListBox.Items.IndexOf(ScenarioListBox.SelectedItem)
         Dim objInputBox As Object = InputBox("Change Item :", "Edit", ScenarioListBox.SelectedItem)
-        If Not objInputBox = Nothing Then
+        If Not objInputBox = Nothing THEN
             ScenarioListBox.Items.Remove(ScenarioListBox.SelectedItem)
             ScenarioListBox.Items.Insert(intIndex, objInputBox)
-        End If
+        END IF
 
 
 
@@ -1402,35 +1402,35 @@ Public Class Form1
     End Sub
 
     Private Sub ItsaPond_CheckedChanged(sender As Object, e As EventArgs) Handles ItsaPond.CheckedChanged
-        If ItsaPond.Checked Then
+        If ItsaPond.Checked THEN
             ItsTPEZWPEZ.Enabled = True
         Else
             ItsTPEZWPEZ.Enabled = False
             ItsTPEZWPEZ.Checked = False
-        End If
+        END IF
     End Sub
 
     Private Sub ModifyScenarios_Click(sender As Object, e As EventArgs) Handles ModifyScenarios.Click
         'Dim msg As String
-        'Dim newfilename As String
+        'Dim newfiLEName As String
 
         MsgBox("disabled, for developer only")
 
-        'For Each scenariofilename As String In ScenarioListBox.Items
+        'For Each scenariofiLEName As String In ScenarioListBox.Items
 
-        '    ReadScenarioParameters(scenariofilename)
+        '    READScenarioPARAMETERs(scenariofiLEName)
 
         '    'Put modifications here:
         '    useAutoGWprofile.Checked = True
 
 
         '    'Version numbering
-        '    newfilename = Replace(scenariofilename, "V4.scn2", "v5.scn2")
+        '    newfiLEName = Replace(scenariofiLEName, "V4.scn2", "v5.scn2")
 
         '    msg = CreateScenarioString()
 
         '    Try
-        '        My.Computer.FileSystem.WriteAllText(newfilename, msg, False, System.Text.Encoding.ASCII)
+        '        My.Computer.FileSystem.WRITEAllText(newfiLEName, msg, False, System.Text.Encoding.ASCII)
         '    Catch ex As Exception
         '        MsgBox(ex.Message)
         '    End Try
@@ -1438,32 +1438,32 @@ Public Class Form1
         'Next
     End Sub
 
-    Private Sub WriteSchemeTableToFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WriteSchemeTableToFileToolStripMenuItem.Click
+    Private Sub WRITESchemeTableToFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WRITESchemeTableToFileToolStripMenuItem.Click
 
         Dim result As System.Windows.Forms.DialogResult
 
         SaveFileDialogMain.Filter = "PWC 3 Scheme File (*.sch)|*.SCH|CSV File (*.csv)|*.CSV|ALL Files (*.*)|*.*"
         SaveFileDialogMain.FilterIndex = 1
 
-        SaveFileDialogMain.InitialDirectory = FileNames.WorkingDirectory
-        SaveFileDialogMain.FileName = ""
+        SaveFileDialogMain.InitialDirectory = FiLENames.WorkingDirectory
+        SaveFileDialogMain.FiLEName = ""
         result = SaveFileDialogMain.ShowDialog(Me)
 
         'Cancel button will cuase return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
-        FileNames.SchemeFileName = SaveFileDialogMain.FileName
+        FiLENames.SchemeFiLEName = SaveFileDialogMain.FiLEName
 
 
-        'FileNames.WorkingDirectory = System.IO.Path.GetDirectoryName(SaveFileDialogMain.FileName) & "\"
-        'WorkingDirectoryLabel.Text = FileNames.WorkingDirectory
+        'FiLENames.WorkingDirectory = System.IO.Path.GetDirectoryName(SaveFileDialogMain.FiLEName) & "\"
+        'WorkingDirectoryLabel.Text = FiLENames.WorkingDirectory
         'SaveFileDialogMain.InitialDirectory = WorkingDirectoryLabel.Text
 
-        'IOFamilyName.Text = System.IO.Path.GetFileNameWithoutExtension(SaveFileDialogMain.FileName)
+        'IOFamilyName.Text = System.IO.Path.GetFiLENameWithoutExtension(SaveFileDialogMain.FiLEName)
 
-        SaveSchemeTableAsTextFile(SaveFileDialogMain.FileName)
+        SaveSchemeTableAsTextFile(SaveFileDialogMain.FiLEName)
 
     End Sub
 
@@ -1475,28 +1475,28 @@ Public Class Form1
         RetrieveMainInput.Filter = "PWC 3 Scheme Files (*.SCH)|*.SCH|CSV Files (*.CSV)|*.CSV|ALL Files (*.*)|*.*"
 
         'Opens the desktop if there is no previous open
-        If System.IO.Directory.Exists(FileNames.WorkingDirectory) Then
-            RetrieveMainInput.InitialDirectory = FileNames.WorkingDirectory
+        If System.IO.Directory.Exists(FiLENames.WorkingDirectory) THEN
+            RetrieveMainInput.InitialDirectory = FiLENames.WorkingDirectory
         Else
             '  RetrieveMainInput.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-        End If
+        END IF
 
-        RetrieveMainInput.FileName = ""
+        RetrieveMainInput.FiLEName = ""
 
         result = RetrieveMainInput.ShowDialog(Me)
 
         'Cancel button will cause return without further execution
-        If result = Windows.Forms.DialogResult.Cancel Then
+        If result = Windows.Forms.DialogResult.Cancel THEN
             Return
-        End If
+        END IF
 
 
 
-        ReadSchemeFile(RetrieveMainInput.FileName)
+        READSchemeFile(RetrieveMainInput.FiLEName)
 
         'disable all edit buttons in scheme table on first retrieve
         Dim buttonCell As DataGridViewDisableButtonCell
-        For i As Integer = 0 To SchemeTableDisplay.RowCount - 1
+        For i As INTEGER = 0 To SchemeTableDisplay.RowCount - 1
             buttonCell = CType(SchemeTableDisplay.Rows(i).Cells("Commit"), DataGridViewDisableButtonCell)
             buttonCell.Enabled = False
         Next
@@ -1511,13 +1511,13 @@ Public Class Form1
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
 
 
-        'The file name should be stored somewhere already but for now here it is
-        Dim PRZMVVWMinputFile As String = FileNames.WorkingDirectory & "PRZMVVWM.txt"
+        'The file name should be stored somewhere alREADy but for now here it is
+        Dim PRZMVVWMinputFile As String = FiLENames.WorkingDirectory & "PRZMVVWM.txt"
         SaveInputsAsTextFile(PRZMVVWMinputFile)
 
 
         Dim p As Process = New Process
-        p.StartInfo.FileName = My.Application.Info.DirectoryPath() & "\PRZM-VVWM.exe"
+        p.StartInfo.FiLEName = My.Application.Info.DirectoryPath() & "\PRZM-VVWM.exe"
         p.StartInfo.Arguments = """" & PRZMVVWMinputFile & """"
         p.StartInfo.UseShellExecute = False
         p.StartInfo.RedirectStandardOutput = True
@@ -1526,11 +1526,11 @@ Public Class Form1
         p.StartInfo.CreateNoWindow = True
         p.Start()
 
-        Dim output As String = p.StandardOutput.ReadToEnd
-        Dim output2 As String = p.StandardError.ReadToEnd
+        Dim output As String = p.StandardOutput.READToEnd
+        Dim output2 As String = p.StandardError.READToEnd
 
         '  p.WaitForExit()
-        My.Computer.FileSystem.WriteAllText("run_status.txt", output & output2, False, System.Text.Encoding.ASCII)
+        My.Computer.FileSystem.WRITEAllText("run_status.txt", output & output2, False, System.Text.Encoding.ASCII)
 
 
 
@@ -1546,21 +1546,21 @@ Public Class Form1
     End Sub
 
     Private Sub poundToKiloConversion_CheckedChanged(sender As Object, e As EventArgs) Handles poundToKiloConversion.CheckedChanged
-        If poundToKiloConversion.Checked Then
+        If poundToKiloConversion.Checked THEN
             AppTableDisplay.Columns(1).Name = "Amount (lb/acre)"
         Else
             AppTableDisplay.Columns(1).Name = "Amount (kg/ha)"
-        End If
+        END IF
 
 
     End Sub
 
     Private Sub Evergreen_CheckedChanged(sender As Object, e As EventArgs) Handles Evergreen.CheckedChanged
-        If Evergreen.Checked = True Then
+        If Evergreen.Checked = True THEN
             EvergreenPanel.Visible = True
         Else
             EvergreenPanel.Visible = False
-        End If
+        END IF
     End Sub
 End Class
 
@@ -1602,7 +1602,7 @@ Public Class DataGridViewDisableButtonCell
 
     Protected Overrides Sub Paint(ByVal graphics As Graphics,
         ByVal clipBounds As Rectangle, ByVal cellBounds As Rectangle,
-        ByVal rowIndex As Integer,
+        ByVal rowIndex As INTEGER,
         ByVal elementState As DataGridViewElementStates,
         ByVal value As Object, ByVal formattedValue As Object,
         ByVal errorText As String,
@@ -1612,24 +1612,24 @@ Public Class DataGridViewDisableButtonCell
 
         ' The button cell is disabled, so paint the border,  
         ' background, and disabled button for the cell.
-        If Not Me.enabledValue Then
+        If Not Me.enabledValue THEN
 
             ' Draw the background of the cell, if specified.
             If (paintParts And DataGridViewPaintParts.Background) =
-                DataGridViewPaintParts.Background Then
+                DataGridViewPaintParts.Background THEN
 
                 Dim cellBackground As New SolidBrush(cellStyle.BackColor)
                 graphics.FillRectangle(cellBackground, cellBounds)
                 cellBackground.Dispose()
-            End If
+            END IF
 
             ' Draw the cell borders, if specified.
             If (paintParts And DataGridViewPaintParts.Border) =
-                DataGridViewPaintParts.Border Then
+                DataGridViewPaintParts.Border THEN
 
                 PaintBorder(graphics, clipBounds, cellBounds, cellStyle,
                     advancedBorderStyle)
-            End If
+            END IF
 
             ' Calculate the area in which to draw the button.
             Dim buttonArea As Rectangle = cellBounds
@@ -1644,10 +1644,10 @@ Public Class DataGridViewDisableButtonCell
             ButtonRenderer.DrawButton(graphics, buttonArea, PushButtonState.Disabled)
 
             ' Draw the disabled button text. 
-            If TypeOf Me.FormattedValue Is String Then
+            If TypeOf Me.FormattedValue Is String THEN
                 TextRenderer.DrawText(graphics, CStr(Me.FormattedValue),
                     Me.DataGridView.Font, buttonArea, SystemColors.GrayText)
-            End If
+            END IF
 
         Else
             ' The button cell is enabled, so let the base class 
@@ -1655,7 +1655,7 @@ Public Class DataGridViewDisableButtonCell
             MyBase.Paint(graphics, clipBounds, cellBounds, rowIndex,
                 elementState, value, formattedValue, errorText,
                 cellStyle, advancedBorderStyle, paintParts)
-        End If
+        END IF
     End Sub
 
 End Class

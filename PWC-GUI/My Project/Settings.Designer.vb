@@ -23,33 +23,33 @@ Namespace My
         Private Shared defaultInstance As MySettings = CType(Global.System.Configuration.ApplicationSettingsBase.Synchronized(New MySettings()),MySettings)
         
 #Region "My.Settings Auto-Save Functionality"
-#If _MyType = "WindowsForms" Then
+#If _MyType = "WindowsForms" THEN
     Private Shared addedHandler As Boolean
 
     Private Shared addedHandlerLockObject As New Object
 
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)> _
     Private Shared Sub AutoSaveSettings(sender As Global.System.Object, e As Global.System.EventArgs)
-        If My.Application.SaveMySettingsOnExit Then
+        If My.Application.SaveMySettingsOnExit THEN
             My.Settings.Save()
-        End If
+        END IF
     End Sub
-#End If
+#END IF
 #End Region
         
-        Public Shared ReadOnly Property [Default]() As MySettings
+        Public Shared READOnly Property [Default]() As MySettings
             Get
                 
-#If _MyType = "WindowsForms" Then
-               If Not addedHandler Then
+#If _MyType = "WindowsForms" THEN
+               If Not addedHandler THEN
                     SyncLock addedHandlerLockObject
-                        If Not addedHandler Then
+                        If Not addedHandler THEN
                             AddHandler My.Application.Shutdown, AddressOf AutoSaveSettings
                             addedHandler = True
-                        End If
+                        END IF
                     End SyncLock
-                End If
-#End If
+                END IF
+#END IF
                 Return defaultInstance
             End Get
         End Property
@@ -58,13 +58,13 @@ End Namespace
 
 Namespace My
     
-    <Global.Microsoft.VisualBasic.HideModuleNameAttribute(),  _
+    <Global.Microsoft.VisualBasic.HideModuLENameAttribute(),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.PWC_2020.My.MySettings
+        Friend READOnly Property Settings() As Global.PWC_2020.My.MySettings
             Get
                 Return Global.PWC_2020.My.MySettings.Default
             End Get

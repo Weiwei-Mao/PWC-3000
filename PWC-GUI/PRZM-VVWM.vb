@@ -1,7 +1,7 @@
 ﻿Partial Public Class Form1
     Sub RunPRZMandVVWM()
 
-        'Run PRZMPRZM on a separate thread
+        'Run PRZMPRZM on a separate thREAD
 
         CalculateButton.Text = "working..."
         CalculateButton.Enabled = False

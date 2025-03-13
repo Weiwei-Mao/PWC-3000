@@ -9,7 +9,7 @@ module Temperatue_Calcs
                                            dwrate,dsrate,dgrate, &
                                            Q_10,nchem, soil_ref_temp
       implicit none
-       integer :: k
+       INTEGER :: k
 
        
        
@@ -17,7 +17,7 @@ module Temperatue_Calcs
            dwrate(k,:) = dwrate_atRefTemp(k,:)*Q_10**((soil_temp(:)-soil_ref_temp(k))/10.)
            dsrate(k,:) = dsrate_atRefTemp(k,:)*Q_10**((soil_temp(:)-soil_ref_temp(k))/10.)
            dgrate(k,:) = dgrate_atRefTemp(k,:)*Q_10**((soil_temp(:)-soil_ref_temp(k))/10.)         
-      end do  
+      END DO  
 
      END SUBROUTINE Q10DK
      
@@ -30,9 +30,9 @@ module Temperatue_Calcs
            INTEGER,intent(in) ::  NUMB
            REAL,intent(in)    ::  Soil_temp(NUMB)
            REAL,intent(in)    ::  HENRY,ENP
-           real,intent(out)   ::  NEWK(NUMB)
+           REAL,intent(out)   ::  NEWK(NUMB)
            
-           real,intent(in)    ::  henry_ref_temp  !degrees C, temp at which variable henry applies
+           REAL,intent(in)    ::  henry_ref_temp  !degrees C, temp at which variable henry applies
 
                      
            IF (HENRY .GT. 0.0) THEN
@@ -66,19 +66,19 @@ module Temperatue_Calcs
       
       
       implicit none
-      integer, intent(in) :: day
+      INTEGER, intent(in) :: day
       INTEGER  I,J,K,L,N,NUMDYS
       REAL     AIRDEN,Z0,D,ZCH,HTC,QC1,QEVF,QLW1,QLW2,QSWR
-      real     QGHF,TEMPK,STK,FX1,FX2,DELTA,EVAP,AAA,BBB
-      real     THKLY1,ABSOIL
+      REAL     QGHF,TEMPK,STK,FX1,FX2,DELTA,EVAP,AAA,BBB
+      REAL     THKLY1,ABSOIL
       REAL     XVOL(5,ncom2),VOLCOR,LBTEMP
-      real     DIFFCO(ncom2),ALAMDA(0:5),GEE(5,3),AKAY(5)
-      real     THZERO(2),GFLD,SIGMA0,SIGMA1,SIGMA2,VAPLMD,AIRLMD
-      real     TA(ncom2),TB(ncom2),TC(ncom2),TF(ncom2)
+      REAL     DIFFCO(ncom2),ALAMDA(0:5),GEE(5,3),AKAY(5)
+      REAL     THZERO(2),GFLD,SIGMA0,SIGMA1,SIGMA2,VAPLMD,AIRLMD
+      REAL     TA(ncom2),TB(ncom2),TC(ncom2),TF(ncom2)
 
-      real ::  vhtcap(ncom2),THCOND(ncom2)
+      REAL ::  vhtcap(ncom2),THCOND(ncom2)
       
-      real :: mineral_fraction, organic_fraction  !soil composition for thermal capacity calcs  no longer using sand and clay
+      REAL :: mineral_fraction, organic_fraction  !soil composition for thermal capacity calcs  no longer using sand and clay
       
       
 !     + + + DATA INITIALIZATIONS + + +
@@ -90,7 +90,7 @@ module Temperatue_Calcs
       DATA ALAMDA/122.7,1762.6,604.8,51.8,122.7,5.3/
       DATA VAPLMD/15.2/
       
-      integer :: current_day,current_month, current_year
+      INTEGER :: current_day,current_month, current_year
       
 
       
@@ -125,7 +125,7 @@ module Temperatue_Calcs
 !     If thermal conductivity and heat capacities are supplied,
 !     bypass this sec.
 
-    !  IF (IDFLAG .EQ. 1) then  !thermal conductivity and heat capacity flag. 1=yes, 0=no
+    !  IF (IDFLAG .EQ. 1) THEN  !thermal conductivity and heat capacity flag. 1=yes, 0=no
 
    
           
@@ -162,12 +162,12 @@ module Temperatue_Calcs
         IF(theta_zero(L) .GT. theta_sat(L)) XVOL(4,L)=theta_sat(L)
         XVOL(5,L) = theta_sat(L) - XVOL(4,L)  !air content
 
-!       Estimation of 'G' parameter when W.C is greater than F.C.
+!       Estimation of 'G' PARAMETER when W.C is greater than F.C.
 
         IF (XVOL(4,L) .GT. theta_fc(L))THEN
             GEE(5,1) = 0.333 - XVOL(5,L)/theta_sat(L)*(0.333-0.035)
             ALAMDA(5) = AIRLMD + VAPLMD
-        ELSE ! Estimation of 'G' parameter when water content is less than F.C.
+        ELSE ! Estimation of 'G' PARAMETER when water content is less than F.C.
             GFLD = 0.333 - (theta_sat(L)-theta_fc(L))/theta_sat(L)*(0.333-0.035)
             GEE(5,1) = 0.013 + XVOL(4,L)/theta_fc(L)*(GFLD-0.013)
             ALAMDA(5) = AIRLMD + XVOL(4,L)/theta_fc(L)*VAPLMD
@@ -187,16 +187,16 @@ module Temperatue_Calcs
         
          do I = 1,5
                 SIGMA0 = 0.0            
-!               Estimation of 'K' parameter
+!               Estimation of 'K' PARAMETER
                
                 do J = 1, 3
                   SIGMA0 = SIGMA0+1./(1.+(ALAMDA(I)/ALAMDA(0)-1.)*GEE(I,J))
-                end do
+                END DO
                 AKAY(I) = SIGMA0/3.
                 
                 SIGMA1 = SIGMA1 + AKAY(I)*XVOL(I,L)*ALAMDA(I)
                 SIGMA2 = SIGMA2 + AKAY(I)*XVOL(I,L)
-         end do
+         END DO
 
          !Thermal Conductivity in cal/cm-day-C
          THZERO(K) =SIGMA1/SIGMA2
@@ -225,12 +225,12 @@ module Temperatue_Calcs
          
          !VHTCAP(L)=0.46*mineral_fraction + 0.6*organic_fraction + theta_zero(L)
           
-     end do
+     END DO
      
 !      do L = 1, NCOM2
 !!       Diffusion coefficient, cm2/day
 !        DIFFCO(L) = THCOND(L)/VHTCAP(L)
-!      end do
+!      END DO
 
       DIFFCO = THCOND/VHTCAP  !Diffusion coefficient, cm2/day
          
@@ -248,7 +248,7 @@ module Temperatue_Calcs
       AIRDEN = (-0.0042*air_TEMP +1.292)*1.E-3
 
       ! Computes zero displacement height, D (meter)
-      ! and the roughness length, Z0 (meter)
+      ! and the roughness LENgth, Z0 (meter)
       ZCH = HEIGHT / 100.0    ! convert to meter    ****** !same calc used in temperature routine STREAMLINE if possible
       Call Get_Crop_Params (ZCH, Z0, D)
 
@@ -302,7 +302,7 @@ module Temperatue_Calcs
         N = N +1
         THKLY1 = THKLY1 + DELX(N)
         BBB = BBB + (soil_temp(N) - soil_temp(N-1))/DELX(N)
-      end do
+      END DO
        
       AAA = AAA/N
       BBB = BBB/N
@@ -331,7 +331,7 @@ module Temperatue_Calcs
           DELTA = FX1/FX2
          
           IF(ABS(DELTA) <= 0.1) exit ! Convergence criteria, 0.1 deg C
-      end do
+      END DO
       
       
 
@@ -353,7 +353,7 @@ module Temperatue_Calcs
           TC(I) = -(DIFFCO(I)+DIFFCO(I+1))*0.5/(DELX(I)*(DELX(I)+DELX(I+1))*0.5)
           TB(I) = 1.0 - (TA(I)+TC(I))
           TF(I) = soil_temp(I)
-         end do
+         END DO
          
          !Bottom Boundary Layer:
 

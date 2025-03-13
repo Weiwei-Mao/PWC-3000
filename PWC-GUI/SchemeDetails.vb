@@ -25,7 +25,7 @@
     Public Property MinDaysBetweenApps As String
 
     Public Property UseBatchScenarioFile As Boolean
-    Public Property ScenarioBatchFileName As String
+    Public Property ScenarioBatchFiLEName As String
 
     Public Property RunoffMitigation As String
     Public Property ErosionMitigation As String

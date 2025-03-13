@@ -5,7 +5,7 @@ module irrigation
       SUBROUTINE IRRIG_PRZM5
 !     determines soil moisture deficit, decides if  irrigation is needed, and calculates irrigation depths.
 
-      use  constants_and_Variables, ONLY: precipitation, really_not_thrufl,IRTYPE,PCDEPL,max_irrig,FLEACH, &
+      use  constants_and_Variables, ONLY: precipitation, REALly_not_thrufl,IRTYPE,PCDEPL,max_irrig,FLEACH, &
            IRRR,cint,DELX,theta_end,theta_fc,theta_wp,potential_canopy_holdup,root_node_daily, &
            under_canopy_irrig, over_canopy_irrig, UserSpecifiesDepth,user_irrig_depth_node
       
@@ -13,10 +13,10 @@ module irrigation
 
       REAL     :: SMCRIT,SMAVG,FCAVG,SMDEF
       INTEGER  :: I
-      integer  :: local_irrigation_node
+      INTEGER  :: local_irrigation_node
       
       SMDEF = 0.0
-      really_not_thrufl = .FALSE.
+      REALly_not_thrufl = .FALSE.
 !     compute average soil moisture and porosity for root zone
 
 ! SMCRIT -- soil moisture level where irrigation begins (fraction).
@@ -51,11 +51,11 @@ module irrigation
       SMAVG = 0.0
       FCAVG = 0.0
       
-      if (UserSpecifiesDepth) then
+      if (UserSpecifiesDepth) THEN
            local_irrigation_node = user_irrig_depth_node 
       else
            local_irrigation_node = root_node_daily
-      end if
+      END IF
       
   
       
@@ -72,7 +72,7 @@ module irrigation
       IF((Sum(theta_end(1:local_irrigation_node)*delx(1:local_irrigation_node)) > SMCRIT) .OR. precipitation > 0.0) THEN
           IRRR = 0.0
           return !no irrigation needed
-      end if
+      END IF
       
      
      select case (irtype)

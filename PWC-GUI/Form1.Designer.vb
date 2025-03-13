@@ -6,9 +6,9 @@ Partial Class Form1
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
-            If disposing AndAlso components IsNot Nothing Then
+            If disposing AndAlso components IsNot Nothing THEN
                 components.Dispose()
-            End If
+            END IF
         Finally
             MyBase.Dispose(disposing)
         End Try
@@ -36,7 +36,7 @@ Partial Class Form1
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RetrieveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WriteSchemeTableToFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WRITESchemeTableToFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadSchemeTableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MorenTabsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToggleAdvancedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -104,8 +104,8 @@ Partial Class Form1
         Me.ConstantProfile = New System.Windows.Forms.RadioButton()
         Me.Label109 = New System.Windows.Forms.Label()
         Me.Label110 = New System.Windows.Forms.Label()
-        Me.ExpParameter2 = New System.Windows.Forms.TextBox()
-        Me.ExpParameter1 = New System.Windows.Forms.TextBox()
+        Me.ExpPARAMETER2 = New System.Windows.Forms.TextBox()
+        Me.ExpPARAMETER1 = New System.Windows.Forms.TextBox()
         Me.ExponentialProfile = New System.Windows.Forms.RadioButton()
         Me.Label108 = New System.Windows.Forms.Label()
         Me.Label107 = New System.Windows.Forms.Label()
@@ -194,7 +194,7 @@ Partial Class Form1
         Me.Label35 = New System.Windows.Forms.Label()
         Me.PETadjustment = New System.Windows.Forms.TextBox()
         Me.Evergreen = New System.Windows.Forms.CheckBox()
-        Me.WeatherFileName = New System.Windows.Forms.TextBox()
+        Me.WeatherFiLEName = New System.Windows.Forms.TextBox()
         Me.EvergreenPanel = New System.Windows.Forms.Panel()
         Me.Label43 = New System.Windows.Forms.Label()
         Me.Label42 = New System.Windows.Forms.Label()
@@ -282,7 +282,7 @@ Partial Class Form1
         Me.BaseFlow = New System.Windows.Forms.TextBox()
         Me.FlowAveraging = New System.Windows.Forms.TextBox()
         Me.MaxDepth = New System.Windows.Forms.TextBox()
-        Me.FlowLength = New System.Windows.Forms.TextBox()
+        Me.FlowLENgth = New System.Windows.Forms.TextBox()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.InitialDepth = New System.Windows.Forms.TextBox()
         Me.WaterBodyArea = New System.Windows.Forms.TextBox()
@@ -324,7 +324,7 @@ Partial Class Form1
         Me.SchemeScenariosTab = New System.Windows.Forms.TabPage()
         Me.SelectScenarioBatchFile = New System.Windows.Forms.Button()
         Me.GetScenariosBatchCheckBox = New System.Windows.Forms.CheckBox()
-        Me.ScenarioBatchFileName = New System.Windows.Forms.TextBox()
+        Me.ScenarioBatchFiLEName = New System.Windows.Forms.TextBox()
         Me.ClearAllScenarios = New System.Windows.Forms.Button()
         Me.ClearSelectedScenarios = New System.Windows.Forms.Button()
         Me.SelectScenarios = New System.Windows.Forms.Button()
@@ -443,9 +443,9 @@ Partial Class Form1
         Me.DoDegradate2 = New System.Windows.Forms.CheckBox()
         Me.DoDegradate1 = New System.Windows.Forms.CheckBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.HeatHenry1 = New System.Windows.Forms.TextBox()
-        Me.HeatHenry2 = New System.Windows.Forms.TextBox()
-        Me.HeatHenry3 = New System.Windows.Forms.TextBox()
+        Me.HeaTHENry1 = New System.Windows.Forms.TextBox()
+        Me.HeaTHENry2 = New System.Windows.Forms.TextBox()
+        Me.HeaTHENry3 = New System.Windows.Forms.TextBox()
         Me.AirDiff3 = New System.Windows.Forms.TextBox()
         Me.AirDiff1 = New System.Windows.Forms.TextBox()
         Me.Henry1 = New System.Windows.Forms.TextBox()
@@ -622,7 +622,7 @@ Partial Class Form1
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveToolStripMenuItem, Me.RetrieveToolStripMenuItem, Me.WriteSchemeTableToFileToolStripMenuItem, Me.LoadSchemeTableToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveToolStripMenuItem, Me.RetrieveToolStripMenuItem, Me.WRITESchemeTableToFileToolStripMenuItem, Me.LoadSchemeTableToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(46, 24)
         Me.FileToolStripMenuItem.Text = "File"
@@ -639,11 +639,11 @@ Partial Class Form1
         Me.RetrieveToolStripMenuItem.Size = New System.Drawing.Size(268, 26)
         Me.RetrieveToolStripMenuItem.Text = "Retrieve"
         '
-        'WriteSchemeTableToFileToolStripMenuItem
+        'WRITESchemeTableToFileToolStripMenuItem
         '
-        Me.WriteSchemeTableToFileToolStripMenuItem.Name = "WriteSchemeTableToFileToolStripMenuItem"
-        Me.WriteSchemeTableToFileToolStripMenuItem.Size = New System.Drawing.Size(268, 26)
-        Me.WriteSchemeTableToFileToolStripMenuItem.Text = "Write Scheme Table to File"
+        Me.WRITESchemeTableToFileToolStripMenuItem.Name = "WRITESchemeTableToFileToolStripMenuItem"
+        Me.WRITESchemeTableToFileToolStripMenuItem.Size = New System.Drawing.Size(268, 26)
+        Me.WRITESchemeTableToFileToolStripMenuItem.Text = "WRITE Scheme Table to File"
         '
         'LoadSchemeTableToolStripMenuItem
         '
@@ -730,7 +730,7 @@ Partial Class Form1
         '
         'GetWeatherFileDialog
         '
-        Me.GetWeatherFileDialog.FileName = "OpenFileDialog1"
+        Me.GetWeatherFileDialog.FiLEName = "OpenFileDialog1"
         '
         'OpenAndSelectScenarios
         '
@@ -769,8 +769,8 @@ Partial Class Form1
         Me.AdvancedTab.Controls.Add(Me.ConstantProfile)
         Me.AdvancedTab.Controls.Add(Me.Label109)
         Me.AdvancedTab.Controls.Add(Me.Label110)
-        Me.AdvancedTab.Controls.Add(Me.ExpParameter2)
-        Me.AdvancedTab.Controls.Add(Me.ExpParameter1)
+        Me.AdvancedTab.Controls.Add(Me.ExpPARAMETER2)
+        Me.AdvancedTab.Controls.Add(Me.ExpPARAMETER1)
         Me.AdvancedTab.Controls.Add(Me.ExponentialProfile)
         Me.AdvancedTab.Controls.Add(Me.Label108)
         Me.AdvancedTab.Controls.Add(Me.Label107)
@@ -850,7 +850,7 @@ Partial Class Form1
         Me.GroupBox7.Size = New System.Drawing.Size(406, 148)
         Me.GroupBox7.TabIndex = 213
         Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "developer's character checker"
+        Me.GroupBox7.Text = "developer's CHARACTER checker"
         '
         'TextBox5
         '
@@ -907,7 +907,7 @@ Partial Class Form1
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(139, 23)
         Me.Button3.TabIndex = 0
-        Me.Button3.Text = "find a character"
+        Me.Button3.Text = "find a CHARACTER"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'GroupBox6
@@ -1298,21 +1298,21 @@ Partial Class Form1
         Me.Label110.TabIndex = 206
         Me.Label110.Text = "Exponent"
         '
-        'ExpParameter2
+        'ExpPARAMETER2
         '
-        Me.ExpParameter2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ExpParameter2.Location = New System.Drawing.Point(670, 557)
-        Me.ExpParameter2.Name = "ExpParameter2"
-        Me.ExpParameter2.Size = New System.Drawing.Size(53, 22)
-        Me.ExpParameter2.TabIndex = 205
+        Me.ExpPARAMETER2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ExpPARAMETER2.Location = New System.Drawing.Point(670, 557)
+        Me.ExpPARAMETER2.Name = "ExpPARAMETER2"
+        Me.ExpPARAMETER2.Size = New System.Drawing.Size(53, 22)
+        Me.ExpPARAMETER2.TabIndex = 205
         '
-        'ExpParameter1
+        'ExpPARAMETER1
         '
-        Me.ExpParameter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ExpParameter1.Location = New System.Drawing.Point(670, 535)
-        Me.ExpParameter1.Name = "ExpParameter1"
-        Me.ExpParameter1.Size = New System.Drawing.Size(53, 22)
-        Me.ExpParameter1.TabIndex = 204
+        Me.ExpPARAMETER1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ExpPARAMETER1.Location = New System.Drawing.Point(670, 535)
+        Me.ExpPARAMETER1.Name = "ExpPARAMETER1"
+        Me.ExpPARAMETER1.Size = New System.Drawing.Size(53, 22)
+        Me.ExpPARAMETER1.TabIndex = 204
         '
         'ExponentialProfile
         '
@@ -1533,7 +1533,7 @@ Partial Class Form1
         'ScenarioExaminerTab
         '
         Me.ScenarioExaminerTab.AutoScroll = True
-        Me.ScenarioExaminerTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ScenarioExaminerTab.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), INTEGER), CType(CType(224, Byte), INTEGER), CType(CType(192, Byte), INTEGER))
         Me.ScenarioExaminerTab.Controls.Add(Me.LoadFromCSV)
         Me.ScenarioExaminerTab.Controls.Add(Me.Label120)
         Me.ScenarioExaminerTab.Controls.Add(Me.Label119)
@@ -1623,7 +1623,7 @@ Partial Class Form1
         '
         'PushToLoadScenario
         '
-        Me.PushToLoadScenario.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.PushToLoadScenario.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), INTEGER), CType(CType(128, Byte), INTEGER), CType(CType(0, Byte), INTEGER))
         Me.PushToLoadScenario.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.PushToLoadScenario.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PushToLoadScenario.Location = New System.Drawing.Point(23, 24)
@@ -1636,7 +1636,7 @@ Partial Class Form1
         'Panel2
         '
         Me.Panel2.AutoScroll = True
-        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), INTEGER), CType(CType(224, Byte), INTEGER), CType(CType(192, Byte), INTEGER))
         Me.Panel2.Controls.Add(Me.Label171)
         Me.Panel2.Controls.Add(Me.TableLayoutPanel3)
         Me.Panel2.Controls.Add(Me.Label135)
@@ -1658,7 +1658,7 @@ Partial Class Form1
         Me.Panel2.Controls.Add(Me.Label35)
         Me.Panel2.Controls.Add(Me.PETadjustment)
         Me.Panel2.Controls.Add(Me.Evergreen)
-        Me.Panel2.Controls.Add(Me.WeatherFileName)
+        Me.Panel2.Controls.Add(Me.WeatherFiLEName)
         Me.Panel2.Controls.Add(Me.EvergreenPanel)
         Me.Panel2.Controls.Add(Me.bcTemp)
         Me.Panel2.Controls.Add(Me.Label83)
@@ -2301,14 +2301,14 @@ Partial Class Form1
         Me.Evergreen.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.Evergreen.UseVisualStyleBackColor = True
         '
-        'WeatherFileName
+        'WeatherFiLEName
         '
-        Me.WeatherFileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.WeatherFileName.Location = New System.Drawing.Point(158, 42)
-        Me.WeatherFileName.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.WeatherFileName.Name = "WeatherFileName"
-        Me.WeatherFileName.Size = New System.Drawing.Size(369, 22)
-        Me.WeatherFileName.TabIndex = 2
+        Me.WeatherFiLEName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.WeatherFiLEName.Location = New System.Drawing.Point(158, 42)
+        Me.WeatherFiLEName.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.WeatherFiLEName.Name = "WeatherFiLEName"
+        Me.WeatherFiLEName.Size = New System.Drawing.Size(369, 22)
+        Me.WeatherFiLEName.TabIndex = 2
         '
         'EvergreenPanel
         '
@@ -3188,15 +3188,15 @@ Partial Class Form1
         Me.MaxDepth.TabIndex = 174
         Me.MaxDepth.Text = "2"
         '
-        'FlowLength
+        'FlowLENgth
         '
-        Me.FlowLength.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.FlowLength.Location = New System.Drawing.Point(186, 204)
-        Me.FlowLength.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.FlowLength.Name = "FlowLength"
-        Me.FlowLength.Size = New System.Drawing.Size(100, 22)
-        Me.FlowLength.TabIndex = 107
-        Me.FlowLength.Text = "100"
+        Me.FlowLENgth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.FlowLENgth.Location = New System.Drawing.Point(186, 204)
+        Me.FlowLENgth.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.FlowLENgth.Name = "FlowLENgth"
+        Me.FlowLENgth.Size = New System.Drawing.Size(100, 22)
+        Me.FlowLENgth.TabIndex = 107
+        Me.FlowLENgth.Text = "100"
         '
         'Label39
         '
@@ -3205,7 +3205,7 @@ Partial Class Form1
         Me.Label39.Name = "Label39"
         Me.Label39.Size = New System.Drawing.Size(100, 16)
         Me.Label39.TabIndex = 108
-        Me.Label39.Text = "Flow Length (m)"
+        Me.Label39.Text = "Flow LENgth (m)"
         '
         'InitialDepth
         '
@@ -3561,7 +3561,7 @@ Partial Class Form1
         '
         Me.SchemeScenariosTab.Controls.Add(Me.SelectScenarioBatchFile)
         Me.SchemeScenariosTab.Controls.Add(Me.GetScenariosBatchCheckBox)
-        Me.SchemeScenariosTab.Controls.Add(Me.ScenarioBatchFileName)
+        Me.SchemeScenariosTab.Controls.Add(Me.ScenarioBatchFiLEName)
         Me.SchemeScenariosTab.Controls.Add(Me.ClearAllScenarios)
         Me.SchemeScenariosTab.Controls.Add(Me.ClearSelectedScenarios)
         Me.SchemeScenariosTab.Controls.Add(Me.SelectScenarios)
@@ -3597,14 +3597,14 @@ Partial Class Form1
         Me.GetScenariosBatchCheckBox.Text = "Get scenarios from a csv file"
         Me.GetScenariosBatchCheckBox.UseVisualStyleBackColor = True
         '
-        'ScenarioBatchFileName
+        'ScenarioBatchFiLEName
         '
-        Me.ScenarioBatchFileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ScenarioBatchFileName.Location = New System.Drawing.Point(146, 432)
-        Me.ScenarioBatchFileName.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.ScenarioBatchFileName.Name = "ScenarioBatchFileName"
-        Me.ScenarioBatchFileName.Size = New System.Drawing.Size(806, 22)
-        Me.ScenarioBatchFileName.TabIndex = 90
+        Me.ScenarioBatchFiLEName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ScenarioBatchFiLEName.Location = New System.Drawing.Point(146, 432)
+        Me.ScenarioBatchFiLEName.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ScenarioBatchFiLEName.Name = "ScenarioBatchFiLEName"
+        Me.ScenarioBatchFiLEName.Size = New System.Drawing.Size(806, 22)
+        Me.ScenarioBatchFiLEName.TabIndex = 90
         '
         'ClearAllScenarios
         '
@@ -4222,7 +4222,7 @@ Partial Class Form1
         Me.Column24.HeaderText = "Scheme Description"
         Me.Column24.MinimumWidth = 6
         Me.Column24.Name = "Column24"
-        Me.Column24.ReadOnly = True
+        Me.Column24.READOnly = True
         '
         'Delete
         '
@@ -4319,9 +4319,9 @@ Partial Class Form1
         Me.ChemPropertyPanel.Controls.Add(Me.DoDegradate2, 4, 0)
         Me.ChemPropertyPanel.Controls.Add(Me.DoDegradate1, 2, 0)
         Me.ChemPropertyPanel.Controls.Add(Me.Label17, 0, 18)
-        Me.ChemPropertyPanel.Controls.Add(Me.HeatHenry1, 1, 18)
-        Me.ChemPropertyPanel.Controls.Add(Me.HeatHenry2, 3, 18)
-        Me.ChemPropertyPanel.Controls.Add(Me.HeatHenry3, 5, 18)
+        Me.ChemPropertyPanel.Controls.Add(Me.HeaTHENry1, 1, 18)
+        Me.ChemPropertyPanel.Controls.Add(Me.HeaTHENry2, 3, 18)
+        Me.ChemPropertyPanel.Controls.Add(Me.HeaTHENry3, 5, 18)
         Me.ChemPropertyPanel.Controls.Add(Me.AirDiff3, 5, 17)
         Me.ChemPropertyPanel.Controls.Add(Me.AirDiff1, 1, 17)
         Me.ChemPropertyPanel.Controls.Add(Me.Henry1, 1, 16)
@@ -5095,40 +5095,40 @@ Partial Class Form1
         Me.Label17.TabIndex = 75
         Me.Label17.Text = "Heat of Henry (J/mol)"
         '
-        'HeatHenry1
+        'HeaTHENry1
         '
-        Me.HeatHenry1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.HeatHenry1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.HeatHenry1.Location = New System.Drawing.Point(380, 544)
-        Me.HeatHenry1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.HeatHenry1.Name = "HeatHenry1"
-        Me.HeatHenry1.Size = New System.Drawing.Size(119, 22)
-        Me.HeatHenry1.TabIndex = 18
-        Me.HeatHenry1.Tag = "parent heat of Henry."
+        Me.HeaTHENry1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.HeaTHENry1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.HeaTHENry1.Location = New System.Drawing.Point(380, 544)
+        Me.HeaTHENry1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.HeaTHENry1.Name = "HeaTHENry1"
+        Me.HeaTHENry1.Size = New System.Drawing.Size(119, 22)
+        Me.HeaTHENry1.TabIndex = 18
+        Me.HeaTHENry1.Tag = "parent heat of Henry."
         '
-        'HeatHenry2
+        'HeaTHENry2
         '
-        Me.HeatHenry2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.HeatHenry2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.HeatHenry2.Location = New System.Drawing.Point(563, 544)
-        Me.HeatHenry2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.HeatHenry2.Name = "HeatHenry2"
-        Me.HeatHenry2.Size = New System.Drawing.Size(119, 22)
-        Me.HeatHenry2.TabIndex = 42
-        Me.HeatHenry2.Tag = "daughter heat of Henry."
-        Me.HeatHenry2.Visible = False
+        Me.HeaTHENry2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.HeaTHENry2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.HeaTHENry2.Location = New System.Drawing.Point(563, 544)
+        Me.HeaTHENry2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.HeaTHENry2.Name = "HeaTHENry2"
+        Me.HeaTHENry2.Size = New System.Drawing.Size(119, 22)
+        Me.HeaTHENry2.TabIndex = 42
+        Me.HeaTHENry2.Tag = "daughter heat of Henry."
+        Me.HeaTHENry2.Visible = False
         '
-        'HeatHenry3
+        'HeaTHENry3
         '
-        Me.HeatHenry3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.HeatHenry3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.HeatHenry3.Location = New System.Drawing.Point(746, 544)
-        Me.HeatHenry3.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.HeatHenry3.Name = "HeatHenry3"
-        Me.HeatHenry3.Size = New System.Drawing.Size(121, 22)
-        Me.HeatHenry3.TabIndex = 66
-        Me.HeatHenry3.Tag = "granddaughter heat of Henry."
-        Me.HeatHenry3.Visible = False
+        Me.HeaTHENry3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.HeaTHENry3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.HeaTHENry3.Location = New System.Drawing.Point(746, 544)
+        Me.HeaTHENry3.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.HeaTHENry3.Name = "HeaTHENry3"
+        Me.HeaTHENry3.Size = New System.Drawing.Size(121, 22)
+        Me.HeaTHENry3.TabIndex = 66
+        Me.HeaTHENry3.Tag = "granddaughter heat of Henry."
+        Me.HeaTHENry3.Visible = False
         '
         'AirDiff3
         '
@@ -5640,7 +5640,7 @@ Partial Class Form1
         '
         Me.Label128.AutoSize = True
         Me.Label128.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label128.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label128.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), INTEGER), CType(CType(64, Byte), INTEGER), CType(CType(0, Byte), INTEGER))
         Me.Label128.Location = New System.Drawing.Point(29, 487)
         Me.Label128.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label128.Name = "Label128"
@@ -5902,7 +5902,7 @@ Partial Class Form1
         '
         Me.Label293.AutoSize = True
         Me.Label293.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label293.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label293.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), INTEGER), CType(CType(64, Byte), INTEGER), CType(CType(0, Byte), INTEGER))
         Me.Label293.Location = New System.Drawing.Point(24, 3)
         Me.Label293.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label293.Name = "Label293"
@@ -6132,7 +6132,7 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.BenthicFoc)
         Me.Panel1.Controls.Add(Me.Label77)
         Me.Panel1.Controls.Add(Me.BenthicDOC)
-        Me.Panel1.Controls.Add(Me.FlowLength)
+        Me.Panel1.Controls.Add(Me.FlowLENgth)
         Me.Panel1.Controls.Add(Me.BenthicBiomass)
         Me.Panel1.Controls.Add(Me.Label78)
         Me.Panel1.Controls.Add(Me.Label79)
@@ -6161,13 +6161,13 @@ Partial Class Form1
         Me.Label115.Name = "Label115"
         Me.Label115.Size = New System.Drawing.Size(245, 16)
         Me.Label115.TabIndex = 219
-        Me.Label115.Text = "Name this waterbody (20 character max)"
+        Me.Label115.Text = "Name this waterbody (20 CHARACTER max)"
         '
         'WaterbodyName
         '
         Me.WaterbodyName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.WaterbodyName.Location = New System.Drawing.Point(304, 6)
-        Me.WaterbodyName.MaxLength = 20
+        Me.WaterbodyName.MaxLENgth = 20
         Me.WaterbodyName.Name = "WaterbodyName"
         Me.WaterbodyName.Size = New System.Drawing.Size(164, 22)
         Me.WaterbodyName.TabIndex = 218
@@ -6234,7 +6234,7 @@ Partial Class Form1
         Me.SprayGridView.AllowUserToDeleteRows = False
         Me.SprayGridView.AllowUserToResizeColumns = False
         Me.SprayGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), INTEGER), CType(CType(255, Byte), INTEGER), CType(CType(192, Byte), INTEGER))
         Me.SprayGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
         Me.SprayGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.SprayGridView.BackgroundColor = System.Drawing.Color.Aqua
@@ -6432,7 +6432,7 @@ Partial Class Form1
         '
         'OpenWaterbodyFile
         '
-        Me.OpenWaterbodyFile.FileName = "OpenFileDialog1"
+        Me.OpenWaterbodyFile.FiLEName = "OpenFileDialog1"
         '
         'Timer1
         '
@@ -6462,7 +6462,7 @@ Partial Class Form1
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDIMENSIONs = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(1028, 752)
@@ -6611,7 +6611,7 @@ Partial Class Form1
     Friend WithEvents WeatherDirectoryBox As TextBox
     Friend WithEvents latitude As TextBox
     Friend WithEvents ScenarioID As TextBox
-    Friend WithEvents WeatherFileName As TextBox
+    Friend WithEvents WeatherFiLEName As TextBox
     Friend WithEvents GetWeatherFileDirectory As Button
     Friend WithEvents Label62 As Label
     Friend WithEvents Label84 As Label
@@ -6718,9 +6718,9 @@ Partial Class Form1
     Friend WithEvents DoDegradate2 As CheckBox
     Friend WithEvents DoDegradate1 As CheckBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents HeatHenry1 As TextBox
-    Friend WithEvents HeatHenry2 As TextBox
-    Friend WithEvents HeatHenry3 As TextBox
+    Friend WithEvents HeaTHENry1 As TextBox
+    Friend WithEvents HeaTHENry2 As TextBox
+    Friend WithEvents HeaTHENry3 As TextBox
     Friend WithEvents AirDiff3 As TextBox
     Friend WithEvents AirDiff2 As TextBox
     Friend WithEvents AirDiff1 As TextBox
@@ -6751,7 +6751,7 @@ Partial Class Form1
     Friend WithEvents Label2 As Label
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents Label39 As Label
-    Friend WithEvents FlowLength As TextBox
+    Friend WithEvents FlowLENgth As TextBox
     Friend WithEvents slope As TextBox
     Friend WithEvents ireg As TextBox
     Friend WithEvents usleP As TextBox
@@ -6916,8 +6916,8 @@ Partial Class Form1
     Friend WithEvents Column12 As DataGridViewButtonColumn
     Friend WithEvents Label109 As Label
     Friend WithEvents Label110 As Label
-    Friend WithEvents ExpParameter2 As TextBox
-    Friend WithEvents ExpParameter1 As TextBox
+    Friend WithEvents ExpPARAMETER2 As TextBox
+    Friend WithEvents ExpPARAMETER1 As TextBox
     Friend WithEvents ExponentialProfile As RadioButton
     Friend WithEvents Label108 As Label
     Friend WithEvents Label107 As Label
@@ -7033,7 +7033,7 @@ Partial Class Form1
     Friend WithEvents Column36 As DataGridViewTextBoxColumn
     Friend WithEvents SelectScenarioBatchFile As Button
     Friend WithEvents GetScenariosBatchCheckBox As CheckBox
-    Friend WithEvents ScenarioBatchFileName As TextBox
+    Friend WithEvents ScenarioBatchFiLEName As TextBox
     Friend WithEvents OpenSelectScenarioBatchFile As OpenFileDialog
     Friend WithEvents Label9 As Label
     Friend WithEvents Label36 As Label
@@ -7064,7 +7064,7 @@ Partial Class Form1
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents Label116 As Label
     Friend WithEvents GroupBox7 As GroupBox
-    Friend WithEvents WriteSchemeTableToFileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents WRITESchemeTableToFileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LoadSchemeTableToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents HelpToolStripMenuItem As ToolStripMenuItem

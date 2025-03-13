@@ -19,14 +19,14 @@ module chemical_transport
 	
 
     use utilities_1
-    use readinputs
+    use READinputs
 
     use field_hydrology
     use clock_variables
 
     implicit none
 
-    integer :: i 
+    INTEGER :: i 
   
     First_time_through_PRZM = .TRUE. 
     julday1900 = startday
@@ -75,7 +75,7 @@ module chemical_transport
 
 
       julday1900 = julday1900  +1
-	end do
+	END DO
 
    end subroutine chem_transport_onfield
     
@@ -105,21 +105,21 @@ module chemical_transport
 	 use clock_variables
      implicit none
 		
-     integer  :: I,K, J
-     integer  :: julday                   !this is the day of the year starting with Jan 1
-     integer  :: current_year, current_month, current_day    
+     INTEGER  :: I,K, J
+     INTEGER  :: julday                   !this is the day of the year starting with Jan 1
+     INTEGER  :: current_year, current_month, current_day    
      REAL     :: OLDKH(NCOM2)
-     real     :: old_conc(NCOM2), new_conc(NCOM2)
-     real     :: predicted_conc(NCOM2)
-     real     :: conc1_neq(NCOM2)         !mobile region post nonequilibrium phase  conc
-     real     :: S2_neq(NCOM2)            !region2 post nonequilibrium phase conc
-     real     :: S2_old(ncom2)            !local sorbed2 concentration    
-     real     :: theta_new_subday(NCOM2)
-     real     :: theta_old_subday(NCOM2)
-     real     :: delta_watercontent(NCOM2)  !local water contents for use with subdaily time steps
-     real     :: theta_air_new_subday(NCOM2)
-     real     :: theta_air_old_subday(NCOM2)
-     real     :: delta_aircontent(NCOM2)    !local water contents for use with subdaily time steps  
+     REAL     :: old_conc(NCOM2), new_conc(NCOM2)
+     REAL     :: predicted_conc(NCOM2)
+     REAL     :: conc1_neq(NCOM2)         !mobile region post nonequilibrium phase  conc
+     REAL     :: S2_neq(NCOM2)            !region2 post nonequilibrium phase conc
+     REAL     :: S2_old(ncom2)            !local sorbed2 concentration    
+     REAL     :: theta_new_subday(NCOM2)
+     REAL     :: theta_old_subday(NCOM2)
+     REAL     :: delta_watercontent(NCOM2)  !local water contents for use with subdaily time steps
+     REAL     :: theta_air_new_subday(NCOM2)
+     REAL     :: theta_air_old_subday(NCOM2)
+     REAL     :: delta_aircontent(NCOM2)    !local water contents for use with subdaily time steps  
    
      !this version of julian day is needed for the curve number and erosion routines
      call get_date (julday1900, current_year, current_month, current_day) 
@@ -129,11 +129,11 @@ module chemical_transport
 
      ! Application of Pesticide into System
      do i = 1,  total_applications   !check to see if this is an application day     
-       if (application_date(i)==julday1900) then	
+       if (application_date(i)==julday1900) THEN	
       
              CALL PESTAP(i)  
-       end if
-	 end do
+       END IF
+	 END DO
 		
      !Note for application day:
        !Currently there is no iterative adjustment to Kd (in Freundlich case) following application. 
@@ -142,11 +142,11 @@ module chemical_transport
      !The pesticide from washoff is taken into account in the "F" term of tridiagonal, somewhat in a manner
      !that it is production over time rather than an intial condition
    
-     if (some_applications_were_foliar) then 
+     if (some_applications_were_foliar) THEN 
         CALL plant_pesticide_washoff
         if (harvest_day ) CALL plant_pesticide_harvest_application        
         CALL plant_pesticide_degradation
-     end if   
+     END IF   
 
 	 
      
@@ -157,7 +157,7 @@ module chemical_transport
            old_conc(i) = conc_total_per_water(k,i)*theta_zero(i)/ &
                          (theta_zero(i)+kd_new(k,i)*bulkdensity(i)+ thair_old(i)*old_henry(k,i))     
            S2_old(i) =sorbed2(k,i)  !create a local array to help things run smoothly 
-        end do
+        END DO
  
    
         ! ****** HENRY LAW COEFFICIENT CALCULATION Temperature Adjustments**************   
@@ -190,7 +190,7 @@ module chemical_transport
             !***************************************************************************   
             !******************** Nonequilibrium ***************************************     
             !***************************************************************************   
-            if (is_nonequilibrium) then
+            if (is_nonequilibrium) THEN
                 ! 1.  Use analytical solution to transfer mass between mobile region and Noneq region. Use current Kd_new.
                 !     Get new pre-predicted mobile concentration.
                    
@@ -203,12 +203,12 @@ module chemical_transport
                 
                 S2_old   = S2_neq       !update the sorbed 2 region and we are done with it for this time step
                 old_conc = conc1_neq    !update the beginning day concentration to reflect post-nonequilibrium step
-            end if 
+            END IF 
       
             !***************************************************************************                              
             !************************** Predictor **************************************
             !***************************************************************************
-            if (is_Freundlich) then                  !Freundlich Flag: only need P/C for nonlinear isotherms
+            if (is_Freundlich) THEN                  !Freundlich Flag: only need P/C for nonlinear isotherms
                 !calculate a "predictor" concentration for calculating predictor Kd:
                 !Split operator : Mass transfer to Region 2 is solved independently of Advection Dispersion operation.
                 
@@ -218,8 +218,8 @@ module chemical_transport
                 
                 !  3. With predicted future concentration, calculate a future Kd to be used in the corrector step. No concentrations are 
                 !     saved during the precictor step.
-                Call Freundlich(k, predicted_conc)           !Puts a predicted New Kd into parameter module
-			end if 
+                Call Freundlich(k, predicted_conc)           !Puts a predicted New Kd into PARAMETER module
+			END IF 
                     
             !**************************************************************************** 
             !************************  Corrector  ***************************************
@@ -233,7 +233,7 @@ module chemical_transport
             theta_old_subday = theta_new_subday        !store these for use in tridiagonal
             theta_air_old_subday = theta_air_new_subday
                 
-		end do    !*******end sub daily here
+		END DO    !*******end sub daily here
 
 
         !Store new total mass
@@ -243,22 +243,22 @@ module chemical_transport
             Sorbed2(k,i)  = S2_neq(i)
             mass_in_compartment(K,I) = new_conc(i) * (theta_end(i) + kd_new(K,i)*bulkdensity(i) + thair_new(i)*new_henry(K,i))*delx(i)
             mass_in_compartment2(K,I) = Sorbed2(k,i)*bulkdensity(i)*delx(i)                        
-        end do
+        END DO
         
         
         
        !*****END PREDICTOR CORRECTOR ********************************************************************************************
 
-       call flux_calculations(K, new_conc)   ! Fluxes should really be a summation of the subdaily--fix this
+       call flux_calculations(K, new_conc)   ! Fluxes should REALly be a summation of the subdaily--fix this
        conc_porewater(k,:) =  new_conc       ! rename concentration to something of more sense
        
        !Store new values for start values of next run
        old_Henry(K,:) = new_henry(K,:) !First Store Previous Run's Henry's Constant
-	 end do
+	 END DO
 
     !probably could/should take this out of this subroutine	, but would require more arrays saves
 	 call get_inputs_from_field_for_vvwm	
-     CALL write_outputfile_2    
+     CALL WRITE_outputfile_2    
 	           
    end subroutine chemical_transport_oneday
    
@@ -274,22 +274,22 @@ use clock_variables
 	
     implicit none
 
-    !Sets up the coefficient matrix for the solution of the soil pesticide transport equation. It then calls an equation
+    !Sets up the coefficient matrix for the solution of the soil pesticide transport equation. It THEN calls an equation
     !solver for the tridiagonal matrix and sets up pesticide flux terms using the new concentrations.
     !Modification date: 2/18/92 JAM
     !Further modified at AQUA TERRA Consultants to hard code the
     !pesticide extraction depth to 1 cm. 9/93
 
     INTEGER, intent(in)  :: K!     K      - chemical number being simulated (1-3)
-    real,    intent(in)  :: old_conc(ncom2)
-    real,    intent(out) :: new_conc(ncom2)
-    real,    intent(in)  :: delt                !time step, could be subdaily
-    real,    intent(in)  :: theta_new(ncom2), theta_old(ncom2)
-    real,    intent(in)  :: theta_air_new(ncom2), theta_air_old(ncom2)
+    REAL,    intent(in)  :: old_conc(ncom2)
+    REAL,    intent(out) :: new_conc(ncom2)
+    REAL,    intent(in)  :: delt                !time step, could be subdaily
+    REAL,    intent(in)  :: theta_new(ncom2), theta_old(ncom2)
+    REAL,    intent(in)  :: theta_air_new(ncom2), theta_air_old(ncom2)
       
     INTEGER ::   I
-    real    ::   A(ncom2),B(ncom2),C(ncom2),F(ncom2)
-integer mm
+    REAL    ::   A(ncom2),B(ncom2),C(ncom2),F(ncom2)
+INTEGER mm
 
     SRCFLX(1,:)=0.0  !Parent production is always zero. For degradate, this variable gets populated after corrrector run
     ! Set up coefficients for surface layer
@@ -344,7 +344,7 @@ integer mm
         
 
         
-    end do
+    END DO
         
 
 
@@ -368,8 +368,8 @@ integer mm
 CALL CPU_TIME (time_5)	
 
 !do i= 1, ncom2
-!       write(97,'(I8, 4G12.4)')  i, (DWRATE(K,i)*theta_new(i))  +(DSRATE(K,i)*kd_new(K,i)*bulkdensity(i)),DWRATE(K,i), DSRATE(K,i)
-!end do
+!       WRITE(97,'(I8, 4G12.4)')  i, (DWRATE(K,i)*theta_new(i))  +(DSRATE(K,i)*kd_new(K,i)*bulkdensity(i)),DWRATE(K,i), DSRATE(K,i)
+!END DO
 !
 !  
     CALL TRIDIAGONAL_Solution (A,B,C, new_conc,F,NCOM2)        
@@ -403,9 +403,9 @@ subroutine flux_calculations(k, concentration)
                                  kd_new, nchem
                                           
     implicit none
-    real, intent(in)    :: concentration(ncom2)  !porewater concentration
-    integer, intent(in) :: k
-    integer :: i
+    REAL, intent(in)    :: concentration(ncom2)  !porewater concentration
+    INTEGER, intent(in) :: k
+    INTEGER :: i
 
     !Primary Fluxes need for program at all times
     ROFLUX(K) =  sum( runoff_on_day*runoff_intensity(1:RNCMPT)*concentration(1:RNCMPT) *DELX(1:RNCMPT) )   
@@ -425,13 +425,13 @@ subroutine flux_calculations(k, concentration)
             PVFLUX(K,I)=DGAIR(I)*new_henry(K,I)/(0.5*(DELX(I)+DELX(I+1)))*concentration(I)    &
                    -DGAIR(I+1)*new_henry(K,I+1)/(0.5*(DELX(I)+DELX(I+1)))*concentration(I+1)       
             IF(ABS(PVFLUX(K,I)).LT.1.E-34)PVFLUX(K,I)=0.0       
-        end do
+        END DO
              
         !------------Soil Degradation------------------------------------
         DKFLUX(K,1)=DELX(1)*concentration(1)*(DWRATE(K,1)*theta_end(1) + DSRATE(K,1)*bulkdensity(1)*kd_new(K,1)+ DGRATE(K,1)*THAIR_new(1)*new_henry(K,1) )
         do i=1,NCOM2 
              DKFLUX(K,I)=DELX(I)*concentration(i)*(DWRATE(K,i)*theta_end(I)+ DSRATE(K,I)*bulkdensity(I)*kd_new(K,I)+  DGRATE(K,I)*THAIR_new(I)*new_henry(K,I)   )           
-        end do
+        END DO
         SDKFLX(K)=sum(DKFLUX(K,:))
 
         !------------Plant Washoff ------------------------------------------
@@ -447,37 +447,37 @@ subroutine flux_calculations(k, concentration)
     
     
     !------------------------Degradate Production --------------------------------------
-    IF (nchem ==1)then 
+    IF (nchem ==1)THEN 
          srcflx=0.0
     else     
-        if(k.eq.1)then
+        if(k.eq.1)THEN
             !Assume no gas phase degradation here
             srcflx(2,1)=DELX(1)*concentration(1)*(MolarConvert_aq12(1)*DWRATE(K,1)*theta_end(1) + MolarConvert_s12(1)*DSRATE(K,1)*bulkdensity(1)*kd_new(K,1) ) !+DGRATE(K,1)*THAIR_new(1)*new_henry(K,1)   ) 
             srcflx(3,1)=DELX(1)*concentration(1)*(MolarConvert_aq13(1)*DWRATE(K,1)*theta_end(1) + MolarConvert_s13(1)*DSRATE(K,1)*bulkdensity(1)*kd_new(K,1) ) !+DGRATE(K,1)*THAIR_new(1)*new_henry(K,1)   )
-        elseif(k.eq.2)then    
+        elseif(k.eq.2)THEN    
             srcflx(3,1)=srcflx(3,1)+ DELX(1)*concentration(1)*(MolarConvert_aq23(1)*DWRATE(K,1)*theta_end(1) + MolarConvert_s23(1)*DSRATE(K,1)*bulkdensity(1)*kd_new(K,1) )
         endif
         
         do i=2,NCOM2- 1 
-            if(k.eq.1)then  
+            if(k.eq.1)THEN  
                 srcflx(2,i) = DELX(i)*concentration(i)*(MolarConvert_aq12(i)*DWRATE(K,i)*theta_end(i) +  &
                           MolarConvert_s12(i)*DSRATE(K,i)*bulkdensity(i)*kd_new(K,i) )   
                 srcflx(3,i) = DELX(i)*concentration(i)*(MolarConvert_aq13(i)*DWRATE(K,i)*theta_end(i) + &
                           MolarConvert_s13(i)*DSRATE(K,i)*bulkdensity(i)*kd_new(K,i) ) 
-            elseif(k.eq.2)then
+            elseif(k.eq.2)THEN
                 srcflx(3,i) = srcflx(3,i)+DELX(i)*concentration(i)*(MolarConvert_aq23(i)*DWRATE(K,i)*theta_end(i) +   &
                          MolarConvert_s23(i)*DSRATE(K,i)*bulkdensity(i)*kd_new(K,i) ) 
             endif
-        end do
+        END DO
 
-        if(k.eq.1) then
+        if(k.eq.1) THEN
             srcflx(2,ncom2)= DELX(NCOM2)*concentration(NCOM2)* & 
                           (MolarConvert_aq12(ncom2)*DWRATE(K,NCOM2)*theta_end(NCOM2) +          &
                            MolarConvert_s12(ncom2) *DSRATE(K,NCOM2)*bulkdensity(NCOM2)*kd_new(K,NCOM2) )  ! +DGRATE(K,NCOM2)*THAIR_new(NCOM2)*new_henry(K,NCOM2)   )
             srcflx(3,ncom2)= DELX(NCOM2)*concentration(NCOM2)* & 
                            (MolarConvert_aq13(ncom2)* DWRATE(K,NCOM2)* theta_end(NCOM2) +          &
                             MolarConvert_s13(ncom2) * DSRATE(K,NCOM2)* bulkdensity(NCOM2)*kd_new(K,NCOM2) ) 
-        elseif(k.eq.2) then
+        elseif(k.eq.2) THEN
             srcflx(3,ncom2) = srcflx(3,ncom2)  + DELX(NCOM2)*concentration(NCOM2)* & 
                           (MolarConvert_aq23(ncom2)* DWRATE(K,NCOM2)* theta_end(NCOM2) +          &
                           MolarConvert_s23(ncom2) * DSRATE(K,NCOM2)* bulkdensity(NCOM2)*kd_new(K,NCOM2) ) 

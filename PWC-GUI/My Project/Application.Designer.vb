@@ -23,7 +23,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Public Sub New()
-            MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuthenticationMode.Windows)
+            MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuTHENticationMode.Windows)
             Me.IsSingleInstance = false
             Me.EnableVisualStyles = true
             Me.SaveMySettingsOnExit = true
@@ -36,7 +36,7 @@ Namespace My
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
-        Protected Overrides Function OnInitialize(ByVal commandLineArgs As System.Collections.ObjectModel.ReadOnlyCollection(Of String)) As Boolean
+        Protected Overrides Function OnInitialize(ByVal commandLineArgs As System.Collections.ObjectModel.READOnlyCollection(Of String)) As Boolean
             Me.MinimumSplashScreenDisplayTime = 0
             Return MyBase.OnInitialize(commandLineArgs)
         End Function

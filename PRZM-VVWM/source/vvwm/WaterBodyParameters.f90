@@ -1,76 +1,76 @@
-Module waterbody_parameters
+Module waterbody_PARAMETERs
     
 implicit none
-    character(len=20) :: this_waterbody_name  !name of specific water body, included in waterbody input file
-    integer :: SimTypeFlag    !1=vvwm,2 = USepa pond, 3 = usepa reservoir, 4=constant vol w/o flow, 5 = const vol w/flow
-    real :: D_over_dx     
-    real :: benthic_depth 
-    real :: porosity      
-    real :: bulk_density  
-    real :: FROC2         
-    real :: DOC2          
-    real :: BNMAS         
-    real :: DFAC          
-    real :: SUSED         
-    real :: CHL           
-    real :: FROC1         
-    real :: DOC1          
-    real :: PLMAS         
-    real :: afield            !square meters 
-    real :: area_waterbody    
-    real :: depth_0    
-    real :: depth_max     
-    real :: baseflow       
-    integer:: flow_averaging  !0 indicates full simulation average, other values are back averaged days
-    real   :: hydro_length
+    CHARACTER(LEN=20) :: this_waterbody_name  !name of specific water body, included in waterbody input file
+    INTEGER :: SimTypeFlag    !1=vvwm,2 = USepa pond, 3 = usepa reservoir, 4=constant vol w/o flow, 5 = const vol w/flow
+    REAL :: D_over_dx     
+    REAL :: benthic_depth 
+    REAL :: porosity      
+    REAL :: bulk_density  
+    REAL :: FROC2         
+    REAL :: DOC2          
+    REAL :: BNMAS         
+    REAL :: DFAC          
+    REAL :: SUSED         
+    REAL :: CHL           
+    REAL :: FROC1         
+    REAL :: DOC1          
+    REAL :: PLMAS         
+    REAL :: afield            !square meters 
+    REAL :: area_waterbody    
+    REAL :: depth_0    
+    REAL :: depth_max     
+    REAL :: baseflow       
+    INTEGER:: flow_averaging  !0 indicates full simulation average, other values are back averaged days
+    REAL   :: hydro_LENgth
     
-	logical :: is_zero_depth  !post processing to zero out conc below a certain depth
-    real    :: zero_depth     !depth below which conc are zeroed during post processing
+	LOGICAL :: is_zero_depth  !post processing to zero out conc below a certain depth
+    REAL    :: zero_depth     !depth below which conc are zeroed during post processing
 
 	
-	real,dimension(14):: spray_values  !default or read-in values for spray drift, their order should corresponds to the menu in the application table
+	REAL,DIMENSION(14):: spray_values  !default or READ-in values for spray drift, their order should corresponds to the menu in the application table
 
-    real,allocatable,dimension(:,:)	  :: spraytable !holds all the spraydrift and buffer values
-	integer :: rows_spraytable
-    integer :: columns_spraytable
+    REAL,ALLOCATABLE,DIMENSION(:,:)	  :: spraytable !holds all the spraydrift and buffer values
+	INTEGER :: rows_spraytable
+    INTEGER :: columns_spraytable
     
-    logical:: itsapond, itsareservoir, itsother, itstpezwpez, use_tpezbuffer
-    character(len=512), allocatable, dimension(:) :: waterbody_names  !this holds the info for looping waterbodies (position 1 and 2 are often Pond and reservoir)
-    character(len=512), parameter :: USEPA_pond = "USEPA Pond"  
-    character(len=512), parameter :: USEPA_reservoir = "USEPA Reservoir"
+    LOGICAL:: itsapond, itsareservoir, itsother, itstpezwpez, use_tpezbuffer
+    CHARACTER(LEN=512), ALLOCATABLE, DIMENSION(:) :: waterbody_names  !this holds the info for looping waterbodies (position 1 and 2 are often Pond and reservoir)
+    CHARACTER(LEN=512), PARAMETER :: USEPA_pond = "USEPA Pond"  
+    CHARACTER(LEN=512), PARAMETER :: USEPA_reservoir = "USEPA Reservoir"
     
  
     !**** POND ****************
 
-    integer, parameter :: waterbodytype_P = 2
-    real,parameter :: D_over_dx_P     = 1e-8
-    real,parameter :: benthic_depth_P = 0.05
-    real,parameter :: porosity_P      = 0.5    
-    real,parameter :: bulk_density_P  = 1.35
-    real,parameter :: FROC2_P         = 0.04
-    real,parameter :: DOC2_P          = 5.0
-    real,parameter :: BNMAS_P         = 0.006
-    real,parameter :: DFAC_P          = 1.19
-    real,parameter :: SUSED_P         = 30.
-    real,parameter :: CHL_P           = 0.005
-    real,parameter :: FROC1_P         = 0.04
-    real,parameter :: DOC1_P          = 5.0
-    real,parameter :: PLMAS_P         = 0.4    
-    real,parameter :: afield_P        = 100000.  !square meters
-    real,parameter :: area_waterbody_P   = 10000.
-    real,parameter :: depth_0_P       = 2.0
-    real,parameter :: depth_max_P     = 2.0
-    real,parameter :: baseflow_P      = 0.0   
-    integer,parameter :: flow_averaging_P = 0
-    real,parameter    :: hydro_length_P      = 356.8 
+    INTEGER, PARAMETER :: waterbodytype_P = 2
+    REAL,PARAMETER :: D_over_dx_P     = 1e-8
+    REAL,PARAMETER :: benthic_depth_P = 0.05
+    REAL,PARAMETER :: porosity_P      = 0.5    
+    REAL,PARAMETER :: bulk_density_P  = 1.35
+    REAL,PARAMETER :: FROC2_P         = 0.04
+    REAL,PARAMETER :: DOC2_P          = 5.0
+    REAL,PARAMETER :: BNMAS_P         = 0.006
+    REAL,PARAMETER :: DFAC_P          = 1.19
+    REAL,PARAMETER :: SUSED_P         = 30.
+    REAL,PARAMETER :: CHL_P           = 0.005
+    REAL,PARAMETER :: FROC1_P         = 0.04
+    REAL,PARAMETER :: DOC1_P          = 5.0
+    REAL,PARAMETER :: PLMAS_P         = 0.4    
+    REAL,PARAMETER :: afield_P        = 100000.  !square meters
+    REAL,PARAMETER :: area_waterbody_P   = 10000.
+    REAL,PARAMETER :: depth_0_P       = 2.0
+    REAL,PARAMETER :: depth_max_P     = 2.0
+    REAL,PARAMETER :: baseflow_P      = 0.0   
+    INTEGER,PARAMETER :: flow_averaging_P = 0
+    REAL,PARAMETER    :: hydro_LENgth_P      = 356.8 
 	
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-	real,dimension(14),parameter :: spray_p = (/0.242,0.125,0.089,0.068, 0.062, 0.027, 0.017, 0.011, 0.042, 0.015, 0.002, 0.022, 1.0, 0.0 /)
+	REAL,DIMENSION(14),PARAMETER :: spray_p = (/0.242,0.125,0.089,0.068, 0.062, 0.027, 0.017, 0.011, 0.042, 0.015, 0.002, 0.022, 1.0, 0.0 /)
 
-    integer,parameter :: rows_spraytable_P = 17
-    integer,parameter :: columns_spraytable_P =15   
+    INTEGER,PARAMETER :: rows_spraytable_P = 17
+    INTEGER,PARAMETER :: columns_spraytable_P =15   
 
-real,dimension(17,15),parameter :: spray_table_P = transpose(reshape((/&
+REAL,DIMENSION(17,15),PARAMETER :: spray_table_P = transpose(reshape((/&
 0.0000, 10.000, 25.000, 50.000, 75.000, 100.00, 125.00, 150.00, 200.00, 250.00, 300.00, 350.00, 400.00  , 450.00  , 500.00    ,&
 0.2421, 0.2266, 0.2076, 0.1821, 0.1617, 0.1446, 0.1311, 0.1196, 0.1023, 0.0899, 0.0804, 0.0730, 0.067   , 0.0622  , 0.0582    ,&
 0.1254, 0.1082, 0.0916, 0.0733, 0.0598, 0.0503, 0.0435, 0.0385, 0.0314, 0.0266, 0.0231, 0.0205, 0.0186  , 0.0172  , 0.016     ,&
@@ -94,30 +94,30 @@ real,dimension(17,15),parameter :: spray_table_P = transpose(reshape((/&
     
     !*** RESERVOIR ****************
 
-    integer, parameter :: waterbodytype_R = 3
-    real,parameter :: D_over_dx_R     = 1e-8
-    real,parameter :: benthic_depth_R = 0.05
-    real,parameter :: porosity_R      = 0.5    
-    real,parameter :: bulk_density_R  = 1.35
-    real,parameter :: FROC2_R         = 0.04
-    real,parameter :: DOC2_R          = 5.0
-    real,parameter :: BNMAS_R         = 0.006
-    real,parameter :: DFAC_R          = 1.19
-    real,parameter :: SUSED_R         = 30.
-    real,parameter :: CHL_R           = 0.005
-    real,parameter :: FROC1_R         = 0.04
-    real,parameter :: DOC1_R          = 5.0
-    real,parameter :: PLMAS_R         = 0.4       
-    real,parameter :: afield_R        = 1728000.
-    real,parameter :: area_waterbody_R    = 52600.
-    real,parameter :: depth_0_R           = 2.74
-    real,parameter :: depth_max_R         = 2.74
-    real,parameter :: baseflow_R          = 0.0   
-    integer,parameter :: flow_averaging_R = 0
-    real,parameter :: hydro_length_R      = 600. 
+    INTEGER, PARAMETER :: waterbodytype_R = 3
+    REAL,PARAMETER :: D_over_dx_R     = 1e-8
+    REAL,PARAMETER :: benthic_depth_R = 0.05
+    REAL,PARAMETER :: porosity_R      = 0.5    
+    REAL,PARAMETER :: bulk_density_R  = 1.35
+    REAL,PARAMETER :: FROC2_R         = 0.04
+    REAL,PARAMETER :: DOC2_R          = 5.0
+    REAL,PARAMETER :: BNMAS_R         = 0.006
+    REAL,PARAMETER :: DFAC_R          = 1.19
+    REAL,PARAMETER :: SUSED_R         = 30.
+    REAL,PARAMETER :: CHL_R           = 0.005
+    REAL,PARAMETER :: FROC1_R         = 0.04
+    REAL,PARAMETER :: DOC1_R          = 5.0
+    REAL,PARAMETER :: PLMAS_R         = 0.4       
+    REAL,PARAMETER :: afield_R        = 1728000.
+    REAL,PARAMETER :: area_waterbody_R    = 52600.
+    REAL,PARAMETER :: depth_0_R           = 2.74
+    REAL,PARAMETER :: depth_max_R         = 2.74
+    REAL,PARAMETER :: baseflow_R          = 0.0   
+    INTEGER,PARAMETER :: flow_averaging_R = 0
+    REAL,PARAMETER :: hydro_LENgth_R      = 600. 
     
     
-    real,dimension(14),parameter :: spray_R = (/0.258, 0.135, 0.097, 0.076, 0.066,0.027,0.017,0.011, 0.048, 0.017,0.0003,0.025, 1.0, 0.0 /)
+    REAL,DIMENSION(14),PARAMETER :: spray_R = (/0.258, 0.135, 0.097, 0.076, 0.066,0.027,0.017,0.011, 0.048, 0.017,0.0003,0.025, 1.0, 0.0 /)
 	
 !"Method \  Buffer (ft)",
 !"Aerial (VF-F)"        ,
@@ -137,10 +137,10 @@ real,dimension(17,15),parameter :: spray_table_P = transpose(reshape((/&
 !none
 !you define
 
-integer,parameter :: rows_spraytable_R = 17
-integer,parameter :: columns_spraytable_R =15
+INTEGER,PARAMETER :: rows_spraytable_R = 17
+INTEGER,PARAMETER :: columns_spraytable_R =15
 
-real,dimension(17,15),parameter :: spray_table_R = transpose(reshape((/&	
+REAL,DIMENSION(17,15),PARAMETER :: spray_table_R = transpose(reshape((/&	
 0.0000E+00,1.0000E+01,2.5000E+01,5.0000E+01,7.5000E+01,1.0000E+02,1.2500E+02,1.5000E+02,2.0000E+02,2.5000E+02,3.0000E+02,3.5000E+02,4.0000E+02,4.5000E+02,5.0000E+02 ,&
 2.5828E-01,2.4538E-01,2.2550E-01,1.9757E-01,1.7616E-01,1.5725E-01,1.4289E-01,1.3039E-01,1.1162E-01,9.8045E-02,8.7796E-02,7.9781E-02,7.3386E-02,6.8186E-02,6.3946E-02 ,&
 1.3494E-01,1.2124E-01,1.0187E-01,8.2155E-02,6.6128E-02,5.5481E-02,4.7449E-02,4.2128E-02,3.4088E-02,2.8893E-02,2.5218E-02,2.2515E-02,2.0461E-02,1.8887E-02,1.7692E-02 ,&
@@ -165,8 +165,8 @@ real,dimension(17,15),parameter :: spray_table_R = transpose(reshape((/&
 
 
     contains
-    subroutine get_pond_parameters
-    integer :: i,j
+    subroutine get_pond_PARAMETERs
+    INTEGER :: i,j
         this_waterbody_name = "Pond"
         simtypeflag         = waterbodytype_P 
         flow_averaging      = flow_averaging_P  
@@ -188,7 +188,7 @@ real,dimension(17,15),parameter :: spray_table_R = transpose(reshape((/&
         depth_0             = depth_0_P       
         depth_max           = depth_max_P     
         baseflow            = baseflow_P        
-        hydro_length        = hydro_length_P
+        hydro_LENgth        = hydro_LENgth_P
         spray_values        =spray_p
         
         is_zero_depth = .FALSE.
@@ -203,15 +203,15 @@ real,dimension(17,15),parameter :: spray_table_R = transpose(reshape((/&
         
 
         !do i = 1, rows_spraytable
-        !    write(*,'(17G12.4)') (spraytable(i,j),j=1, columns_spraytable)
-        !end do	
+        !    WRITE(*,'(17G12.4)') (spraytable(i,j),j=1, columns_spraytable)
+        !END DO	
 		
-	end subroutine get_pond_parameters
+	end subroutine get_pond_PARAMETERs
    
 	
 	
-    subroutine get_reservoir_parameters
-        integer :: i,j
+    subroutine get_reservoir_PARAMETERs
+        INTEGER :: i,j
         
         this_waterbody_name = "Reservoir"
         simtypeflag = waterbodytype_R
@@ -234,7 +234,7 @@ real,dimension(17,15),parameter :: spray_table_R = transpose(reshape((/&
         depth_max           = depth_max_R     
         baseflow            = baseflow_R        
         flow_averaging      = flow_averaging_R
-        hydro_length        = hydro_length_R
+        hydro_LENgth        = hydro_LENgth_R
         
         is_zero_depth = .FALSE.
         zero_depth = 0.0
@@ -248,80 +248,80 @@ real,dimension(17,15),parameter :: spray_table_R = transpose(reshape((/&
        allocate (spraytable (rows_spraytable, columns_spraytable))	
 	   spraytable = spray_table_R 
         
-       !write(*,*) 'Default Reservoir Spraydrift Table'
+       !WRITE(*,*) 'Default Reservoir Spraydrift Table'
        !do i = 1, rows_spraytable
-       !     write(*,'(17G12.4)') (spraytable(i,j),j=1, columns_spraytable)
-       !end do
-    end subroutine get_reservoir_parameters
+       !     WRITE(*,'(17G12.4)') (spraytable(i,j),j=1, columns_spraytable)
+       !END DO
+    end subroutine get_reservoir_PARAMETERs
 
     
-    subroutine read_waterbodyfile(file_index)
+    subroutine READ_waterbodyfile(file_index)
     use constants_and_variables, ONLY: waterbody_file_unit
 
-    integer,intent(in) :: file_index
-	integer :: i,j
+    INTEGER,intent(in) :: file_index
+	INTEGER :: i,j
      
         open (UNIT=waterbody_file_unit, FILE= trim(waterbody_names(file_index)), STATUS ='old')
    
-        read(waterbody_file_unit, *) this_waterbody_name       
-        read(waterbody_file_unit, *) simtypeflag                           !Line 2
-        read(waterbody_file_unit, *) flow_averaging     
-        read(waterbody_file_unit, *) afield       
-        read(waterbody_file_unit, *) area_waterbody     
-        read(waterbody_file_unit, *) D_over_dx          
-        read(waterbody_file_unit, *) benthic_depth      
-        read(waterbody_file_unit, *) porosity           
-        read(waterbody_file_unit, *) bulk_density       
-        read(waterbody_file_unit, *) FROC2              
-        read(waterbody_file_unit, *) DOC2               
-        read(waterbody_file_unit, *) BNMAS         
-        read(waterbody_file_unit, *) DFAC               
-        read(waterbody_file_unit, *) SUSED              
-        read(waterbody_file_unit, *) CHL                
-        read(waterbody_file_unit, *) FROC1              
-        read(waterbody_file_unit, *) DOC1               
-        read(waterbody_file_unit, *) PLMAS       !LIne 18
+        READ(waterbody_file_unit, *) this_waterbody_name                   ! Line 1 Water body name
+        READ(waterbody_file_unit, *) simtypeflag                           ! Line 2 simulation type flag
+        READ(waterbody_file_unit, *) flow_averaging                        ! Line 3  (1, 4) flow averaging, day
+        READ(waterbody_file_unit, *) afield                                ! Line 4  (1, 6) area of whole field m2
+        READ(waterbody_file_unit, *) area_waterbody                        ! Line 5  (1, 1) area of water body m2
+        READ(waterbody_file_unit, *) D_over_dx                             ! Line 6  (2, 2) D over dx, m/s
+        READ(waterbody_file_unit, *) benthic_depth                         ! Line 7  (2, 1) benthic depth, m
+        READ(waterbody_file_unit, *) porosity                              ! Line 8  (2, 3) benthic porosity
+        READ(waterbody_file_unit, *) bulk_density                          ! Line 9  (2, 4) benthic bulk density, g/cm3
+        READ(waterbody_file_unit, *) FROC2                                 ! Line 10 (2, 5) benthic OC fraction
+        READ(waterbody_file_unit, *) DOC2                                  ! Line 11 (2, 6) benthic DOC, mg/L
+        READ(waterbody_file_unit, *) BNMAS                                 ! Line 12 (2, 7) benthic biomass, g/m2
+        READ(waterbody_file_unit, *) DFAC                                  ! Line 13 (3, 1) DFAC
+        READ(waterbody_file_unit, *) SUSED                                 ! Line 14 (3, 2) Suspended solids, mg/L
+        READ(waterbody_file_unit, *) CHL                                   ! Line 15 (3, 3) Chlorophyll, mg/L
+        READ(waterbody_file_unit, *) FROC1                                 ! Line 16 (3, 4) water column OC fraction
+        READ(waterbody_file_unit, *) DOC1                                  ! Line 17 (3, 5) water column DOC, mg/L
+        READ(waterbody_file_unit, *) PLMAS                                 ! LIne 18 (3, 6) water column biomass, mg/L
 
         
         
-        read(waterbody_file_unit, *) depth_0      !Line 19      
-        read(waterbody_file_unit, *) depth_max    !Line 20
-        read(waterbody_file_unit, *) baseflow     !line 21
+        READ(waterbody_file_unit, *) depth_0      ! Line 19 (1, 2) initial depth
+        READ(waterbody_file_unit, *) depth_max    ! Line 20 (1, 3) maximum depth
+        READ(waterbody_file_unit, *) baseflow     ! line 21 (1, 5) baseflow m3/s
 
-        read(waterbody_file_unit, *) hydro_length  !Line 22
+        READ(waterbody_file_unit, *) hydro_LENgth  ! Line 22 (1, 7) flow LENgth, m
        
-        read(waterbody_file_unit, *) is_zero_depth, zero_depth
+        READ(waterbody_file_unit, *) is_zero_depth, zero_depth  ! Line 23, zero concentrations when water level drops below depth?
  
-        read(waterbody_file_unit, *) 
+        READ(waterbody_file_unit, *)                            ! Line 24, unused
 
-		read(waterbody_file_unit, *) rows_spraytable, columns_spraytable
+        READ(waterbody_file_unit, *) rows_spraytable, columns_spraytable ! spray table rows? THEN how many columns?
 		
 		allocate (spraytable (rows_spraytable, columns_spraytable))
 		
-       ! write(*,*) "read spraytable: rows cols ", rows_spraytable, columns_spraytable
+       ! WRITE(*,*) "READ spraytable: rows cols ", rows_spraytable, columns_spraytable
 
 		do i =1, rows_spraytable
           
-			read(waterbody_file_unit, *) (spraytable(i,j),j=1, columns_spraytable)
+			READ(waterbody_file_unit, *) (spraytable(i,j),j=1, columns_spraytable)
          
-           ! write(*, *) (spraytable(i,j),j=1, columns_spraytable)
+           ! WRITE(*, *) (spraytable(i,j),j=1, columns_spraytable)
             
-        end do
+        END DO
 		
      
         
-		!write(*, *) 'spray table'
+		!WRITE(*, *) 'spray table'
 		!do i =1, rows_spraytable
-		!	write(*,'(20G12.4)' ) (spraytable(i,j),j=1, columns_spraytable-1)
-  !      end do
+		!	WRITE(*,'(20G12.4)' ) (spraytable(i,j),j=1, columns_spraytable-1)
+  !      END DO
 		
 
-    end subroutine read_waterbodyfile
+    end subroutine READ_waterbodyfile
     
     
     
     
     
     
-end Module waterbody_parameters
+end Module waterbody_PARAMETERs
    

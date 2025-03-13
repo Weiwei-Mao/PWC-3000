@@ -7,33 +7,33 @@ subroutine solute_holding_capacity(chem_index, koc)
                                 v2,	Sediment_conversion_factor, kd_sed_1,m_sed_1,  &	!out          
                                 volume1,theta                                           !INPUT
 
-   use waterbody_parameters, ONLY: benthic_depth ,porosity,bulk_density,FROC2,DOC2,BNMAS,SUSED, &
+   use waterbody_PARAMETERs, ONLY: benthic_depth ,porosity,bulk_density,FROC2,DOC2,BNMAS,SUSED, &
            FROC1,DOC1,area_waterbody ,depth_0 ,depth_max,PLMAS               
                                 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   !Calculates the Solute Holding capacity parameter as a vector the size of the simulation 
+   !Calculates the Solute Holding capacity PARAMETER as a vector the size of the simulation 
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   
    implicit none
 
-   real, intent(in):: koc
-   integer, intent(in)::chem_index
-   real:: VOL1,VOL2
-   real:: KOW, KPDOC1,KPDOC2,XKPB
+   REAL, intent(in):: koc
+   INTEGER, intent(in)::chem_index
+   REAL:: VOL1,VOL2
+   REAL:: KOW, KPDOC1,KPDOC2,XKPB
 
-   real:: m_sed_2
-   real:: m_bio_1, m_bio_2
-   real:: m_doc_1, m_doc_2
+   REAL:: m_sed_2
+   REAL:: m_bio_1, m_bio_2
+   REAL:: m_doc_1, m_doc_2
 
-   real:: kd_sed_2
-   real:: kd_bio
-   real:: kd_doc_1, kd_doc_2
-integer :: i
+   REAL:: kd_sed_2
+   REAL:: kd_bio
+   REAL:: kd_doc_1, kd_doc_2
+INTEGER :: i
    
  !aqueous volumes in each region  
 !   v1= daily_depth*area      !total volume in water column, approximately equal to water volume alone
    vol2 = benthic_depth*area_waterbody !total benthic volume
-   v2 = vol2*porosity       !with EXAMS parameters   v2  = VOL2*BULKD*(1.-100./PCTWA)
+   v2 = vol2*porosity       !with EXAMS PARAMETERs   v2  = VOL2*BULKD*(1.-100./PCTWA)
    
    
 
@@ -57,13 +57,13 @@ integer :: i
 ! partitioning coefficients of individual media 
     kd_sed_1 = KOC*FROC1*.001       !Kd of sediment in littoral [m3/kg]
     kd_sed_2 = KOC*FROC2*.001       !Kd of sediment in benthic                       
-    kd_bio   = XKPB/1000.           !Kd of biological organisms
+    kd_bio   = XKPB/1000.           !Kd of bioLOGICAL organisms
     kd_doc_1 = KPDOC1/1000.         !Kd of DOC in littoral region
     kd_doc_2 = KPDOC2/1000.         !Kd of DOC in benthic region
 
 ! mass in benthic region
 
-    m_sed_2 = bulk_density*VOL2*1000.   ! as defined by EXAMS parameters m_sed_2 = BULKD/PCTWA*VOL2*100000.
+    m_sed_2 = bulk_density*VOL2*1000.   ! as defined by EXAMS PARAMETERs m_sed_2 = BULKD/PCTWA*VOL2*100000.
     m_bio_2 = BNMAS*area_waterbody*.001
     m_doc_2 = DOC2*v2*.001
 

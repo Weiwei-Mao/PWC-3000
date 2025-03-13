@@ -2,7 +2,7 @@ module schemeload
     implicit none
     contains
     
-    Subroutine deallocate_application_parameters
+    Subroutine deallocate_application_PARAMETERs
         use constants_and_variables,   ONLY: application_rate_in,days_until_applied,DEPI_in,APPEFF_in,Tband_top_in,&
                                            pest_app_method_in ,drift_value,lag_app_in,repeat_app_in, is_absolute_year
         use TPEZ_spray_initialization, ONLY: tpez_drift_value
@@ -21,7 +21,7 @@ module schemeload
 
         deallocate(tpez_drift_value ) 
         
-	end Subroutine deallocate_application_parameters
+	end Subroutine deallocate_application_PARAMETERs
 
 
     subroutine set_chemical_applications(scheme_number)
@@ -38,21 +38,21 @@ module schemeload
            runoff_mitigation, erosion_mitigation,drift_mitigation  
        
 
-       use waterbody_parameters, ONLY: afield,   area_waterbody
-        integer,intent(in):: scheme_number
-        integer :: i
+       use waterbody_PARAMETERs, ONLY: afield,   area_waterbody
+        INTEGER,intent(in):: scheme_number
+        INTEGER :: i
         num_applications_input = num_apps_in_schemes(scheme_number)
 
         allocate(application_rate_in(num_applications_input))
-        allocate(DEPI_in            (num_applications_input))          
+        allocate(DEPI_in            (num_applications_input))
         allocate(APPEFF_in          (num_applications_input))
         allocate(Tband_top_in       (num_applications_input))
-        allocate(pest_app_method_in (num_applications_input))   
-        allocate(drift_value        (num_applications_input)) 
-        allocate(lag_app_in         (num_applications_input)) 
+        allocate(pest_app_method_in (num_applications_input))
+        allocate(drift_value        (num_applications_input))
+        allocate(lag_app_in         (num_applications_input))
         allocate(repeat_app_in      (num_applications_input))
         allocate(days_until_applied (num_applications_input))
-        allocate(is_absolute_year   (num_applications_input))    
+        allocate(is_absolute_year   (num_applications_input))
         
         
         !pest_app_method = 1 "Below Crop" 
@@ -81,10 +81,10 @@ module schemeload
                    
 			!calclautaed based on losses to the waterbody subtracted from fields applied pesticide
 			APPEFF_in(i)           = 1.0 - drift_value(i) * area_waterbody/afield
-        end do 
+        END DO 
         		
-		!the following cannot be applied until after the weather file has been read in. 
-		!But parameters are read in here because they are part of the application scheme
+		!the following cannot be applied until after the weather file has been READ in. 
+		!But PARAMETERs are READ in here because they are part of the application scheme
 		
 		is_adjust_for_rain	       = is_adjust_for_rain_schemes(scheme_number)
 		rain_limit                 = rain_limit_schemes(scheme_number)
@@ -98,9 +98,9 @@ module schemeload
         
 
         some_applications_were_foliar = .FALSE.
-        if(any(pest_app_method_in==2)) then
+        if(any(pest_app_method_in==2)) THEN
             some_applications_were_foliar = .TRUE.
-        end if
+        END IF
 
     end subroutine set_chemical_applications
     
@@ -111,39 +111,39 @@ module schemeload
     !was there a reason to treat tpez spray table differently?
     !try to consolidate in future
        use constants_and_variables, ONLY: is_output_spraydrift
-	   use waterbody_parameters, only: spraytable
-	   integer, intent(in) :: row  
-	   real, intent(in)    :: column   !this is a distance, so its real and will be used for interpolation
-	   real, intent(out)   :: output
+	   use waterbody_PARAMETERs, only: spraytable
+	   INTEGER, intent(in) :: row  
+	   REAL, intent(in)    :: column   !this is a distance, so its REAL and will be used for interpolation
+	   REAL, intent(out)   :: output
 	
-	   integer :: i, j
-	   real    :: previous
+	   INTEGER :: i, j
+	   REAL    :: previous
        
        
 	   !interpolate column value for values in row
 	   
        
         !do i = 1, size(spraytable, 1)
-        !     write(*,'(20G12.4)') (spraytable(i,j), j=1,size(spraytable, 2))
-        !end do
+        !     WRITE(*,'(20G12.4)') (spraytable(i,j), j=1,size(spraytable, 2))
+        !END DO
        
         
         previous = 0.0
 	   do i = 1, size(spraytable, 2)
            
-	   	 if (abs(column - spraytable(1, i)) < 0.01 ) then !almost exact match within 0.01 ft, get value and end
+	   	 if (abs(column - spraytable(1, i)) < 0.01 ) THEN !almost exact match within 0.01 ft, get value and end
 	   		 output = spraytable(row, i)
 	   		 exit
-	   	 elseif (spraytable(1, i) < column ) then
+	   	 elseif (spraytable(1, i) < column ) THEN
 	   		 previous = spraytable(1, i)
 	   	 else      !spraytable(1, i))< column  !do interpolation and quit
 	   		 output =  spraytable(row, i-1) +   (spraytable(row, i)-spraytable(row, i-1)) *  (column - previous)/(spraytable(1, i)- previous)
-!	   		 write(*,'("            row = ",i2, " interpolate between columns ", i2, " and ", i2, ", fraction = ", g10.4 )') row, i-1, i,  (column - previous)/(spraytable(1, i)- previous)
+!	   		 WRITE(*,'("            row = ",i2, " interpolate between columns ", i2, " and ", i2, ", fraction = ", g10.4 )') row, i-1, i,  (column - previous)/(spraytable(1, i)- previous)
 	   		 exit
-		 end if	 
-       end do
+		 END IF	 
+       END DO
        
-      if (is_output_spraydrift)  write(*,*)  "waterbody drift factor ", output
+      if (is_output_spraydrift)  WRITE(*,*)  "waterbody drift factor ", output
 	
 	end subroutine lookup_drift
 	

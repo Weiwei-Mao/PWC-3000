@@ -6,7 +6,7 @@ module curve_number_table
     !selected a CN2 of 100 (subroutine Curve_Number_PRZM5 uses n+1 in its interpolation scheme)
     
     
-    real,parameter,dimension(101) :: cn_1 = (/   &
+    REAL,PARAMETER,DIMENSION(101) :: cn_1 = (/   &
     0.4  ,  &  !cn_1(1)  = 
     0.8  ,  &  !cn_1(2)  = 
     1.2  ,  &  !cn_1(3)  = 
@@ -110,7 +110,7 @@ module curve_number_table
     100.0 /)   !cn_1(101)= 
                       
                        
-   real,parameter,dimension(101) :: cn_3 = (/   &
+   REAL,PARAMETER,DIMENSION(101) :: cn_3 = (/   &
    2.6,  &  !cn_3(1)  = 
    5.2,  &  !cn_3(2)  = 
    7.8,  &  !cn_3(3)  = 

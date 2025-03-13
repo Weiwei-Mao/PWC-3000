@@ -12,10 +12,10 @@ module ProcessMetfiles
        
     implicit none
 
-    real :: temp30(30)        !array to hold previous 30 days of temperature 
-    real :: tempsum            !sum of 30 day temperature values
+    REAL :: temp30(30)        !array to hold previous 30 days of temperature 
+    REAL :: tempsum            !sum of 30 day temperature values
  
-    integer :: i,j                !do loop counters
+    INTEGER :: i,j                !do loop counters
 
 
 
@@ -30,10 +30,10 @@ module ProcessMetfiles
 
         do j=1, 29                    !update new array
             temp30(j)= temp30(j+1)
-        end do
+        END DO
         temp30(30) = air_temperature(i)
         !***********************************************
-    end do
+    END DO
 
     wind_m   = wind_speed/100.                     !whole array operation convert to m/s
     evap_m   = pet_evap/100. *open_water_adj       !whole array operation convert to m

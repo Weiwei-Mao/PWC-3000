@@ -1,0 +1,84 @@
+PWC 3 Input File, Version 1                                 ## 1  Ancillary Information, not used in program
+C:\PWC\                                                     ## 2  Working directory
+Test                                                        ## 3  family name
+C:\PWC\GroundWater\EcoWeatherFiles\                         ## 4  weather file directory
+1.0                                                         ## 5  A evap
+.FALSE.    .FALSE.    .FALSE.    .FALSE.    .TRUE.          ## 6  is_koc, is_freundlich, is_nonequilibrium, is_needs_poundkg_conversion, is_hydrolysis_override
+1                                                           ## 7  nchem, 1 parent only; 2 parent and daughter; 3 parent, daughter, and granddaughter
+100     6.6     0.0                                         ## 8  Freundlich coefficients
+1,      0.99    1                                           ## 9  Freundlich exponent
+0.0     0.0     0.0                                         ## 10 Freundlich coeff nonequilibrium region
+0.0     0.0     0.0                                         ## 11 Freundlich exponent corresponding for nonequilibrium region
+0.0     0.0     0.0                                         ## 12 mass transfer coefficient between equilibrium and nonequilibrium regions 
+0.88    1                                                   ## 13 lowest_conc, number sub delta time
+86      0       0       0       0                           ## 14 water column halflives, moles of daughter/granddaughter produced per mole former 
+25      0       0                                           ## 15 temperature (°C) at which the rates in Line 14 were derived
+86      0       0       0       0                           ## 16 benthic region halflives, moles of daughter/granddaughter produced per mole former 
+25      0       0                                           ## 17 temperature (°C) at which the rates in Line 16 were derived
+86      0       0       0       0                           ## 18 near-surface aqueous photolysis half life, moles of daughter/granddaughter produced per mole former 
+30      0       0                                           ## 19 latitude at which the photolysis in Line 18 represents
+86      0       0       0       0                           ## 20 hydrolysis halflife, moles of daughter/granddaughter produced per mole former 
+86      0       0       0       0       .TRUE.              ## 21 soil degradation halflife, moles rates as former, switch for degradation media
+25      0       0                                           ## 22 the temperature (°C) at which the rates in Line 20 were derived
+25      0       0       0       0                           ## 23 plant pesticide degrade rates, moles rates as former
+0.5     0.5     0.5                                         ## 24 fraction of pesticide washed off foliage per cm of rainfall
+215.685  0       0                                          ## 25 molecular weight
+0.00013  0       0                                          ## 26 vapor pressure 
+33       0       0                                          ## 27 solubility
+2.5E-07  0       0                                          ## 28 Henrys's law coefficient
+4300     0       0                                          ## 29 diffusion coefficient in air
+83860    0       0                                          ## 30 enthapy of phase transfer from dissolved in water to dissolved in air
+2                                                           ## 31 Q10, a multiplier of change in degradation for every 10 degree in temperature
+.FALSE.                                                     ## 32 is constant profile? if tree, the degradation is constant
+.TRUE.   10.0    200.0   0.0                                ## 33 is_ramp, if true, degradation is constant; first plateau depth; depth as measured from surface; second plateau
+.FALSE.  0       0                                          ## 34 is_exp_profile, if true, then degradation declines exponentially; exponent; asymptote
+1                                                           ## 35 number of schemes 
+1        "Test1, less pesticides application"                         ## 36 scheme_number, scheme_name
+1                                                                     ## 37 app_reference_point_schemes, 0 absolute; 1 emergence; 2 maturity; 3 removal
+1                                                                     ## 38 number of applications in a year
+10      20      1      4.0      0.0      1      5      3      0                 ## 39 Date, rate, method, depth, split, drift, driftfactor, periodicity, lag
+.FALSE.  0      0                                                     ## 40 is_app_windows, app_window_span, step size across the window
+.FALSE.  0      0      0      0                                       ## 41 is_adjust_for_rain_schemes, and so on
+1                                                                     ## 42 number of scenarios
+C:\PWC\Immokalee.SCN2                                                           ## 43 Scenario names
+.FALSE.                                                               ## 44 is batch scenario, true if scenarios will be read in from a CSV format file
+0                                                                     ## 45 scenario batch file
+3                                                                     ## 46 Unused
+0      0      0                                                       ## 47 runoff_mitigation schemes; erosion_mitigation_schemes; drift_mitigation_schemes
+3                                                           ## 48 Erflag 1 musle; 2 must; 3 muss
+0                                                           ## 49 Unused
+0                                                           ## 50 Unused
+0                                                           ## 51 Unused
+0                                                           ## 52 Unused
+0                                                           ## 53 Unused
+.TRUE.                                                      ## 54 Adjust_cn
+.TRUE.      .FALSE.      .TRUE.      .FALSE.      .FALSE.   ## 55 its a pond; its a reservoir; its other; itstpezwpez; use_tpezbuffer 
+1                                                           ## 56 number of special water bodies
+C:\PWC\LakeTrafford.WAT                                               ## 57 Waterbody names
+.FALSE.                                                     ## 58 is runoff output
+.FALSE.                                                     ## 59 is erosion output
+.FALSE.                                                     ## 60 is chemical mass in runoff output
+.FALSE.                                                     ## 61 is chemical mass in eroded solids output
+.FALSE.                                                     ## 62 is chemical concentration at bottom compartment output
+.FALSE.                                                     ## 63 is daily volatilized output
+.FALSE.      0                                              ## 64 is chemical mass at specified depth output? depth  
+.FALSE.      0      0                                       ## 65 is chemical decayed at specified depth interval, top depth, bottom depth
+.FALSE.                                                     ## 66 is chemical in all soil output
+.FALSE.      0      0                                       ## 67 is chemical in part soil output, field mass start, field mass end
+.FALSE.                                                     ## 68 is chemical on foliage output
+.FALSE.                                                     ## 69 is precipitation output
+.FALSE.                                                     ## 70 is evapotranspiration output
+.FALSE.                                                     ## 71 is soil water output
+.FALSE.                                                     ## 72 is irrigation output
+.FALSE.      0.2                                            ## 73 is irrigation at depth output, infiltration point
+.FALSE.                                                     ## 74 is infiltrated bottom output
+.FALSE.                                                     ## 75 is water body info output
+.FALSE.                                                     ## 76 is output spraydrift
+.FALSE.                                                     ## 77 is groundwater levels?
+holder for future expansion                                 ## 78 Unused
+holder for future expansion                                 ## 79 Unused
+holder for future expansion                                 ## 80 Unused
+holder for future expansion                                 ## 81 Unused
+holder for future expansion                                 ## 82 Unused
+0                                                           ## 83 extra_plots
+A      0      0      0      0      0.0                                ## plname, che_id, mode, arg, arg2, const

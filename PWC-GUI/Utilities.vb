@@ -5,13 +5,13 @@
         'that a 0 halflife means a zero rate.
 
 
-        If halflife = "" Then
+        If halflife = "" THEN
             RateFromHalflife = 0.0   'Blank means stable
-        ElseIf Convert.ToSingle(halflife) = 0.0 Then
+        ElseIf Convert.ToSingle(halflife) = 0.0 THEN
             RateFromHalflife = 0.0   'half life of 0 means stable
         Else
             RateFromHalflife = 0.69314 / halflife
-        End If
+        END IF
 
 
     End Function
@@ -21,17 +21,17 @@
     Public Function BlankMeansZero(ByVal input As String) As String
         'converts hato single, recognizes that user intends blans to mean zero
         BlankMeansZero = input
-        If input = "" Then
+        If input = "" THEN
             BlankMeansZero = "0.0"  'Blank means stable
-        End If
+        END IF
 
     End Function
 
 
 
 
-    Sub TestRealNumbers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox)
-        'Tests if real
+    Sub TestREALNumbers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox)
+        'Tests if REAL
         'return True if everythin OK
 
         Dim TestNumber As Double
@@ -52,31 +52,31 @@
 
         End Try
 
-        If name.Text.Contains(",") Then
+        If name.Text.Contains(",") THEN
             '  MsgBox("No commas allowed for " & name.Tag)
             name.BackColor = Color.Orange
             msg = "No commas allowed for " & name.Tag
             TrueOrFalse = False
             Return
-        End If
+        END IF
 
     End Sub
 
 
-    Sub TestRealNumbers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox, ByVal except As String)
-        'This OVERLOAD will allow exceptions to the real number requirement, For example the null string would
+    Sub TestREALNumbers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox, ByVal except As String)
+        'This OVERLOAD will allow exceptions to the REAL number requirement, For example the null string would
         'indicate a zero rate of degradation if box is left blank
-        'Tests if real
+        'Tests if REAL
         'return True if everythin OK
 
         Dim TestNumber As Double
         TrueOrFalse = True
         name.BackColor = Color.White
 
-        If name.Text = except Then
+        If name.Text = except THEN
             TrueOrFalse = True
             Return
-        End If
+        END IF
 
         Try
             TestNumber = name.Text
@@ -89,20 +89,20 @@
 
         End Try
 
-        If name.Text.Contains(",") Then
+        If name.Text.Contains(",") THEN
             '  MsgBox("No commas allowed for " & name.Tag)
             name.BackColor = Color.Orange
             msg = "No commas allowed for " & name.Tag
             TrueOrFalse = False
             Return
-        End If
+        END IF
 
     End Sub
 
 
-    Sub TestActualRealNumbers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As String)
-        'This test the real number requirementfor any object, 
-        'Tests if real
+    Sub TestActualREALNumbers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As String)
+        'This test the REAL number requirementfor any object, 
+        'Tests if REAL
         'return True if everythin OK
 
         Dim TestNumber As Double
@@ -112,31 +112,31 @@
         Try
             TestNumber = name
         Catch ex As Exception
-            msg = "Not a real number:"
+            msg = "Not a REAL number:"
 
             TrueOrFalse = False
             Return
         End Try
 
-        If name = "" Then Return  'blank boxes dont work with next
-        If name.Contains(",") Then
+        If name = "" THEN Return  'blank boxes dont work with next
+        If name.Contains(",") THEN
             msg = "No commas allowed:"
             TrueOrFalse = False
             Return
-        End If
+        END IF
 
     End Sub
 
 
 
-    Sub TestIntegers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox, ByVal except As String)
+    Sub TestINTEGERs(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox, ByVal except As String)
         'This OVERLOAD will allow exceptions to the number requirement, For example the null string would
         'indicate a zero if box is left blank
-        'otherwise Tests if integer
+        'otherwise Tests if INTEGER
         'return True if everythin OK
 
-        Dim TestNumber As Integer
-        Dim TestReal As Double
+        Dim TestNumber As INTEGER
+        Dim TestREAL As Double
 
         TrueOrFalse = True
 
@@ -144,10 +144,10 @@
         'test to see if its  a number
 
 
-        If name.Text = except Then
+        If name.Text = except THEN
             TrueOrFalse = True
             Return
-        End If
+        END IF
 
         Try
             TestNumber = name.Text
@@ -158,29 +158,29 @@
             Return
         End Try
 
-        'testIntegers Today see if its an integer
+        'testINTEGERs Today see if its an INTEGER
 
-        TestReal = name.Text
-        If TestReal - TestNumber > 0.01 Then
-            msg = "This value should be an integer:  " & name.Tag
+        TestREAL = name.Text
+        If TestREAL - TestNumber > 0.01 THEN
+            msg = "This value should be an INTEGER:  " & name.Tag
             name.BackColor = Color.Orange
             TrueOrFalse = False
             Return
-        End If
+        END IF
 
-        If name.Text.Contains(",") Then
+        If name.Text.Contains(",") THEN
             msg = "No commas allowed for " & name.Tag
             name.BackColor = Color.Orange
             TrueOrFalse = False
             Return
-        End If
+        END IF
     End Sub
 
 
 
-    Sub TestIntegers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox)
-        Dim TestNumber As Integer
-        Dim TestReal As Double
+    Sub TestINTEGERs(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As TextBox)
+        Dim TestNumber As INTEGER
+        Dim TestREAL As Double
 
         TrueOrFalse = True
 
@@ -198,31 +198,31 @@
             Return
         End Try
 
-        'testIntegers Today see if its an integer
+        'testINTEGERs Today see if its an INTEGER
 
 
-        TestReal = name.Text
-        If TestReal - TestNumber > 0.01 Then
-            msg = "This value should be an integer:  " & name.Tag
+        TestREAL = name.Text
+        If TestREAL - TestNumber > 0.01 THEN
+            msg = "This value should be an INTEGER:  " & name.Tag
             name.BackColor = Color.Orange
             TrueOrFalse = False
             Return
-        End If
+        END IF
 
-        If name.Text.Contains(",") Then
+        If name.Text.Contains(",") THEN
             msg = "No commas allowed for " & name.Tag
             name.BackColor = Color.Orange
             TrueOrFalse = False
             Return
-        End If
+        END IF
     End Sub
 
 
 
-    Sub TestActualIntegers(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As String)
+    Sub TestActualINTEGERs(ByRef TrueOrFalse As Boolean, ByRef msg As String, ByVal name As String)
         ' Test string, instead of text boxes
-        Dim TestNumber As Integer
-        Dim TestReal As Double
+        Dim TestNumber As INTEGER
+        Dim TestREAL As Double
 
         TrueOrFalse = True
 
@@ -230,28 +230,28 @@
         Try
             TestNumber = name
         Catch ex As Exception
-            msg = "Value should be an integer"
+            msg = "Value should be an INTEGER"
             TrueOrFalse = False
             Return
         End Try
 
-        'testIntegers Today see if its an integer
+        'testINTEGERs Today see if its an INTEGER
 
-        TestReal = name
-        If TestReal - TestNumber > 0.01 Then
-            msg = "Value should be an integer"
+        TestREAL = name
+        If TestREAL - TestNumber > 0.01 THEN
+            msg = "Value should be an INTEGER"
             TrueOrFalse = False
             Return
-        End If
+        END IF
 
         Try
 
 
-            If name.Contains(",") Then
+            If name.Contains(",") THEN
                 msg = "No commas allowed for " & name
                 TrueOrFalse = False
                 Return
-            End If
+            END IF
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -273,10 +273,10 @@
 
 
 
-    Sub CalendarCheck(ByVal dayBox As TextBox, ByVal monthBox As TextBox, ByRef TrueOrFalse As Boolean, ByRef msg As String)
+    Sub CaLENdarCheck(ByVal dayBox As TextBox, ByVal monthBox As TextBox, ByRef TrueOrFalse As Boolean, ByRef msg As String)
 
-        Dim monthtest As Integer
-        Dim daytest As Integer
+        Dim monthtest As INTEGER
+        Dim daytest As INTEGER
 
         TrueOrFalse = True
         msg = ""
@@ -303,40 +303,40 @@
             Return
         End Try
 
-        If monthtest > 12 Or monthtest < 1 Then
+        If monthtest > 12 Or monthtest < 1 THEN
             monthBox.BackColor = Color.Orange
             msg = "The following month is not posssible: " & monthBox.Tag
             TrueOrFalse = False
             Return
-        End If
+        END IF
 
         Select Case monthtest
             Case 1, 3, 5, 7, 8, 10, 12
-                If daytest > 31 Or daytest < 1 Then
+                If daytest > 31 Or daytest < 1 THEN
                     '   MsgBox("Bad day for " & dayBox.Tag)
                     dayBox.BackColor = Color.Orange
                     msg = "Bad day for " & dayBox.Tag
                     TrueOrFalse = False
                     Return
-                End If
+                END IF
             Case 2
-                If daytest > 28 Or daytest < 1 Then
+                If daytest > 28 Or daytest < 1 THEN
                     dayBox.BackColor = Color.Orange
                     msg = "Bad day for you and " & dayBox.Tag
                     TrueOrFalse = False
                     Return
-                End If
+                END IF
             Case 4, 6, 9, 11
-                If daytest > 30 Or daytest < 1 Then
+                If daytest > 30 Or daytest < 1 THEN
                     dayBox.BackColor = Color.Orange
                     TrueOrFalse = False
                     msg = "Bad day for " & dayBox.Tag
                     Return
-                End If
+                END IF
             Case Else
                 monthBox.BackColor = Color.Orange
                 TrueOrFalse = False
-                msg = "Month does not exist on Earth calendar for " & monthBox.Tag
+                msg = "Month does not exist on Earth caLENdar for " & monthBox.Tag
                 Return
         End Select
 
@@ -350,40 +350,40 @@
 
         Dim deltaX As Double
         Dim testdepth As Double
-        Dim node As Integer
-        Dim increments As Integer
+        Dim node As INTEGER
+        Dim increments As INTEGER
         Dim thickness As Double
 
         node = 0
         testdepth = 0.0
 
         'Smallest node is 1
-        If depth <= 0 Then
+        If depth <= 0 THEN
             node = 1
             Return node
-        End If
+        END IF
 
 
-        For i As Integer = 0 To horizonTable.Rows.Count - 1
+        For i As INTEGER = 0 To horizonTable.Rows.Count - 1
             increments = horizonTable(6, i).Value
             thickness = horizonTable(1, i).Value
 
             deltaX = thickness / increments
 
-            For j As Integer = 1 To increments
+            For j As INTEGER = 1 To increments
                 node = node + 1
                 testdepth = testdepth + deltaX
 
-                If testdepth >= depth Then
+                If testdepth >= depth THEN
                     'Test if the overshoot was too much
-                    If (testdepth - depth) < (depth - (testdepth - deltaX)) Then
+                    If (testdepth - depth) < (depth - (testdepth - deltaX)) THEN
                         Return node
                     Else
                         testdepth = testdepth - deltaX
                         node = node - 1
                         Return node
-                    End If
-                End If
+                    END IF
+                END IF
             Next
         Next
 
@@ -393,18 +393,18 @@
     End Function
 
 
-    Function CalculateSoilMass(ByVal horizonTable As DataGridView, ByVal top As Integer, ByVal bottom As Integer) As Double
+    Function CalculateSoilMass(ByVal horizonTable As DataGridView, ByVal top As INTEGER, ByVal bottom As INTEGER) As Double
         'Returns mass of soil per ha given a Horizon table with following set up:
         'Assume horizon table thickness is column 1 (zero based)
         'Assume horizon table density is column 2 (zero based)
         'Assume horizon table compartment number is in column 6 (zero based)
 
-        Dim totalhorizons, totalcompartments As Integer
+        Dim totalhorizons, totalcompartments As INTEGER
 
         totalhorizons = horizonTable.Rows.Count - 1
 
         totalcompartments = 0
-        For i As Integer = 0 To totalhorizons - 1
+        For i As INTEGER = 0 To totalhorizons - 1
             totalcompartments = totalcompartments + horizonTable(6, i).Value
         Next
 
@@ -414,11 +414,11 @@
 
 
         'Create arrays
-        Dim k As Integer
+        Dim k As INTEGER
         k = 0
-        For i As Integer = 0 To totalhorizons - 1
+        For i As INTEGER = 0 To totalhorizons - 1
 
-            For j As Integer = 1 To horizonTable(6, i).Value
+            For j As INTEGER = 1 To horizonTable(6, i).Value
                 k = k + 1
                 '   Kg = (thickness (cm)/ NumberComp/100)*(10000m2) * Bulk density kg/L * 1000 L/m3
                 mass(k) = horizonTable(1, i).Value / horizonTable(6, i).Value * horizonTable(2, i).Value * 100000
@@ -427,7 +427,7 @@
 
 
         CalculateSoilMass = 0
-        For i As Integer = top To bottom
+        For i As INTEGER = top To bottom
             CalculateSoilMass = CalculateSoilMass + mass(i)
         Next
 

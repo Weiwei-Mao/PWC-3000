@@ -3,7 +3,7 @@
     Sub SaveInputsAsTextFile(ByVal savefile As String)
         Dim msg As String
         msg = "PWC 3 Input File, Version " & VersionNumber
-        msg &= String.Format("{0}{1}", vbNewLine, WorkingDirectoryLabel.Text)  'Dont put commas on the end of long strings, need to leave off for fortran read
+        msg &= String.Format("{0}{1}", vbNewLine, WorkingDirectoryLabel.Text)  'Dont put commas on the end of long strings, need to leave off for fortran READ
         msg &= String.Format("{0}{1}", vbNewLine, IOFamilyName.Text)
         msg &= String.Format("{0}{1}", vbNewLine, WeatherDirectoryBox.Text)
         msg &= String.Format("{0}{1},", vbNewLine, WaterbodyEvapAdjustment.Text)
@@ -12,13 +12,13 @@
         msg &= String.Format("{0}{1}, {2}, {3}, {4}, {5},", vbNewLine, isKoc.Checked, UseFreundlich.Checked, UseNonequilibrium.Checked, poundToKiloConversion.Checked, IsHydrolysisOverride.Checked)
 
         Dim nchem As String
-        If DoDegradate1.Checked And DoDegradate2.Checked Then 'daughter and graddaugter
+        If DoDegradate1.Checked And DoDegradate2.Checked THEN 'daughter and graddaugter
             nchem = "3"
-        ElseIf DoDegradate1.Checked And DoDegradate2.Checked = False Then 'daughter
+        ElseIf DoDegradate1.Checked And DoDegradate2.Checked = False THEN 'daughter
             nchem = "2"
         Else 'parent only'
             nchem = "1"
-        End If
+        END IF
         msg = msg & String.Format("{0}{1},", vbNewLine, nchem)
 
 
@@ -45,22 +45,22 @@
         msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, Sol1.Text, Sol2.Text, Sol3.Text)
         msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, Henry1.Text, Henry2.Text, Henry3.Text)
         msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, AirDiff1.Text, AirDiff2.Text, AirDiff3.Text)
-        msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, HeatHenry1.Text, HeatHenry2.Text, HeatHenry3.Text)
+        msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, HeaTHENry1.Text, HeaTHENry2.Text, HeaTHENry3.Text)
         msg = msg & String.Format("{0}{1},", vbNewLine, Q10.Text)
 
         msg = msg & String.Format("{0}{1},", vbNewLine, ConstantProfile.Checked)
         msg = msg & String.Format("{0}{1},{2},{3},{4},", vbNewLine, RampProfile.Checked, profileDepth1.Text, ProfileDepth2.Text, RampEndValue.Text)
-        msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, ExponentialProfile.Checked, ExpParameter1.Text, ExpParameter2.Text)
+        msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, ExponentialProfile.Checked, ExpPARAMETER1.Text, ExpPARAMETER2.Text)
 
 
 
         'Schemes***************************
-        Dim NumberOfSchemes As Integer
+        Dim NumberOfSchemes As INTEGER
         Dim ApplicationTable As New SchemeDetails
-        Dim actualRowsInAppTable As Integer 'app table rows
+        Dim actualRowsInAppTable As INTEGER 'app table rows
 
-        Dim NumberOfScenarios As Integer
-        Dim referencedate As Integer
+        Dim NumberOfScenarios As INTEGER
+        Dim referencedate As INTEGER
 
         AppTableDisplay.CommitEdit(DataGridViewDataErrorContexts.Commit)  'commit the cell if cursor still on box
 
@@ -68,22 +68,22 @@
 
         NumberOfSchemes = SchemeTableDisplay.RowCount - 1
 
-        If (NumberOfSchemes > SchemeInfoList.Count) Then
+        If (NumberOfSchemes > SchemeInfoList.Count) THEN
             MsgBox("There is an uncommitted scheme. Delete it or commit it.")
             Return
-        End If
+        END IF
 
-        If NumberOfSchemes = 1 And SchemeInfoList.Count = 0 Then
+        If NumberOfSchemes = 1 And SchemeInfoList.Count = 0 THEN
             'scheme is not commited so dont try to save else get error below
             NumberOfSchemes = 0
-        End If
+        END IF
 
 
 
         msg = msg & String.Format("{0}{1},", vbNewLine, NumberOfSchemes)
         SchemeTableDisplay.CommitEdit(DataGridViewDataErrorContexts.Commit) 'commit the cell if cursor still on box
 
-        For i As Integer = 0 To NumberOfSchemes - 1
+        For i As INTEGER = 0 To NumberOfSchemes - 1
             msg = msg & String.Format("{0}{1},{2},", vbNewLine, (i + 1), """" & SchemeTableDisplay.Item(3, i).Value & """")
 
 
@@ -108,7 +108,7 @@
             actualRowsInAppTable = ApplicationTable.Days.Count   'AppTableDisplay.RowCount - 1
             msg = msg & String.Format("{0}{1},", vbNewLine, actualRowsInAppTable)
 
-            For j As Integer = 0 To actualRowsInAppTable - 1
+            For j As INTEGER = 0 To actualRowsInAppTable - 1
 
                 msg = msg & String.Format("{0}{1},{2},{3},{4},{5},{6},{7},{8},{9},", vbNewLine, ApplicationTable.Days(j), ApplicationTable.Amount(j),
                                           ApplicationTable.Method(j), ApplicationTable.Depth(j), ApplicationTable.Split(j),
@@ -123,12 +123,12 @@
             NumberOfScenarios = ApplicationTable.Scenarios.Count
             msg = msg & vbNewLine & NumberOfScenarios
 
-            For j As Integer = 0 To NumberOfScenarios - 1
+            For j As INTEGER = 0 To NumberOfScenarios - 1
                 msg = msg & vbNewLine & ApplicationTable.Scenarios(j)
             Next
             msg = msg & vbNewLine & ApplicationTable.UseBatchScenarioFile & ","
-            msg = msg & vbNewLine & ApplicationTable.ScenarioBatchFileName & ","
-            msg = msg & vbNewLine & "Mitigations (flag to make older versions still readable)"
+            msg = msg & vbNewLine & ApplicationTable.ScenarioBatchFiLEName & ","
+            msg = msg & vbNewLine & "Mitigations (flag to make older versions still READable)"
             msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, ApplicationTable.RunoffMitigation, ApplicationTable.ErosionMitigation, ApplicationTable.DriftMitigation)
 
         Next
@@ -184,13 +184,13 @@
         msg = msg & vbNewLine & "holder for future expansion" & ","
 
         AdditionalOutputGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
-        Dim NumberAdditionalOutputs As Integer
+        Dim NumberAdditionalOutputs As INTEGER
         NumberAdditionalOutputs = AdditionalOutputGridView.RowCount - 1
         msg = msg & vbNewLine & NumberAdditionalOutputs & ","
 
 
 
-        For i As Integer = 0 To NumberAdditionalOutputs - 1
+        For i As INTEGER = 0 To NumberAdditionalOutputs - 1
             msg = msg & String.Format("{0}{1},{2},{3},{4},{5},{6},", vbNewLine,
                   AdditionalOutputGridView.Item(0, i).Value, AdditionalOutputGridView.Item(1, i).Value,
                   AdditionalOutputGridView.Item(2, i).Value, AdditionalOutputGridView.Item(3, i).Value,
@@ -202,17 +202,17 @@
         'Dim MoreOutputRequested As Boolean
         'MoreOutputRequested = False
         'For Each ctrl As Control In OptionalOutputTab.Controls
-        '    If TypeOf ctrl Is CheckBox AndAlso DirectCast(ctrl, CheckBox).Checked Then
+        '    If TypeOf ctrl Is CheckBox AndAlso DirectCast(ctrl, CheckBox).Checked THEN
         '        MoreOutputRequested = True
-        '    End If
+        '    END IF
         'Next
-        'If NumberAdditionalOutputs > 0 Then
+        'If NumberAdditionalOutputs > 0 THEN
         '    MoreOutputRequested = True
-        'End If
+        'END IF
 
 
         Try
-            My.Computer.FileSystem.WriteAllText(savefile, msg, False, System.Text.Encoding.ASCII)
+            My.Computer.FileSystem.WRITEAllText(savefile, msg, False, System.Text.Encoding.ASCII)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -227,22 +227,22 @@
 
 
         'Schemes***************************
-        Dim NumberOfSchemes As Integer
+        Dim NumberOfSchemes As INTEGER
         Dim ApplicationTable As New SchemeDetails
-        Dim actualRowsInAppTable As Integer 'app table rows
+        Dim actualRowsInAppTable As INTEGER 'app table rows
 
-        Dim NumberOfScenarios As Integer
-        Dim referencedate As Integer
+        Dim NumberOfScenarios As INTEGER
+        Dim referencedate As INTEGER
 
         AppTableDisplay.CommitEdit(DataGridViewDataErrorContexts.Commit)  'commit the cell if cursor still on box
 
 
         NumberOfSchemes = SchemeTableDisplay.RowCount - 1
 
-        If (NumberOfSchemes > SchemeInfoList.Count) Then
+        If (NumberOfSchemes > SchemeInfoList.Count) THEN
             MsgBox("There is an uncommitted scheme. Delete it or commit it.")
             Return
-        End If
+        END IF
 
 
         msg = msg & String.Format("{0}{1}{0}", vbNewLine, NumberOfSchemes)
@@ -256,10 +256,10 @@
 
 
 
-        Dim checktest As Integer
+        Dim checktest As INTEGER
         Try
 
-            For i As Integer = 0 To NumberOfSchemes - 1
+            For i As INTEGER = 0 To NumberOfSchemes - 1
 
 
                 checktest = i
@@ -288,22 +288,22 @@
 
 
                 'Maximum of 10 applications for a scheme dump
-                If actualRowsInAppTable - 1 > 10 Then
+                If actualRowsInAppTable - 1 > 10 THEN
                     MsgBox("column order is preserved only for a maximum of 10 applications")
-                End If
+                END IF
 
-                For j As Integer = 0 To actualRowsInAppTable - 1
+                For j As INTEGER = 0 To actualRowsInAppTable - 1
 
                     msg = msg & String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},", ApplicationTable.Days(j), ApplicationTable.Amount(j),
                                               ApplicationTable.Method(j), ApplicationTable.Depth(j), ApplicationTable.Split(j),
                                               ApplicationTable.Drift(j), ApplicationTable.DriftBuffer(j), ApplicationTable.Periodicity(j), ApplicationTable.Lag(j))
                 Next
 
-                If actualRowsInAppTable < 10 Then
-                    For j As Integer = 1 To (10 - actualRowsInAppTable)
+                If actualRowsInAppTable < 10 THEN
+                    For j As INTEGER = 1 To (10 - actualRowsInAppTable)
                         msg = msg & String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},", 0, 0, 0, 0, 0, 0, 0, 0, 0)
                     Next
-                End If
+                END IF
 
 
 
@@ -317,25 +317,25 @@
 
                 msg = msg & NumberOfScenarios
 
-                If NumberOfScenarios = 0 Then
+                If NumberOfScenarios = 0 THEN
                     msg = msg & ","
                 Else
-                    If IO.Path.GetDirectoryName(ApplicationTable.Scenarios(0)) = "" Then
+                    If IO.Path.GetDirectoryName(ApplicationTable.Scenarios(0)) = "" THEN
                         msg = msg & ","
                     Else
                         msg = msg & "," & IO.Path.GetDirectoryName(ApplicationTable.Scenarios(0)) & "\"
-                    End If
-                End If
+                    END IF
+                END IF
 
 
-                For j As Integer = 0 To NumberOfScenarios - 1
+                For j As INTEGER = 0 To NumberOfScenarios - 1
 
 
-                    msg = msg & "," & IO.Path.GetFileName(ApplicationTable.Scenarios(j))
+                    msg = msg & "," & IO.Path.GetFiLEName(ApplicationTable.Scenarios(j))
                 Next
 
                 'msg = msg & vbNewLine & ApplicationTable.UseBatchScenarioFile & ","
-                'msg = msg & vbNewLine & ApplicationTable.ScenarioBatchFileName & ","
+                'msg = msg & vbNewLine & ApplicationTable.ScenarioBatchFiLEName & ","
             Next
 
 
@@ -349,7 +349,7 @@
 
 
         Try
-            My.Computer.FileSystem.WriteAllText(savefile, msg, False, System.Text.Encoding.ASCII)
+            My.Computer.FileSystem.WRITEAllText(savefile, msg, False, System.Text.Encoding.ASCII)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -363,10 +363,10 @@
 
 
         msg = ScenarioID.Text
-        msg = msg & vbNewLine & WeatherFileName.Text
+        msg = msg & vbNewLine & WeatherFiLEName.Text
         msg = msg & vbNewLine & latitude.Text
 
-        For i As Integer = 1 To 24  'This is all the waterbody stuff in the old scenarios
+        For i As INTEGER = 1 To 24  'This is all the waterbody stuff in the old scenarios
             msg = msg & vbNewLine
         Next
 
@@ -375,7 +375,7 @@
         msg = msg & "******** start of PRZM information ******************" & vbNewLine 'line 28
         msg = msg & String.Format("False, {0}, False", Evergreen.Checked)  'to be compatible with old scenarios, now only evergreen is needed
 
-        Dim numberOfCrops As Integer
+        Dim numberOfCrops As INTEGER
 
         CropGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
@@ -383,19 +383,19 @@
 
         msg = msg & String.Format("{0}{1}", vbNewLine, numberOfCrops)
         Dim simple As Boolean
-        If numberOfCrops = 1 Then
+        If numberOfCrops = 1 THEN
             simple = True
         Else
             simple = False
-        End If
+        END IF
         msg = msg & String.Format("{0}{1},", vbNewLine, simple)
 
 
         Dim AA, BB, CC As Date
         Dim DD As String
-        Dim DDout As Integer
+        Dim DDout As INTEGER
 
-        For i As Integer = 0 To numberOfCrops - 1
+        For i As INTEGER = 0 To numberOfCrops - 1
             AA = CropGridView.Item(0, i).Value
             BB = CropGridView.Item(1, i).Value
             CC = CropGridView.Item(2, i).Value
@@ -419,7 +419,7 @@
                                       CropGridView.Item(6, i).Value, DDout, CropGridView.Item(8, i).Value,
                                       CropGridView.Item(9, i).Value)
         Next
-        For i As Integer = numberOfCrops To 6
+        For i As INTEGER = numberOfCrops To 6
             msg = msg & String.Format("{0},,,,,,,,,,,,", vbNewLine)
         Next
 
@@ -433,17 +433,17 @@
 
 
         msg = msg & vbNewLine & "*** irrigation information start ***"
-        If noIrrigation.Checked Then
+        If noIrrigation.Checked THEN
             msg = msg & String.Format("{0}0", vbNewLine)
 
-        ElseIf overCanopy.Checked Then
+        ElseIf overCanopy.Checked THEN
             msg = msg & String.Format("{0}1", vbNewLine)
 
-        ElseIf underCanopy.Checked Then
+        ElseIf underCanopy.Checked THEN
             msg = msg & String.Format("{0}2", vbNewLine)
         Else
             msg = msg & String.Format("{0}0", vbNewLine)
-        End If
+        END IF
 
         msg = msg & String.Format("{0}{1},{2},{3},", vbNewLine, fleach.Text, depletion.Text, rateIrrig.Text)
         msg = msg & String.Format("{0}{1},{2},", vbNewLine, UserSpecifiesIrrigDepth.Checked, IrrigationDepthUserSpec.Text)
@@ -458,45 +458,45 @@
         msg = msg & vbNewLine & "*** Horizon Info *******" '
         HorizonGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
-        Dim numberofhorizons As Integer
+        Dim numberofhorizons As INTEGER
         numberofhorizons = HorizonGridView.RowCount - 1
 
         msg = msg & String.Format("{0}{1},{0}", vbNewLine, numberofhorizons)
 
 
-        For i As Integer = 0 To numberofhorizons - 1
+        For i As INTEGER = 0 To numberofhorizons - 1
             msg = msg & String.Format("{0},", HorizonGridView.Item(1, i).Value)
         Next
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhorizons - 1
+        For i As INTEGER = 0 To numberofhorizons - 1
             msg = msg & String.Format("{0},", HorizonGridView.Item(2, i).Value)
         Next
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhorizons - 1
+        For i As INTEGER = 0 To numberofhorizons - 1
             msg = msg & String.Format("{0},", HorizonGridView.Item(3, i).Value)
         Next
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhorizons - 1
+        For i As INTEGER = 0 To numberofhorizons - 1
             msg = msg & String.Format("{0},", HorizonGridView.Item(4, i).Value)
         Next
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhorizons - 1
+        For i As INTEGER = 0 To numberofhorizons - 1
             msg = msg & String.Format("{0},", HorizonGridView.Item(5, i).Value)
         Next
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhorizons - 1
+        For i As INTEGER = 0 To numberofhorizons - 1
             msg = msg & String.Format("{0},", HorizonGridView.Item(6, i).Value)
         Next
         msg = msg & vbNewLine
 
-        'For i As Integer = 0 To numberofhorizons - 1
+        'For i As INTEGER = 0 To numberofhorizons - 1
         '    msg = msg & String.Format("{0},", HorizonGridView.Item(7, i).Value)
         'Next
         msg = msg & "Spare Line (formerly sand)"
 
 
         msg = msg & vbNewLine
-        'For i As Integer = 0 To numberofhorizons - 1
+        'For i As INTEGER = 0 To numberofhorizons - 1
         '    msg = msg & String.Format("{0},", HorizonGridView.Item(8, i).Value)
         'Next
         msg = msg & "Spare Line (formerly clay)"
@@ -512,32 +512,32 @@
 
         HydroDataGrid.CommitEdit(DataGridViewDataErrorContexts.Commit)
 
-        Dim numberofhydrofactors As Integer
+        Dim numberofhydrofactors As INTEGER
         numberofhydrofactors = HydroDataGrid.RowCount - 1
 
         msg = msg & vbNewLine & numberofhydrofactors
 
 
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhydrofactors - 1
+        For i As INTEGER = 0 To numberofhydrofactors - 1
             AA = HydroDataGrid.Item(0, i).Value
             msg = msg & AA.Day & ","
         Next
 
         msg = msg & vbNewLine
 
-        For i As Integer = 0 To numberofhydrofactors - 1
+        For i As INTEGER = 0 To numberofhydrofactors - 1
             AA = HydroDataGrid.Item(0, i).Value
             msg = msg & AA.Month & ","
         Next
 
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhydrofactors - 1
+        For i As INTEGER = 0 To numberofhydrofactors - 1
             msg = msg & HydroDataGrid.Item(1, i).Value & ","
         Next
 
         msg = msg & vbNewLine
-        For i As Integer = 0 To numberofhydrofactors - 1
+        For i As INTEGER = 0 To numberofhydrofactors - 1
             msg = msg & HydroDataGrid.Item(2, i).Value & ","
         Next
 
@@ -548,7 +548,7 @@
         msg = msg & vbNewLine & "False"
         msg = msg & vbNewLine & ",,,,,"
         ' msg = msg & vbNewLine & useUSLEYear.Checked & vbNewLine
-        'For i As Integer = 0 To USLE.MaxHydroErosionFactors - 1
+        'For i As INTEGER = 0 To USLE.MaxHydroErosionFactors - 1
         '    msg = msg & USLE.year(i).Text & ","
         'Next
 
@@ -557,15 +557,15 @@
 
         msg = msg & vbNewLine & useAutoGWprofile.Checked
 
-        If useAutoGWprofile.Checked Then
-            Dim numberofdiscreterows As Integer
+        If useAutoGWprofile.Checked THEN
+            Dim numberofdiscreterows As INTEGER
             numberofdiscreterows = DiscretizationGridView.RowCount - 1
             msg = msg & vbNewLine & numberofdiscreterows
 
-            For i As Integer = 0 To numberofdiscreterows - 1
+            For i As INTEGER = 0 To numberofdiscreterows - 1
                 msg = msg & String.Format("{0}{1}, {2}", vbNewLine, DiscretizationGridView.Item(0, i).Value, DiscretizationGridView.Item(1, i).Value)
             Next
-        End If
+        END IF
 
 
         Return msg
@@ -574,45 +574,45 @@
     End Function
 
 
-    Sub ReadInputsFromTextFile(ByVal filename As String)
+    Sub READInputsFromTextFile(ByVal fiLEName As String)
 
 
         SchemeInfoList.Clear()
 
-        Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(filename)
+        Using MyREADer As New Microsoft.VisualBasic.FileIO.TextFieldParser(fiLEName)
             Dim currentrow As String()
 
-            WorkingDirectoryLabel.Text = System.IO.Path.GetDirectoryName(filename) & "\"
-            FileNames.WorkingDirectory = System.IO.Path.GetDirectoryName(filename) & "\"
+            WorkingDirectoryLabel.Text = System.IO.Path.GetDirectoryName(fiLEName) & "\"
+            FiLENames.WorkingDirectory = System.IO.Path.GetDirectoryName(fiLEName) & "\"
 
-            IOFamilyName.Text = System.IO.Path.GetFileNameWithoutExtension(filename)
+            IOFamilyName.Text = System.IO.Path.GetFiLENameWithoutExtension(fiLEName)
 
             WorkingDirectoryLabel.ForeColor = Color.Black
             IOFamilyName.ForeColor = Color.Black
 
-            MyReader.TextFieldType = FileIO.FieldType.Delimited
-            MyReader.SetDelimiters(",")
+            MyREADer.TextFieldType = FileIO.FieldType.Delimited
+            MyREADer.SetDelimiters(",")
 
 
-            MyReader.ReadLine() 'Title Line  LINE 1
-            MyReader.ReadLine() 'working directory, not retrieved here, so can alter
-            MyReader.ReadLine() 'family name not retrieved, so can alter, needed for transfer to vvwm
+            MyREADer.READLine() 'Title Line  LINE 1
+            MyREADer.READLine() 'working directory, not retrieved here, so can alter
+            MyREADer.READLine() 'family name not retrieved, so can alter, needed for transfer to vvwm
             'Weather Path
 
-            WeatherDirectoryBox.Text = MyReader.ReadLine()   'LINE 4
+            WeatherDirectoryBox.Text = MyREADer.READLine()   'LINE 4
 
-            currentrow = MyReader.ReadFields                 'LINE 5
+            currentrow = MyREADer.READFields                 'LINE 5
             WaterbodyEvapAdjustment.Text = currentrow(0)
 
             'Chemical Proerties
-            currentrow = MyReader.ReadFields         'LINE 6
-            If currentrow(0) Then
+            currentrow = MyREADer.READFields         'LINE 6
+            If currentrow(0) THEN
                 isKoc.Checked = True
                 isKd.Checked = False
             Else
                 isKoc.Checked = False
                 isKd.Checked = True
-            End If
+            END IF
 
             UseFreundlich.Checked = currentrow(1)
             UseNonequilibrium.Checked = currentrow(2)
@@ -620,13 +620,13 @@
             'early pwc3 did not have these options:
             Try
 
-                If currentrow(3) Then
+                If currentrow(3) THEN
                     poundToKiloConversion.Checked = True
                     kgha.Checked = False
                 Else
                     poundToKiloConversion.Checked = False
                     kgha.Checked = True
-                End If
+                END IF
 
                 IsHydrolysisOverride.Checked = currentrow(4)
             Catch ex As Exception
@@ -636,8 +636,8 @@
 
 
 
-            Dim nchem As Integer
-            currentrow = MyReader.ReadFields
+            Dim nchem As INTEGER
+            currentrow = MyREADer.READFields
             nchem = currentrow(0) 'LINE 6
             Select Case nchem
                 Case 3
@@ -652,79 +652,79 @@
                 Case Else
             End Select
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             sorption1.Text = currentrow(0)
             sorption2.Text = currentrow(1)
             sorption3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             Nexp1Reg1.Text = currentrow(0)
             Nexp2Reg1.Text = currentrow(1)
             Nexp3Reg1.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             Kf1Reg2.Text = currentrow(0)
             Kf2Reg2.Text = currentrow(1)
             Kf3Reg2.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields 'LINE 11
+            currentrow = MyREADer.READFields 'LINE 11
             Nexp1Reg2.Text = currentrow(0)
             Nexp2Reg2.Text = currentrow(1)
             Nexp3Reg2.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             MassTransferRegion2.Text = currentrow(0)
             MassTransferRegion2Daughter.Text = currentrow(1)
             MassTransferRegion2GrandDaughter.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             FreundlichMinimumConc.Text = currentrow(0)
             SubTimeSteps.Text = currentrow(1)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             WaterColMetab1.Text = currentrow(0)
             WaterColMetab2.Text = currentrow(1)
             WaterColMetab3.Text = currentrow(2)
             WaterMolarRatio1.Text = currentrow(3)
             WaterMolarRatio2.Text = currentrow(4)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             WaterColRef1.Text = currentrow(0)
             WaterColRef2.Text = currentrow(1)
             WaterColRef3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             BenthicMetab1.Text = currentrow(0)
             BenthicMetab2.Text = currentrow(1)
             BenthicMetab3.Text = currentrow(2)
             BenthicMolarRatio1.Text = currentrow(3)
             BenthicMolarRatio2.Text = currentrow(4)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             BenthicRef1.Text = currentrow(0)
             BenthicRef2.Text = currentrow(1)
             BenthicRef3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             Photo1.Text = currentrow(0)
             Photo2.Text = currentrow(1)
             Photo3.Text = currentrow(2)
             PhotoMolarRatio1.Text = currentrow(3)
             PhotoMolarRatio2.Text = currentrow(4)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             PhotoLat1.Text = currentrow(0)
             PhotoLat2.Text = currentrow(1)
             PhotoLat3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields 'LINE 20
+            currentrow = MyREADer.READFields 'LINE 20
             Hydrolysis1.Text = currentrow(0)
             Hydrolysis2.Text = currentrow(1)
             Hydrolysis3.Text = currentrow(2)
             HydroMolarRatio1.Text = currentrow(3)
             HydroMolarRatio2.Text = currentrow(4)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             SoilDegradation1.Text = currentrow(0)
             SoilDegradation2.Text = currentrow(1)
             SoilDegradation3.Text = currentrow(2)
@@ -733,81 +733,81 @@
             IsAllMedia.Checked = currentrow(5)
             IsAqueousDegradation.Checked = Not IsAllMedia.Checked
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             SoilRef1.Text = currentrow(0)
             SoilRef2.Text = currentrow(1)
             SoilRef3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             FoliarDeg1.Text = currentrow(0)
             FoliarDeg2.Text = currentrow(1)
             FoliarDeg3.Text = currentrow(2)
             FoliarMolarRatio1.Text = currentrow(3)
             FoliarMolarRatio2.Text = currentrow(4)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             FoliarWashoff1.Text = currentrow(0)
             FoliarWashoff2.Text = currentrow(1)
             FoliarWashoff3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             MWT1.Text = currentrow(0)
             MWT2.Text = currentrow(1)
             MWT3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             VaporPress1.Text = currentrow(0)
             VaporPress2.Text = currentrow(1)
             VaporPress3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             Sol1.Text = currentrow(0)
             Sol2.Text = currentrow(1)
             Sol3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             Henry1.Text = currentrow(0)
             Henry2.Text = currentrow(1)
             Henry3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             AirDiff1.Text = currentrow(0)
             AirDiff2.Text = currentrow(1)
             AirDiff3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
-            HeatHenry1.Text = currentrow(0)
-            HeatHenry2.Text = currentrow(1)
-            HeatHenry3.Text = currentrow(2)
+            currentrow = MyREADer.READFields
+            HeaTHENry1.Text = currentrow(0)
+            HeaTHENry2.Text = currentrow(1)
+            HeaTHENry3.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields         'LINE 31
+            currentrow = MyREADer.READFields         'LINE 31
             Q10.Text = currentrow(0)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             ConstantProfile.Checked = currentrow(0)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             RampProfile.Checked = currentrow(0)
             profileDepth1.Text = currentrow(1)
             ProfileDepth2.Text = currentrow(2)
             RampEndValue.Text = currentrow(3)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             ExponentialProfile.Checked = currentrow(0)
-            ExpParameter1.Text = currentrow(1)
-            ExpParameter2.Text = currentrow(2)
+            ExpPARAMETER1.Text = currentrow(1)
+            ExpPARAMETER2.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
-            Dim NumberOfSchemes As Integer
+            currentrow = MyREADer.READFields
+            Dim NumberOfSchemes As INTEGER
             NumberOfSchemes = currentrow(0)
 
             SchemeTableDisplay.Rows.Clear()
 
-            Dim NumberOfScenarios As Integer
-            Dim numRows As Integer
+            Dim NumberOfScenarios As INTEGER
+            Dim numRows As INTEGER
             Dim blip As String
 
-            For i As Integer = 0 To NumberOfSchemes - 1
+            For i As INTEGER = 0 To NumberOfSchemes - 1
                 'Need a new apptable for every scheme because otherwise just a reference to table will be sent to schemeinfo
                 ' and only copies of the last scheme will be picked up
                 Dim ApplicationTable As New SchemeDetails With {
@@ -825,11 +825,11 @@
 
                 ' ApplicationTable.ClearAll()
 
-                currentrow = MyReader.ReadFields
+                currentrow = MyREADer.READFields
 
                 SchemeTableDisplay.Rows.Add("", False, "", currentrow(1))
 
-                currentrow = MyReader.ReadFields
+                currentrow = MyREADer.READFields
 
                 ApplicationTable.AbsoluteRelative = False
                 ApplicationTable.Emerge = False
@@ -846,12 +846,12 @@
                         ApplicationTable.Removal = True
                 End Select
 
-                currentrow = MyReader.ReadFields
+                currentrow = MyREADer.READFields
                 numRows = currentrow(0) 'number of application (rows) in app table
 
 
-                For j As Integer = 0 To numRows - 1
-                    currentrow = MyReader.ReadFields               'Not read if zero rows
+                For j As INTEGER = 0 To numRows - 1
+                    currentrow = MyREADer.READFields               'Not READ if zero rows
                     ApplicationTable.Days.Add(currentrow(0))
                     ApplicationTable.Amount.Add(currentrow(1))
                     ApplicationTable.Method.Add(currentrow(2))
@@ -863,39 +863,39 @@
                     ApplicationTable.Lag.Add(currentrow(8))
                 Next
 
-                currentrow = MyReader.ReadFields
+                currentrow = MyREADer.READFields
                 ApplicationTable.UseApplicationWindow = currentrow(0)
                 ApplicationTable.ApplicationWindowSpan = currentrow(1)
                 ApplicationTable.ApplicationWindowStep = currentrow(2)
 
-                currentrow = MyReader.ReadFields                          'LINE 40
+                currentrow = MyREADer.READFields                          'LINE 40
                 ApplicationTable.UseRainFast = currentrow(0)
                 ApplicationTable.RainLimit = currentrow(1)
                 ApplicationTable.IntolerableRainWindow = currentrow(2)
                 ApplicationTable.OptimumApplicationWindow = currentrow(3)
                 ApplicationTable.MinDaysBetweenApps = currentrow(4)
 
-                currentrow = MyReader.ReadFields  'Read number of scenarios    
+                currentrow = MyREADer.READFields  'READ number of scenarios    
 
                 NumberOfScenarios = currentrow(0)
 
-                For j As Integer = 0 To NumberOfScenarios - 1
-                    'currentrow = MyReader.ReadFields
+                For j As INTEGER = 0 To NumberOfScenarios - 1
+                    'currentrow = MyREADer.READFields
                     'ApplicationTable.Scenarios.Add(currentrow(0)) ' commas in name were causing problems READ Entire line instead
-                    blip = MyReader.ReadLine()
+                    blip = MyREADer.READLine()
                     ApplicationTable.Scenarios.Add(blip)
                 Next
-                currentrow = MyReader.ReadFields
+                currentrow = MyREADer.READFields
                 ApplicationTable.UseBatchScenarioFile = currentrow(0)
 
-                currentrow = MyReader.ReadFields
-                ApplicationTable.ScenarioBatchFileName = currentrow(0)
+                currentrow = MyREADer.READFields
+                ApplicationTable.ScenarioBatchFiLEName = currentrow(0)
 
 
 
-                If MyReader.PeekChars(11) = "Mitigations" Then
-                    MyReader.ReadLine() 'skip over the Mitigations line
-                    currentrow = MyReader.ReadFields
+                If MyREADer.PeekChars(11) = "Mitigations" THEN
+                    MyREADer.READLine() 'skip over the Mitigations line
+                    currentrow = MyREADer.READFields
                     ApplicationTable.RunoffMitigation = currentrow(0)
                     ApplicationTable.ErosionMitigation = currentrow(1)
                     ApplicationTable.DriftMitigation = currentrow(2)
@@ -903,26 +903,26 @@
                     ApplicationTable.RunoffMitigation = "1.0"
                     ApplicationTable.ErosionMitigation = "1.0"
                     ApplicationTable.DriftMitigation = "1.0"
-                End If
+                END IF
 
 
                 SchemeInfoList.Add(ApplicationTable)
             Next
 
-            currentrow = MyReader.ReadFields 'msg = msg & vbNewLine & ErosionFlag.Text
+            currentrow = MyREADer.READFields 'msg = msg & vbNewLine & ErosionFlag.Text
             ErosionFlag.Text = currentrow(0)
-            MyReader.ReadLine() 'msg = msg & vbNewLine & HydroLength.Text
-            MyReader.ReadLine() 'msg = msg & vbNewLine & AreaOfField.Text
-            MyReader.ReadLine()
-            MyReader.ReadLine()
-            MyReader.ReadLine() 'msg = msg & vbNewLine & additionaloutput.Checked
+            MyREADer.READLine() 'msg = msg & vbNewLine & HydroLENgth.Text
+            MyREADer.READLine() 'msg = msg & vbNewLine & AreaOfField.Text
+            MyREADer.READLine()
+            MyREADer.READLine()
+            MyREADer.READLine() 'msg = msg & vbNewLine & additionaloutput.Checked
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             AdjustCN.Checked = currentrow(0) 'msg = msg & vbNewLine & AdjustCN.Checked
 
 
 
-            currentrow = MyReader.ReadFields 'msg = msg & vbNewLine & ItsaPond.Checked & "," & ItsaReservoir.Checked & "," & ItsOther.Checked
+            currentrow = MyREADer.READFields 'msg = msg & vbNewLine & ItsaPond.Checked & "," & ItsaReservoir.Checked & "," & ItsOther.Checked
 
             ItsaPond.Checked = currentrow(0)
 
@@ -932,105 +932,105 @@
             ItsTPEZWPEZ.Checked = currentrow(3)
             UseTPEZbuffers.Checked = currentrow(4)
 
-            currentrow = MyReader.ReadFields 'msg = msg & vbNewLine & WaterbodyList.Items.Count
-            Dim countofspecialwaterbodies As Integer
+            currentrow = MyREADer.READFields 'msg = msg & vbNewLine & WaterbodyList.Items.Count
+            Dim countofspecialwaterbodies As INTEGER
             countofspecialwaterbodies = currentrow(0)
             WaterbodyList.Items.Clear()
 
 
 
-            For i As Integer = 1 To countofspecialwaterbodies
-                currentrow = MyReader.ReadFields
+            For i As INTEGER = 1 To countofspecialwaterbodies
+                currentrow = MyREADer.READFields
                 WaterbodyList.Items.Add(currentrow(0))
             Next
 
 
 
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputRunoff.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputErosion.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputPestRunoff.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputPestErosion.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputConcLastLayer.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputDailyFieldVolatilization.Checked = currentrow(0)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             OutputDailyPestLeached.Checked = currentrow(0)
             chemInfiltrationDepth.Text = currentrow(1)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             OutputDecayedPest.Checked = currentrow(0)
             OutputDecayDepth1.Text = currentrow(1)
             OutputDecayDepth2.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputMassInSoilProfile.Checked = currentrow(0)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputMassSoilSpecific.Checked = currentrow(0)
             OutputMassDepth1.Text = currentrow(1)
             OutputMassDepth2.Text = currentrow(2)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputMassOnFoliage.Checked = currentrow(0)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputPrecipitation.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputActualEvap.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputTotalSoilWater.Checked = currentrow(0)
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputIrrigation.Checked = currentrow(0)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputInfiltrationAtDepth.Checked = currentrow(0)
             OutputInfiltrationDepth.Text = currentrow(1)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputInfiltratedWaterLastLayer.Checked = currentrow(0)
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
             outputWaterConc.Checked = currentrow(0)
 
 
-            currentrow = MyReader.ReadFields
+            currentrow = MyREADer.READFields
 
-            If currentrow(0) = "True" Or "False" Then
+            If currentrow(0) = "True" Or "False" THEN
                 outputSpraydrift.Checked = currentrow(0)
             Else
                 outputSpraydrift.Checked = False
-            End If
+            END IF
 
 
-            currentrow = MyReader.ReadFields
-            If currentrow(0) = "True" Or "False" Then
+            currentrow = MyREADer.READFields
+            If currentrow(0) = "True" Or "False" THEN
                 output_GW_BTC.Checked = currentrow(0)
             Else
                 output_GW_BTC.Checked = False
-            End If
+            END IF
 
 
-            MyReader.ReadLine() 'expansion lines
-            MyReader.ReadLine()
-            MyReader.ReadLine()
-            MyReader.ReadLine()
-            MyReader.ReadLine()
+            MyREADer.READLine() 'expansion lines
+            MyREADer.READLine()
+            MyREADer.READLine()
+            MyREADer.READLine()
+            MyREADer.READLine()
 
-            Dim NumOutputRows As Integer
-            currentrow = MyReader.ReadFields
+            Dim NumOutputRows As INTEGER
+            currentrow = MyREADer.READFields
             NumOutputRows = currentrow(0)
 
 
             AdditionalOutputGridView.Rows.Clear()
-            For j As Integer = 0 To NumOutputRows - 1
-                currentrow = MyReader.ReadFields
+            For j As INTEGER = 0 To NumOutputRows - 1
+                currentrow = MyREADer.READFields
                 AdditionalOutputGridView.Rows.Add(currentrow(0), currentrow(1), currentrow(2), currentrow(3), currentrow(4), currentrow(5))
             Next
 
@@ -1042,30 +1042,30 @@
 
     End Sub
 
-    Sub ReadSchemeFile(ByVal filename As String)
+    Sub READSchemeFile(ByVal fiLEName As String)
 
 
         SchemeInfoList.Clear()
 
-        Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(filename)
+        Using MyREADer As New Microsoft.VisualBasic.FileIO.TextFieldParser(fiLEName)
             Dim currentrow As String()
-            Dim NumberOfSchemes As Integer
-            Dim NumberOfScenarios As Integer
-            Dim numRows As Integer
+            Dim NumberOfSchemes As INTEGER
+            Dim NumberOfScenarios As INTEGER
+            Dim numRows As INTEGER
             Dim scenariopath As String
 
 
-            MyReader.TextFieldType = FileIO.FieldType.Delimited
-            MyReader.SetDelimiters(",")
+            MyREADer.TextFieldType = FileIO.FieldType.Delimited
+            MyREADer.SetDelimiters(",")
 
-            MyReader.ReadLine()                'Title        LINE 1
-            currentrow = MyReader.ReadFields   'No. Schemes  LINE 2
+            MyREADer.READLine()                'Title        LINE 1
+            currentrow = MyREADer.READFields   'No. Schemes  LINE 2
             NumberOfSchemes = currentrow(0)
-            MyReader.ReadLine()                'Header       LINE 3
+            MyREADer.READLine()                'Header       LINE 3
 
             SchemeTableDisplay.Rows.Clear()
 
-            For i As Integer = 0 To NumberOfSchemes - 1
+            For i As INTEGER = 0 To NumberOfSchemes - 1
                 'Need a new apptable for every scheme because otherwise just a reference to table will be sent to schemeinfo
                 ' and only copies of the last scheme will be picked up
                 Dim ApplicationTable As New SchemeDetails With {
@@ -1083,7 +1083,7 @@
 
                 ' ApplicationTable.ClearAll()
 
-                currentrow = MyReader.ReadFields                   'read full scheme line
+                currentrow = MyREADer.READFields                   'READ full scheme line
 
                 SchemeTableDisplay.Rows.Add("", False, "", currentrow(1))
 
@@ -1104,11 +1104,11 @@
 
                 numRows = currentrow(3)             'number of application (rows) in app table
 
-                If numRows > 10 Then
+                If numRows > 10 THEN
                     MsgBox("for scheme upload/download using this external feature, apps are limited to 10 per scheme")
-                End If
+                END IF
 
-                For j As Integer = 0 To numRows - 1
+                For j As INTEGER = 0 To numRows - 1
                     ApplicationTable.Days.Add(currentrow(4 + 9 * j))
                     ApplicationTable.Amount.Add(currentrow(5 + 9 * j))
                     ApplicationTable.Method.Add(currentrow(6 + 9 * j))
@@ -1134,14 +1134,14 @@
 
 
                 'Row 103 is the path
-                If currentrow(103) = "" Then
+                If currentrow(103) = "" THEN
                     scenariopath = ""
                 Else
                     scenariopath = currentrow(103)
-                End If
+                END IF
 
 
-                For j As Integer = 104 To 104 + NumberOfScenarios - 1
+                For j As INTEGER = 104 To 104 + NumberOfScenarios - 1
                     ApplicationTable.Scenarios.Add(scenariopath & currentrow(j))
                 Next
                 SchemeInfoList.Add(ApplicationTable)
@@ -1154,53 +1154,53 @@
     End Sub
 
 
-    Private Sub ReadwaterBodyParameters(filename As String)
+    Private Sub READwaterBodyPARAMETERs(fiLEName As String)
 
-        Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(filename)
-            MyReader.TextFieldType = FileIO.FieldType.Delimited
-            MyReader.SetDelimiters(",")
+        Using MyREADer As New Microsoft.VisualBasic.FileIO.TextFieldParser(fiLEName)
+            MyREADer.TextFieldType = FileIO.FieldType.Delimited
+            MyREADer.SetDelimiters(",")
             Dim currentRow As String()
 
-            WaterbodyName.Text = MyReader.ReadLine()
-            WaterBodyType.Text = MyReader.ReadLine()
-            FlowAveraging.Text = MyReader.ReadLine()
-            FieldSize.Text = MyReader.ReadLine()
-            WaterBodyArea.Text = MyReader.ReadLine()
+            WaterbodyName.Text = MyREADer.READLine()
+            WaterBodyType.Text = MyREADer.READLine()
+            FlowAveraging.Text = MyREADer.READLine()
+            FieldSize.Text = MyREADer.READLine()
+            WaterBodyArea.Text = MyREADer.READLine()
 
-            DoverDx.Text = MyReader.ReadLine()
-            BenthicDepth.Text = MyReader.ReadLine()
-            BenthicPorosity.Text = MyReader.ReadLine()
-            BenthicBulkDensity.Text = MyReader.ReadLine()
-            BenthicFoc.Text = MyReader.ReadLine()
-            BenthicDOC.Text = MyReader.ReadLine()
-            BenthicBiomass.Text = MyReader.ReadLine()
-            Dfac.Text = MyReader.ReadLine()
-            SuspendedSolids.Text = MyReader.ReadLine()
-            Chlorophyll.Text = MyReader.ReadLine()
-            WaterColumnFoc.Text = MyReader.ReadLine()
-            WaterColumnDoc.Text = MyReader.ReadLine()
-            WaterColumnBiomass.Text = MyReader.ReadLine()
-            InitialDepth.Text = MyReader.ReadLine()
-            MaxDepth.Text = MyReader.ReadLine()
-            BaseFlow.Text = MyReader.ReadLine()
-            FlowLength.Text = MyReader.ReadLine()
+            DoverDx.Text = MyREADer.READLine()
+            BenthicDepth.Text = MyREADer.READLine()
+            BenthicPorosity.Text = MyREADer.READLine()
+            BenthicBulkDensity.Text = MyREADer.READLine()
+            BenthicFoc.Text = MyREADer.READLine()
+            BenthicDOC.Text = MyREADer.READLine()
+            BenthicBiomass.Text = MyREADer.READLine()
+            Dfac.Text = MyREADer.READLine()
+            SuspendedSolids.Text = MyREADer.READLine()
+            Chlorophyll.Text = MyREADer.READLine()
+            WaterColumnFoc.Text = MyREADer.READLine()
+            WaterColumnDoc.Text = MyREADer.READLine()
+            WaterColumnBiomass.Text = MyREADer.READLine()
+            InitialDepth.Text = MyREADer.READLine()
+            MaxDepth.Text = MyREADer.READLine()
+            BaseFlow.Text = MyREADer.READLine()
+            FlowLENgth.Text = MyREADer.READLine()
 
-            currentRow = MyReader.ReadFields
+            currentRow = MyREADer.READFields
             isZeroConc.Checked = currentRow(0)
             ZeroConcDepth.Text = currentRow(1)
 
-            MyReader.ReadLine() 'blank line
+            MyREADer.READLine() 'blank line
 
-            Dim rowcount, colcount As Integer
-            currentRow = MyReader.ReadFields
+            Dim rowcount, colcount As INTEGER
+            currentRow = MyREADer.READFields
             rowcount = currentRow(0)
             colcount = currentRow(1)
 
 
-            For i As Integer = 0 To rowcount - 1
-                currentRow = MyReader.ReadFields
+            For i As INTEGER = 0 To rowcount - 1
+                currentRow = MyREADer.READFields
 
-                For j As Integer = 1 To colcount
+                For j As INTEGER = 1 To colcount
 
                     SprayGridView.Item(j, i).Value = currentRow(j - 1)
 
@@ -1240,30 +1240,30 @@
         msg = msg & vbNewLine & InitialDepth.Text
         msg = msg & vbNewLine & MaxDepth.Text
         msg = msg & vbNewLine & BaseFlow.Text
-        msg = msg & vbNewLine & FlowLength.Text
+        msg = msg & vbNewLine & FlowLENgth.Text
         msg = msg & vbNewLine & isZeroConc.Checked & "," & ZeroConcDepth.Text & ","
         msg = msg & vbNewLine & "unused line for future expansion"
 
-        Dim column_count As Integer
+        Dim column_count As INTEGER
         'determine column count
         column_count = 0
-        For i As Integer = 1 To SprayGridView.ColumnCount - 1
+        For i As INTEGER = 1 To SprayGridView.ColumnCount - 1
 
-            If IsNumeric(SprayGridView.Item(i, 0).Value) Then
+            If IsNumeric(SprayGridView.Item(i, 0).Value) THEN
                 column_count = column_count + 1
             Else
                 Exit For
-            End If
+            END IF
         Next
 
         msg = msg & vbNewLine & SprayGridView.RowCount & "," & column_count
 
         Dim submsg As String
 
-        For i As Integer = 0 To SprayGridView.RowCount - 1
+        For i As INTEGER = 0 To SprayGridView.RowCount - 1
             submsg = SprayGridView.Item(1, i).Value
 
-            For j As Integer = 2 To SprayGridView.ColumnCount - 2
+            For j As INTEGER = 2 To SprayGridView.ColumnCount - 2
                 submsg = submsg & ", " & SprayGridView.Item(j, i).Value
             Next
             msg = msg & vbNewLine & submsg
@@ -1272,15 +1272,15 @@
 
         CreateWaterbodyString = msg
     End Function
-    Private Sub LoadSingleBatchFileScenario(ByVal filename As String)
+    Private Sub LoadSingleBatchFileScenario(ByVal fiLEName As String)
         Try
 
 
 
 
-            Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(filename)
-                MyReader.TextFieldType = FileIO.FieldType.Delimited
-                MyReader.SetDelimiters(",")
+            Using MyREADer As New Microsoft.VisualBasic.FileIO.TextFieldParser(fiLEName)
+                MyREADer.TextFieldType = FileIO.FieldType.Delimited
+                MyREADer.SetDelimiters(",")
                 Dim currentRow As String()
                 Dim test As Boolean
 
@@ -1288,29 +1288,29 @@
                 msg = ""
 
 
-                TestIntegers(test, msg, CSV_line)
-                If test = False Then
+                TestINTEGERs(test, msg, CSV_line)
+                If test = False THEN
                     MsgBox(msg)
                     Return
-                End If
+                END IF
 
 
-                For i As Integer = 1 To Convert.ToInt16(CSV_line.Text) - 1
-                    If MyReader.EndOfData Then
+                For i As INTEGER = 1 To Convert.ToInt16(CSV_line.Text) - 1
+                    If MyREADer.EndOfData THEN
                         Exit For
-                    End If
+                    END IF
 
-                    MyReader.ReadLine()
+                    MyREADer.READLine()
                 Next
 
-                If MyReader.EndOfData Then
+                If MyREADer.EndOfData THEN
                     MsgBox("No data on this line")
                     Exit Sub
-                End If
+                END IF
 
-                currentRow = MyReader.ReadFields
+                currentRow = MyREADer.READFields
                 ScenarioID.Text = currentRow(0)
-                WeatherFileName.Text = currentRow(2) & "_grid.wea"
+                WeatherFiLEName.Text = currentRow(2) & "_grid.wea"
                 latitude.Text = currentRow(9)
 
                 PETadjustment.Text = "1.0"              'default
@@ -1344,7 +1344,7 @@
                 albedo.Text = 0.2                  'default
 
                 HorizonGridView.Rows.Clear()
-                For i As Integer = 0 To currentRow(36) - 1
+                For i As INTEGER = 0 To currentRow(36) - 1
                     HorizonGridView.Rows.Add(i + 1, currentRow(37 + i), currentRow(45 + i), currentRow(53 + i), currentRow(61 + i), currentRow(69 + i), "0")
                 Next
 
@@ -1356,7 +1356,7 @@
                 DiscretizationGridView.Rows.Add("80.0", "4")
 
                 Dim transition_depth As Single
-                Dim transition_delta As Integer
+                Dim transition_delta As INTEGER
                 transition_depth = currentRow(96) - 100
                 transition_delta = transition_depth / 50     ' 50 cm increment
 
@@ -1370,12 +1370,12 @@
                 Dim maturity_date As Date  ' maturity
                 Dim harvest_date As Date  ' harvest
 
-                Dim dayEmerge As Integer
-                Dim monthEmerge As Integer
-                Dim dayMature As Integer
-                Dim monthMature As Integer
-                Dim dayHarvest As Integer
-                Dim monthHarvest As Integer
+                Dim dayEmerge As INTEGER
+                Dim monthEmerge As INTEGER
+                Dim dayMature As INTEGER
+                Dim monthMature As INTEGER
+                Dim dayHarvest As INTEGER
+                Dim monthHarvest As INTEGER
 
                 Dim aa, bb, cc As Double
                 aa = currentRow(18)
@@ -1400,13 +1400,13 @@
 
                 Evergreen.Checked = False
 
-                If (Convert.ToInt16(aa) = 0 And Convert.ToInt16(bb) = 1) Then
+                If (Convert.ToInt16(aa) = 0 And Convert.ToInt16(bb) = 1) THEN
                     Evergreen.Checked = True
                     EvergreenRoot.Text = currentRow(27)
                     EvergreenCover.Text = currentRow(26)
                     EvergreenHt.Text = 1.0
                     EvergreenHoldup.Text = currentRow(25)
-                End If
+                END IF
 
 
 
@@ -1451,56 +1451,56 @@
 
 
 
-    Private Sub ReadScenarioParameters(ByVal filename As String)
+    Private Sub READScenarioPARAMETERs(ByVal fiLEName As String)
 
 
-        Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(filename)
+        Using MyREADer As New Microsoft.VisualBasic.FileIO.TextFieldParser(fiLEName)
 
-            MyReader.TextFieldType = FileIO.FieldType.Delimited
-            MyReader.SetDelimiters(",")
+            MyREADer.TextFieldType = FileIO.FieldType.Delimited
+            MyREADer.SetDelimiters(",")
             Dim currentRow As String()
 
-            ScenarioID.Text = MyReader.ReadLine()
-            WeatherFileName.Text = MyReader.ReadLine()
+            ScenarioID.Text = MyREADer.READLine()
+            WeatherFiLEName.Text = MyREADer.READLine()
 
-            latitude.Text = MyReader.ReadLine()
-            MyReader.ReadLine() 'waterbody types
-            MyReader.ReadLine() 'flow averagin
-            MyReader.ReadLine() 'burial
-            MyReader.ReadLine() 'fieldsize.Text = Myreader.ReadLine()
-            MyReader.ReadLine() 'waterAreaBox.Text = Myreader.ReadLine()
-            MyReader.ReadLine() 'initialDepthBox.Text = Myreader.ReadLine()
-            MyReader.ReadLine() 'maxDepthBox.Text = Myreader.ReadLine()
-            MyReader.ReadLine() 'massXferBox.Text = Myreader.ReadLine()
-            MyReader.ReadLine() 'prben
-            MyReader.ReadLine() ' benthicdepthBox.Text = MyReader.ReadLine()
-            MyReader.ReadLine() ' porosityBox.Text = MyReader.ReadLine()
-            MyReader.ReadLine() ' bdBox.Text = MyReader.ReadLine()
-            MyReader.ReadLine() ' foc2Box.Text = MyReader.ReadLine()
-            MyReader.ReadLine() ' DOC2Box.Text = MyReader.ReadLine()
-            MyReader.ReadLine() ' biomass2Box.Text = MyReader.ReadLine()
-            MyReader.ReadLine() ' dfacBox.Text = MyReader.ReadLine()
-            MyReader.ReadLine() ' ssBox.Text = MyReader.ReadLine()
-            MyReader.ReadLine() 'ChlorophyllBox.Text = MyReader.ReadLine()
-            MyReader.ReadLine() 'foc1Box.Text = MyReader.ReadLine()
-            MyReader.ReadLine() 'DOC1Box.Text = MyReader.ReadLine()
-            MyReader.ReadLine() 'Biomass1Box.Text = MyReader.ReadLine()
-            MyReader.ReadLine() 'Line 25 'EpaDefaultsCheck.Checked = MyReader.ReadLine()
-            MyReader.ReadLine() 'Line 26
-            MyReader.ReadLine() 'Line 27 blank
+            latitude.Text = MyREADer.READLine()
+            MyREADer.READLine() 'waterbody types
+            MyREADer.READLine() 'flow averagin
+            MyREADer.READLine() 'burial
+            MyREADer.READLine() 'fieldsize.Text = MyREADer.READLine()
+            MyREADer.READLine() 'waterAreaBox.Text = MyREADer.READLine()
+            MyREADer.READLine() 'initialDepthBox.Text = MyREADer.READLine()
+            MyREADer.READLine() 'maxDepthBox.Text = MyREADer.READLine()
+            MyREADer.READLine() 'massXferBox.Text = MyREADer.READLine()
+            MyREADer.READLine() 'prben
+            MyREADer.READLine() ' benthicdepthBox.Text = MyREADer.READLine()
+            MyREADer.READLine() ' porosityBox.Text = MyREADer.READLine()
+            MyREADer.READLine() ' bdBox.Text = MyREADer.READLine()
+            MyREADer.READLine() ' foc2Box.Text = MyREADer.READLine()
+            MyREADer.READLine() ' DOC2Box.Text = MyREADer.READLine()
+            MyREADer.READLine() ' biomass2Box.Text = MyREADer.READLine()
+            MyREADer.READLine() ' dfacBox.Text = MyREADer.READLine()
+            MyREADer.READLine() ' ssBox.Text = MyREADer.READLine()
+            MyREADer.READLine() 'ChlorophyllBox.Text = MyREADer.READLine()
+            MyREADer.READLine() 'foc1Box.Text = MyREADer.READLine()
+            MyREADer.READLine() 'DOC1Box.Text = MyREADer.READLine()
+            MyREADer.READLine() 'Biomass1Box.Text = MyREADer.READLine()
+            MyREADer.READLine() 'Line 25 'EpaDefaultsCheck.Checked = MyREADer.READLine()
+            MyREADer.READLine() 'Line 26
+            MyREADer.READLine() 'Line 27 blank
 
-            MyReader.ReadLine()  ' line 28 with ******** start of PRZM information ******************
+            MyREADer.READLine()  ' line 28 with ******** start of PRZM information ******************
 
-            currentRow = MyReader.ReadFields
+            currentRow = MyREADer.READFields
             '  SingleCropAnnual.Checked = currentRow(0)
-            Evergreen.Checked = currentRow(1) 'there are unused parameters on this line
+            Evergreen.Checked = currentRow(1) 'there are unused PARAMETERs on this line
 
-            Dim croprows As Integer
+            Dim croprows As INTEGER
 
-            croprows = MyReader.ReadLine()  'Line 30 CropCyclesPerYear is number of rows in crop tab;le
-            MyReader.ReadLine()  ' irrelevant now
+            croprows = MyREADer.READLine()  'Line 30 CropCyclesPerYear is number of rows in crop tab;le
+            MyREADer.READLine()  ' irrelevant now
 
-            Dim emday, emmonth, matday, matmonth, endday, endmonth As Integer
+            Dim emday, emmonth, matday, matmonth, endday, endmonth As INTEGER
             Dim emergencedate As String
             Dim maturedate As String
             Dim enddate As String
@@ -1508,8 +1508,8 @@
 
             CropGridView.Rows.Clear()
 
-            For j As Integer = 0 To croprows - 1
-                currentRow = MyReader.ReadFields
+            For j As INTEGER = 0 To croprows - 1
+                currentRow = MyREADer.READFields
                 emday = currentRow(0)
                 emmonth = currentRow(1)
                 matday = currentRow(2)
@@ -1535,21 +1535,21 @@
                                       currentRow(8), currentRow(9), foliardeposit, currentRow(11), currentRow(12))
             Next
 
-            For j As Integer = croprows To 6
-                MyReader.ReadLine() 'read the lines that do not have crop data
+            For j As INTEGER = croprows To 6
+                MyREADer.READLine() 'READ the lines that do not have crop data
             Next
 
-            MyReader.ReadLine()  'Line 39  alternative crop parameters fro evergreen and such, probably should rework this
-            MyReader.ReadLine()  'Line 40
+            MyREADer.READLine()  'Line 39  alternative crop PARAMETERs fro evergreen and such, probably should rework this
+            MyREADer.READLine()  'Line 40
 
-            currentRow = MyReader.ReadFields  'Line 41
+            currentRow = MyREADer.READFields  'Line 41
             PETadjustment.Text = currentRow(0)
             'snowMelt.Text = currentRow(1)  'For FDA, we will keep snowmelt factor constant
             evapDepth.Text = currentRow(2)
 
-            MyReader.ReadLine() 'Line 42 *** irrigation information start ***
-            Dim test As Integer
-            test = MyReader.ReadLine()  'Line 43
+            MyREADer.READLine() 'Line 42 *** irrigation information start ***
+            Dim test As INTEGER
+            test = MyREADer.READLine()  'Line 43
 
             Select Case test
                 Case "0"
@@ -1562,36 +1562,36 @@
                     noIrrigation.Checked = True
             End Select
 
-            currentRow = MyReader.ReadFields 'line 44
+            currentRow = MyREADer.READFields 'line 44
             fleach.Text = currentRow(0)
             depletion.Text = currentRow(1)
             rateIrrig.Text = currentRow(2)
 
-            currentRow = MyReader.ReadFields 'line 45
+            currentRow = MyREADer.READFields 'line 45
             UserSpecifiesIrrigDepth.Checked = currentRow(0)
             IrrigDepthRootZone.Checked = Not UserSpecifiesIrrigDepth.Checked
             IrrigationDepthUserSpec.Text = currentRow(1)
 
-            MyReader.ReadLine()      'Line46
-            MyReader.ReadLine()      'Line47
-            MyReader.ReadLine()      'Line48  Soil Information
+            MyREADer.READLine()      'Line46
+            MyREADer.READLine()      'Line47
+            MyREADer.READLine()      'Line48  Soil Information
 
             '    Try
-            currentRow = MyReader.ReadFields '49
+            currentRow = MyREADer.READFields '49
             usleK.Text = currentRow(0)
             usleLS.Text = currentRow(1)
             usleP.Text = currentRow(2)
 
-            currentRow = MyReader.ReadFields
+            currentRow = MyREADer.READFields
             ireg.Text = currentRow(0)
             slope.Text = currentRow(1)
-            '  hydlength.Text = currentRow(2) THIS NEEDS TO BE HANDLED SOMEWHERE ELSE. Watershed not field parameter
+            '  hydLENgth.Text = currentRow(2) THIS NEEDS TO BE HANDLED SOMEWHERE ELSE. Watershed not field PARAMETER
 
-            MyReader.ReadLine() 'this is: *** Horizon Info *******
+            MyREADer.READLine() 'this is: *** Horizon Info *******
 
-            Dim numberofhorizons As Integer
-            'numberofhorizons = MyReader.ReadLine()
-            currentRow = MyReader.ReadFields
+            Dim numberofhorizons As INTEGER
+            'numberofhorizons = MyREADer.READLine()
+            currentRow = MyREADer.READFields
             numberofhorizons = currentRow(0)
 
             Dim thicknessrow As String()
@@ -1603,107 +1603,107 @@
             'Dim sandrow As String()
             'Dim clayrow As String()
 
-            thicknessrow = MyReader.ReadFields
-            blkdensityrow = MyReader.ReadFields
-            maxcapacityrow = MyReader.ReadFields
-            mincapacityrow = MyReader.ReadFields
-            ocrow = MyReader.ReadFields
-            compartmentrow = MyReader.ReadFields
+            thicknessrow = MyREADer.READFields
+            blkdensityrow = MyREADer.READFields
+            maxcapacityrow = MyREADer.READFields
+            mincapacityrow = MyREADer.READFields
+            ocrow = MyREADer.READFields
+            compartmentrow = MyREADer.READFields
 
-            'sandrow = MyReader.ReadFields
-            'clayrow = MyReader.ReadFields
-            MyReader.ReadLine()
-            MyReader.ReadLine()
+            'sandrow = MyREADer.READFields
+            'clayrow = MyREADer.READFields
+            MyREADer.READLine()
+            MyREADer.READLine()
 
             HorizonGridView.Rows.Clear()
 
-            For i As Integer = 0 To numberofhorizons - 1
+            For i As INTEGER = 0 To numberofhorizons - 1
                 HorizonGridView.Rows.Add(i + 1, thicknessrow(i), blkdensityrow(i), maxcapacityrow(i), mincapacityrow(i), ocrow(i), compartmentrow(i))
             Next
 
-            MyReader.ReadLine() '*** Horizon End, Temperature Start ********"
+            MyREADer.READLine() '*** Horizon End, Temperature Start ********"
 
             'V4 scenarios do not have temp populated'line 62
-                'MyReader.ReadLine()
+                'MyREADer.READLine()
 
                 '**************************************]
                 Dim ttt As String
-            ttt = MyReader.ReadLine()
-            If ttt = "" Then
+            ttt = MyREADer.READLine()
+            If ttt = "" THEN
                 albedo.Text = 0.2
                 bcTemp.Text = 10
             Else
                 Dim uuu As String() = Split(ttt, ",")
                 albedo.Text = uuu(0)
                 bcTemp.Text = uuu(1)
-            End If
+            END IF
 
 
 
             '**************************************
 
-            currentRow = MyReader.ReadFields
+            currentRow = MyREADer.READFields
             SimTemperature.Checked = currentRow(0) 'line 63
 
-            MyReader.ReadLine()  '***spare line for expansion
-            MyReader.ReadLine()  '***spare line for expansion
-            MyReader.ReadLine() '***Erosion Curve Number Inputs, Line 66
+            MyREADer.READLine()  '***spare line for expansion
+            MyREADer.READLine()  '***spare line for expansion
+            MyREADer.READLine() '***Erosion Curve Number Inputs, Line 66
 
             '****** READ IN USLE and CN Values ************************
             HydroDataGrid.Rows.Clear()
-            Dim numberofevents As Integer
-            numberofevents = MyReader.ReadLine() 'line 67
+            Dim numberofevents As INTEGER
+            numberofevents = MyREADer.READLine() 'line 67
 
             Dim USLEday As String()
             Dim USLmon As String()
             Dim USLEcn As String()
             Dim USLEC As String()
 
-            USLEday = MyReader.ReadFields 'line 68
-            USLmon = MyReader.ReadFields 'line 69
-            USLEcn = MyReader.ReadFields 'line 70
-            USLEC = MyReader.ReadFields 'line 71
-            MyReader.ReadLine() 'line 72 old Mannings N
+            USLEday = MyREADer.READFields 'line 68
+            USLmon = MyREADer.READFields 'line 69
+            USLEcn = MyREADer.READFields 'line 70
+            USLEC = MyREADer.READFields 'line 71
+            MyREADer.READLine() 'line 72 old Mannings N
 
             Dim combodate As String
-            For i As Integer = 0 To numberofevents - 1
+            For i As INTEGER = 0 To numberofevents - 1
                 combodate = String.Format("{0}/{1}", USLmon(i), USLEday(i))
                 HydroDataGrid.Rows.Add(combodate, USLEcn(i), USLEC(i))
             Next
 
             ''******************************************************************************
-            currentRow = MyReader.ReadFields 'line 73
+            currentRow = MyREADer.READFields 'line 73
             rDepth.Text = currentRow(0)
             rDecline.Text = currentRow(1)
             rInteracting.Text = currentRow(2)
 
-            currentRow = MyReader.ReadFields 'line 74
+            currentRow = MyREADer.READFields 'line 74
             eDepth.Text = currentRow(0)
             eDecline.Text = currentRow(1)
             eInteracting.Text = currentRow(2)
 
-            MyReader.ReadLine() 'use usle years
-            MyReader.ReadLine() 'list of usle years if used
-            VolatilizationBounday.Text = MyReader.ReadLine() 'volatilization boundary
+            MyREADer.READLine() 'use usle years
+            MyREADer.READLine() 'list of usle years if used
+            VolatilizationBounday.Text = MyREADer.READLine() 'volatilization boundary
 
 
             'adding in the new discretization routine
-            If MyReader.EndOfData Then
+            If MyREADer.EndOfData THEN
                 useAutoGWprofile.Checked = False
             Else
-                Dim numberofdiscreterows As Integer
-                useAutoGWprofile.Checked = MyReader.ReadLine()
-                numberofdiscreterows = MyReader.ReadLine()
+                Dim numberofdiscreterows As INTEGER
+                useAutoGWprofile.Checked = MyREADer.READLine()
+                numberofdiscreterows = MyREADer.READLine()
 
                 DiscretizationGridView.Rows.Clear()
 
-                For i As Integer = 1 To numberofdiscreterows
-                    currentRow = MyReader.ReadFields
+                For i As INTEGER = 1 To numberofdiscreterows
+                    currentRow = MyREADer.READFields
                     DiscretizationGridView.Rows.Add(currentRow(0), currentRow(1))
                 Next
 
 
-            End If
+            END IF
 
 
 
@@ -1711,9 +1711,9 @@
     End Sub
 
 
-    Private Sub RecordScheme(ByVal SchemeNumber As Integer)
+    Private Sub RecordScheme(ByVal SchemeNumber As INTEGER)
 
-        Dim AppTableList As New List(Of Integer)
+        Dim AppTableList As New List(Of INTEGER)
 
         Dim AppData As New SchemeDetails With {
             .Days = New List(Of String),
@@ -1731,7 +1731,7 @@
         AppTableDisplay.CommitEdit(DataGridViewDataErrorContexts.Commit)  'commit the cell if cursor still on box
 
 
-        For i As Integer = 0 To AppTableDisplay.RowCount - 2
+        For i As INTEGER = 0 To AppTableDisplay.RowCount - 2
             AppData.Days.Add(AppTableDisplay.Item(0, i).Value)
             AppData.Amount.Add(AppTableDisplay.Item(1, i).Value)
 
@@ -1825,15 +1825,15 @@
         AppData.Scenarios = ScenarioListBox.Items.Cast(Of String).ToList
 
         AppData.UseBatchScenarioFile = GetScenariosBatchCheckBox.Checked
-        AppData.ScenarioBatchFileName = ScenarioBatchFileName.Text
+        AppData.ScenarioBatchFiLEName = ScenarioBatchFiLEName.Text
 
-        If SchemeInfoList.Count - 1 < SchemeNumber Then
-            'if application scheme does not exist, then add it
+        If SchemeInfoList.Count - 1 < SchemeNumber THEN
+            'if application scheme does not exist, THEN add it
             SchemeInfoList.Add(AppData)
-        ElseIf SchemeNumber >= 0 Then
+        ElseIf SchemeNumber >= 0 THEN
             'otherwise replace it
             SchemeInfoList.Item(SchemeNumber) = AppData
-        End If
+        END IF
 
     End Sub
 

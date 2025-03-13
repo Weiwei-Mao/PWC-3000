@@ -6,7 +6,7 @@
     Version 2.0
     
     The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
+    that is mostly human READable. The generation and parsing of the 
     various data types are done through the TypeConverter classes 
     associated with the data types.
     
@@ -15,8 +15,8 @@
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <resheader name="READer">System.Resources.ResXResourceREADer, System.Windows.Forms, ...</resheader>
+    <resheader name="WRITEr">System.Resources.ResXResourceWRITEr, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
     <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -37,27 +37,27 @@
     mimetype set.
     
     The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+    ResXResourceREADer how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
     
     Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
+    that the ResXResourceWRITEr will generate, however the READer can 
+    READ any of the formats listed below.
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
+            : and THEN encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
+            : and THEN encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
     value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
+            : and THEN encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
@@ -111,11 +111,11 @@
   <resheader name="version">
     <value>2.0</value>
   </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <resheader name="READer">
+    <value>System.Resources.ResXResourceREADer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <resheader name="WRITEr">
+    <value>System.Resources.ResXResourceWRITEr, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>120, 17</value>
@@ -143,7 +143,7 @@
 automatically conforms the data to the discretization scheme selected here. Additionally, the profile will be extended
 to the depth selected here and the water contents below 10 cm will be adjusted to reflect halfway between field cap 
 and porosity. The last line will be saturated and assumed to be the aquifer output of interest. The lowest profile
-characteristics will be extrapolated to all points below.  This conforms to the NAFTA standard GW profile, ensuring
+CHARACTERistics will be extrapolated to all points below.  This conforms to the NAFTA standard GW profile, ensuring
 proper dispersion.
 </value>
   </data>
@@ -229,7 +229,7 @@ of the last line. Depth should only be adjusted by changing the 5th row and the 
   </metadata>
   <data name="Label101.Text" xml:space="preserve">
     <value>A scheme is a pesticide application method and the crops and regions it applies to. Schemes are managed on this tab.
-To create or modify a scheme, check the Edit box, and then populate the Applications and Scenarios tabs. After you
+To create or modify a scheme, check the Edit box, and THEN populate the Applications and Scenarios tabs. After you
 have created or modified a scheme, you must push the Commit button to register the changes.</value>
   </data>
   <metadata name="Column21.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -2159,7 +2159,7 @@ have created or modified a scheme, you must push the Commit button to register t
         fA/AuMpNd2AzSGlE7UUi5hZArVbj62+/Ze4C3L936802TRMU9oum7U6OjuaeGDwjurfHbii0lQKw7WXB
         V71Juc3iZwucTifF/X3TdhcXF7zz9tumD0S+UMBzy5p7GsaZgmazz8nxCS0LG4DZfB7Pzs7S750dWLUF
         sBUCoGFbIwDNoZG3IABSl7RbrbkC4HA6yWTSt76XAkinU/j885cSrWbDdEkCkMnl8O7sbJ0L0GArO7W2
-        /m2FAMwKXdgRB7BfNDe3x+OxaRWgQCBAtlC8tUlreALi7O3Nz1Not9t0u13T98tks7e2SlbHtk89NrAA
+        /m2FAMwKXdgRB7BfNDe3x+OxaRWgQCBAtlC8tUlREALi7O3Nz1Not9t0u13T98tks7e2SlbHtk89NrAA
         7E4skWDHN99EHg6HprOtz+cjk7l9xp2c9mnPxBNw1ulwYXK+odPpJJuZn1uwUbZ9/NvBArDt9I8x28aT
         ScLh+Z6A0chcACJ7e+zt7d1eACSEw7vEY/NjAbrd7pO6AC/D6/XeKi5h1Qi53V4AZQG84kggkUiYugJH
         oxEDkzqA+UIRz5Jq7jmcTlNPwPn5+QuHhDyPd2eHTC63tQIgYbu9ACu+cxt3AwrsXZl55goMmxQGGQwG

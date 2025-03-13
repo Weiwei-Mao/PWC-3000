@@ -9,7 +9,7 @@ module field_hydrology
                                   canopy_height, canopy_cover  , cover, height, &
                                   potential_canopy_holdup,evapo_root_node_daily, &
                                   evapo_root_node,root_node ,root_node_daily, julday1900 ,startday,soil_temp
-	  integer :: i
+	  INTEGER :: i
       julday1900 = startday
 
 	   do i=1, num_records
@@ -29,7 +29,7 @@ module field_hydrology
             
 			
 			julday1900 = julday1900  +1
-	   end do
+	   END DO
 	   
 
 	   
@@ -38,7 +38,7 @@ module field_hydrology
     !*******************************************************************************************************
     SUBROUTINE runoff_leaching_and_heat(day)
 	use constants_and_Variables, ONLY: is_temperature_simulated,            & 
-        THRUFL,really_not_thrufl,COVER, USLEC,cfac, & 
+        THRUFL,REALly_not_thrufl,COVER, USLEC,cfac, & 
         ainf,juslec,nuslec,CN_index, under_canopy_irrig,over_canopy_irrig,julday1900, &
         use_usleyears, delt, irtype, irrigation_save
 
@@ -49,51 +49,51 @@ module field_hydrology
 
     use plant_pesticide_processes
     implicit none
-    integer, intent(in) :: day !day tracker
+    INTEGER, intent(in) :: day !day tracker
 	
-    integer  :: I
-    integer  :: julday                   !this is the day of the year starting with Jan 1
-    integer  :: current_year, current_month, current_day    
+    INTEGER  :: I
+    INTEGER  :: julday                   !this is the day of the year starting with Jan 1
+    INTEGER  :: current_year, current_month, current_day    
 
     !************************************************************************************************
     AINF   = 0.0
     THRUFL = 0.0
-    really_not_thrufl = .FALSE.
+    REALly_not_thrufl = .FALSE.
  
 
 	
    !**********IRRIGATION ************************ 
 
     
-   IF (irtype > 0  .AND. cover > 0.0) then  !irrigate if there is a crop
+   IF (irtype > 0  .AND. cover > 0.0) THEN  !irrigate if there is a crop
       CALL irrigation(day)
    else										!no irrigation
       under_canopy_irrig = 0.0
       over_canopy_irrig = 0.0
       irrigation_save(day) = 0.0               
-   end if
+   END IF
 
    !this version of julian day is needed for the curve number and erosion routines
    call get_date (julday1900, current_year, current_month, current_day) 
    julday = julday1900 -jd(current_year,1,1) +1
 
-   if (use_usleyears) then
+   if (use_usleyears) THEN
       do i = 1, nuslec
-         if (julday1900  ==juslec(i))then
+         if (julday1900  ==juslec(i))THEN
              cfac=USLEC(i)
              CN_index = i  !this is used for curve number
              exit
-         end if
-      end do       
+         END IF
+      END DO       
    else     
       do i = 1, nuslec
-         if (julday ==juslec(i))then
+         if (julday ==juslec(i))THEN
            cfac=USLEC(i)
            CN_index = i  !this is used for curve number
            exit
-         end if
-      end do
-   end if
+         END IF
+      END DO
+   END IF
 
 
 
@@ -125,10 +125,10 @@ module field_hydrology
 !     canopy evaporation, and actual evapotranspiration from each
 !     soil layer.
       ! New version with Houbau's correction
-      integer, intent(in) :: day
+      INTEGER, intent(in) :: day
       REAL ::      FRAC(evapo_root_node_daily), DEP(evapo_root_node_daily) !!!add DEP() as the depth of each compartment (top)!!!
       REAL         PET,PETP,ANUM,DENOM,AW,TSW
-      Real         TWP,TFRAC,STDELX,EDEPTH, depth, DEPtotal !!!add depth to calculate top of each compartment, DEPtotal to calculate sum of DEP()!!!
+      REAL         TWP,TFRAC,STDELX,EDEPTH, depth, DEPtotal !!!add depth to calculate top of each compartment, DEPtotal to calculate sum of DEP()!!!
       INTEGER      ITEMP,I
 
 !     Compute potential evapotranspiration
@@ -167,7 +167,7 @@ module field_hydrology
       do I= 1, evapo_root_node_daily
         ANUM = ANUM  + AMAX1(0.0,soilwater(I)- wiltpoint_water(I))
         DENOM= DENOM + AMAX1(0.0,fieldcap_water(I)- wiltpoint_water(I))
-      end do
+      END DO
       
 
       AW   = ANUM/DENOM
@@ -183,14 +183,14 @@ module field_hydrology
         TSW  = TSW + SoilWater(I)
         TWP  = TWP + wiltpoint_water(I)
         depth = depth + DELX(I)      !!! depth calculation !!!
-      end do   
+      END DO   
 
       IF ((evapo_root_node_daily*depth-DEPtotal) .GT. 0.00 .AND. TSW .GT. TWP) THEN
         TFRAC= 0.0        
         do I= 1, evapo_root_node_daily
           FRAC(I)=(DEP(I)-depth)/(DEPtotal - evapo_root_node_daily*depth)*(SoilWater(I)-wiltpoint_water(I))/(TSW-TWP)  !!! depth related FRAC calculation !!!
           TFRAC  =TFRAC + FRAC(I)
-        end do
+        END DO
 !###########################################################################################################################################################
 
  
@@ -206,7 +206,7 @@ module field_hydrology
             STTDET = STTDET + EvapoTran(I)  !used in temperature routine
             STDELX = STDELX + DELX(I)
           END IF
-        end do
+        END DO
       ENDIF
       
       et_save(day) = tdet
@@ -224,19 +224,19 @@ module field_hydrology
 SUBROUTINE irrigation(day)
 !     determines soil moisture deficit, decides if  irrigation is needed, and calculates irrigation depths.
 
-      use  constants_and_Variables, ONLY: precipitation, really_not_thrufl,IRTYPE,PCDEPL,max_irrig,FLEACH, &
+      use  constants_and_Variables, ONLY: precipitation, REALly_not_thrufl,IRTYPE,PCDEPL,max_irrig,FLEACH, &
            cint,DELX,theta_end,theta_fc,theta_wp,potential_canopy_holdup,root_node_daily, &
            under_canopy_irrig, over_canopy_irrig, UserSpecifiesDepth,user_irrig_depth_node,irrigation_save
       
       implicit none
 
-	  integer, intent(in) :: day
+	  INTEGER, intent(in) :: day
       REAL     :: SMCRIT,SMAVG,FCAVG,SMDEF
       INTEGER  :: I
-      integer  :: local_irrigation_node
+      INTEGER  :: local_irrigation_node
       
       SMDEF = 0.0
-      really_not_thrufl = .FALSE.
+      REALly_not_thrufl = .FALSE.
 !     compute average soil moisture and porosity for root zone
 
 ! SMCRIT -- soil moisture level where irrigation begins (fraction).
@@ -273,11 +273,11 @@ SUBROUTINE irrigation(day)
       SMAVG = 0.0
       FCAVG = 0.0
       
-      if (UserSpecifiesDepth) then
+      if (UserSpecifiesDepth) THEN
            local_irrigation_node = user_irrig_depth_node 
       else
            local_irrigation_node = root_node_daily
-      end if
+      END IF
       
 
       DO I=1,local_irrigation_node
@@ -296,7 +296,7 @@ SUBROUTINE irrigation(day)
       IF((Sum(theta_end(1:local_irrigation_node)*delx(1:local_irrigation_node)) > SMCRIT) .OR. precipitation > 0.0) THEN
           irrigation_save(day) = 0.0
           return !no irrigation needed
-      end if
+      END IF
       
   
       
@@ -329,7 +329,7 @@ END SUBROUTINE Irrigation
 
 !*****************************************************************************************
 SUBROUTINE Runoff_cn(day)
-    !PRZM5: Calculate runoff first and then using any left over for the canopy & infiltration 
+    !PRZM5: Calculate runoff first and THEN using any left over for the canopy & infiltration 
     !In conformance to NEH-4, initial abstraction is no longer altered by canopy
     
       use constants_and_Variables, ONLY: precipitation, precip_rain, air_TEMP,sfac,snowfl,THRUFL, &
@@ -340,10 +340,10 @@ SUBROUTINE Runoff_cn(day)
         
       implicit none
 !     This subroutine calculates snowmelt, crop interception, runoff, and infiltration from the soil surface
-      integer, intent(in) :: day
+      INTEGER, intent(in) :: day
       REAL   CURVN
 
-      real :: canopy_capture
+      REAL :: canopy_capture
 
       runoff_on_day = 0.0
       SMELT = 0.0
@@ -379,7 +379,7 @@ SUBROUTINE Runoff_cn(day)
 
       
 
-      !Here runoff has preference since according to CN method canopy would already be accounted for:
+      !Here runoff has preference since according to CN method canopy would alREADy be accounted for:
       canopy_capture = min(potential_canopy_holdup-CINT, (precip_rain + over_canopy_irrig - runoff_on_day)  )
       canopy_capture = max (0.0, canopy_capture) !for under canopy irrigation the above could be negative
      
@@ -389,7 +389,7 @@ SUBROUTINE Runoff_cn(day)
 	  
 	  !cint is not well defined after harvest, but impact is trivial. After harvest there is still cint water, 
 	  !but it evaporates in a few days under normal evapo values. If PET is zero,
-	  !then it will linger at max value for the entire simulation regardless of crop presence--has insignificant impact
+	  !THEN it will linger at max value for the entire simulation regardless of crop presence--has insignificant impact
 	  !but it could be added to soil at harvest if you want to get picky
 	
 	  
@@ -399,7 +399,7 @@ SUBROUTINE Runoff_cn(day)
 	  
 	  
       !Thrufl is now only the amount of water actually hitting the ground  used for erosion calcs
-      !Might need rethinkin to remove canopy if already accounted for in C factors
+      !Might need rethinkin to remove canopy if alREADy accounted for in C factors
       !used effective rain for time of conc in erosion routine
       THRUFL = over_canopy_irrig + precip_rain -canopy_capture + under_canopy_irrig
  
@@ -427,24 +427,24 @@ SUBROUTINE Runoff_cn(day)
     Subroutine Curve_Number_Adjustment(curvn)
     !moisture adjustments to the curve number
     !CN_index is determined based on the julian day and sets the curve number until the next change
-    !Nov 5 2014, dfy changed curve number 2 to a real number and allowed interpolation between whole curve numbers   
+    !Nov 5 2014, dfy changed curve number 2 to a REAL number and allowed interpolation between whole curve numbers   
     
         use constants_and_Variables, ONLY:CN_moisture_ref, CN_index, CN_2, SoilWater,cn_moist_node,ADJUST_CN,soil_depth
         use curve_number_table
         implicit none
-        real,intent(out) :: curvn
-        integer :: i
+        REAL,intent(out) :: curvn
+        INTEGER :: i
         
-        real :: curve_number1, curve_number2,curve_number3, twlvl
+        REAL :: curve_number1, curve_number2,curve_number3, twlvl
   
-        IF (ADJUST_CN) then
+        IF (ADJUST_CN) THEN
             !Water amount in top 10 cm used for CN manipulation
             TWLVL = sum(SoilWater(1:cn_moist_node)) / soil_depth(cn_moist_node)  !average water content per depth in top 10 cm
 
  
             
             !Interpolation
-            i= int (CN_2(CN_index)) !integer portion of CN_2
+            i= int (CN_2(CN_index)) !INTEGER portion of CN_2
             curve_number2  =  CN_2(CN_index)
             curve_number1  =  cn_1(i) + (curve_number2- int(curve_number2)) *(cn_1(i+1)-cn_1(i))
             curve_number3  =  cn_3(i) + (curve_number2- int(curve_number2)) *(cn_3(i+1)-cn_3(i))   
@@ -453,7 +453,7 @@ SUBROUTINE Runoff_cn(day)
     
         else
             CURVN =  CN_2(CN_index)
-        end if
+        END IF
 
    
         
@@ -467,19 +467,19 @@ SUBROUTINE Runoff_cn(day)
     Subroutine Calculate_Runoff_PRZM5(curvn,Effective_Rain)
        use constants_and_Variables, ONLY:runoff_on_day,inabs
        implicit none
-       real, intent(in) :: curvn
-       real,intent(in)  :: Effective_Rain
+       REAL, intent(in) :: curvn
+       REAL,intent(in)  :: Effective_Rain
     
        !the constant 0.508 is derived from 0.2 * 2.54 cm/in and 0.2 is from INABS = 0.2 * S, where S is (1000./CURVN-10.).
        !INABS: Initial Abstraction INABS = AMAX1(0.508* (1000./CURVN-10.),PRECIP-THRUFL)
-       !The Original NRCS Curve Number method already accounts for canopy holdup.  -DFY
+       !The Original NRCS Curve Number method alREADy accounts for canopy holdup.  -DFY
 
        INABS = 0.508* (1000./CURVN-10.)  !also used in erosion calculation
-       IF (Effective_Rain .GT. INABS) then
+       IF (Effective_Rain .GT. INABS) THEN
            runoff_on_day= (Effective_Rain-INABS)**2/ (Effective_Rain + (4.0* INABS))  !OK the 4 is from 0.8 = 4 * 0.2
        else 
            runoff_on_day = 0.0
-       end if
+       END IF
 
       
               
@@ -498,7 +498,7 @@ SUBROUTINE Runoff_cn(day)
         !Performs hydraulic calculations assuming a uniform soil profile with unrestricted drainage
         !(drainage occurs instantaneously)
         !Also calculates the Air space at start and end of time step
-        integer, intent(in) :: day
+        INTEGER, intent(in) :: day
         INTEGER      I
 
 
@@ -518,7 +518,7 @@ SUBROUTINE Runoff_cn(day)
             soilwater(I) = theta_end(I)*DELX(I)
             
      
-        end do	
+        END DO	
 
         
         !***** Calculate Air space and gas diffusion coefficient

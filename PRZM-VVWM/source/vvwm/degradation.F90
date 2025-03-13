@@ -19,7 +19,7 @@ subroutine gamma_one
                                  gamma_1         !output overall aqueous-phase first-order rate littoral (per sec)
                                                            
   implicit none
-integer :: i
+INTEGER :: i
   gamma_1 = k_flow+ (k_photo + k_hydro +k_volatile) *fw1  +k_aer_aq*fw1 + k_aer_s*(1.-fw1)
 
  
@@ -63,19 +63,19 @@ subroutine photolysis (nchem)
    !%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     use constants_and_variables, ONLY: num_records, temp_avg, latitude, photo_rate, RFLAT, CLOUD,k_photo, daily_depth
-    use waterbody_parameters, ONLY:sused, dfac, chl,DOC1
+    use waterbody_PARAMETERs, ONLY:sused, dfac, chl,DOC1
     
     
 
     implicit none
     
-    integer, intent(in) :: nchem
+    INTEGER, intent(in) :: nchem
 
 
-    real:: A
- !   real:: KDP        !calculated EXAMS parameter                      
-    real,dimension(num_records) :: term3
-    real term1,term2,term4
+    REAL:: A
+ !   REAL:: KDP        !calculated EXAMS PARAMETER                      
+    REAL,DIMENSION(num_records) :: term3
+    REAL term1,term2,term4
 
 
         A= 0.141 +101.*CHL+6.25*DOC1 +.34*SUSED   !EXAMS 2.98 section 2.3.3.2.2
@@ -86,7 +86,7 @@ subroutine photolysis (nchem)
         term3 = (1.-exp(-dfac*daily_depth*A))/dfac/daily_depth/A
         term4 = 1.-0.056*cloud
         
-  !      KDP  = 8.0225368e-6/photo_input(nchem) !KDP  = 0.69314718/photo/24/3600.  !EXAMS parameter (per sec)
+  !      KDP  = 8.0225368e-6/photo_input(nchem) !KDP  = 0.69314718/photo/24/3600.  !EXAMS PARAMETER (per sec)
         
         k_photo = photo_rate(nchem)*term1/term2*term3*term4  !effective photolysis rate (per sec)
         
@@ -106,7 +106,7 @@ subroutine hydrolysis(nchem)
 
   
   implicit none
-  integer,intent(in) :: nchem 
+  INTEGER,intent(in) :: nchem 
   
 
      k_hydro  = hydrolysis_rate(nchem)  !hydrolysis is constant (for now no dependecies)
@@ -139,9 +139,9 @@ subroutine metabolism (nchem)
     implicit none                      
 
     
-    integer, intent(in) :: nchem
+    INTEGER, intent(in) :: nchem
 
-    integer :: i    
+    INTEGER :: i    
         
     !***** Zero Half Life Represents Stabilty or Zero Rate *************************
     
@@ -166,34 +166,34 @@ subroutine volatilization(nchem)
 use constants_and_variables, ONLY: num_records, temp_avg, wind_m , mwt, henry_unitless,heat_of_henry, wind_height,k_volatile,  &     !output: effective first-order decay rate due to volatilization
                              volume1 
 
-use waterbody_parameters, ONLY: area_waterbody
+use waterbody_PARAMETERs, ONLY: area_waterbody
 
 implicit none
 
-integer, intent(in) :: nchem
+INTEGER, intent(in) :: nchem
 
-real, allocatable, dimension(:) :: RL          !changed to allocatable bnecause of stack problems
-real, allocatable, dimension(:) :: RG
-real, allocatable, dimension(:) :: U           !wind speed adjusted to 10m above surface
-real, allocatable, dimension(:) :: Henry_temp  !array of temperature adjusted Henry's constants
+REAL, ALLOCATABLE, DIMENSION(:) :: RL          !changed to ALLOCATABLE bnecause of stack problems
+REAL, ALLOCATABLE, DIMENSION(:) :: RG
+REAL, ALLOCATABLE, DIMENSION(:) :: U           !wind speed adjusted to 10m above surface
+REAL, ALLOCATABLE, DIMENSION(:) :: Henry_temp  !array of temperature adjusted Henry's constants
 
-real, parameter  :: R        = 8.2057e-5  !gas constant (atm m3/K/mol)   
-real, parameter  :: R_JKmol  = 8.314      !gas constant (J/K/mol)
+REAL, PARAMETER  :: R        = 8.2057e-5  !gas constant (atm m3/K/mol)   
+REAL, PARAMETER  :: R_JKmol  = 8.314      !gas constant (J/K/mol)
 
 
 
-real :: HENRY_local     ! local Henry's constant; read in as unitless but cahanged to atm m3/mol later
-integer i
+REAL :: HENRY_local     ! local Henry's constant; READ in as unitless but cahanged to atm m3/mol later
+INTEGER i
 
 
    !Added Nov 2021 because was causing problems on some compiles when divide by zero occurred 
    !Not sure why this never caused issues in older vvwm
-   if (henry_unitless(nchem) > 0.0) then
+   if (henry_unitless(nchem) > 0.0) THEN
        !PROCEED
    else
 	   k_volatile = 0.0 
 	   return
-   end if
+   END IF
 
   allocate (RL(num_records) )
   allocate (RG(num_records) )
@@ -211,7 +211,7 @@ integer i
     U = 4./log10(wind_height*1000.)*wind_m  !adjust wind ht to 10m (see paragraph under eqn 2-85)
 
     where (U < 5.5)                 !default conditions p.36
-        RL = 4.19e-6*sqrt(U)        !m/s, RL Is really KO2, just trying to save some memory
+        RL = 4.19e-6*sqrt(U)        !m/s, RL Is REALly KO2, just trying to save some memory
     elsewhere (U>=5.5)
         RL = 3.2e-7*U*U             !m/s
     end where
@@ -253,8 +253,8 @@ integer i
     
     
 !do i=1, num_records
-!    write(33,*) Henry_temp(i)/(0.00008206*298.15), temp_avg(i),exp(-heat_of_henry(nchem)/R_JKmol*(1.0/(temp_avg(i)+273.0) -1.0/(25.0 + 273.0)))
-!end do    
+!    WRITE(33,*) Henry_temp(i)/(0.00008206*298.15), temp_avg(i),exp(-heat_of_henry(nchem)/R_JKmol*(1.0/(temp_avg(i)+273.0) -1.0/(25.0 + 273.0)))
+!END DO    
 
     
 end subroutine volatilization
